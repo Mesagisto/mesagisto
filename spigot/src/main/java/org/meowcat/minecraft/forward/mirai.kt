@@ -1,10 +1,7 @@
 package org.meowcat.minecraft.forward
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.utils.*
 import org.bukkit.Bukkit
@@ -33,13 +30,17 @@ class MineLogger(override val identity: String?) : MiraiLoggerPlatformBase(){
     }
 
 }
-class MineLoginSolver() : LoginSolver() {
+
+class MineLoginSolver : LoginSolver() {
+
+    private val captchaChannel:HashMap<Long,Channel<String>>
+        get() = Forward.captchaChannel
+
     override suspend fun onSolvePicCaptcha(bot: Bot, data: ByteArray): String? {
         Bukkit.getConsoleSender()
         val logger = bot.logger
         val tempFile: File = createTempFile(suffix = ".png").apply { deleteOnExit() }
         withContext(Dispatchers.IO) {
-            tempFile.createNewFile()
             logger.info("需要图片验证码登录, 验证码为 4 字母")
             try {
                 tempFile.writeBytes(data)
@@ -49,6 +50,8 @@ class MineLoginSolver() : LoginSolver() {
             }
         }
         logger.info("请输入 4 位字母验证码. 若要更换验证码, 请直接回车")
+
+        //需要验证码，开启通道并通知登录命令的发送者
         Forward.captchaChannel[bot.id]= Channel()
         return Forward.captchaChannel[bot.id]!!.receive()
     }
@@ -60,8 +63,9 @@ class MineLoginSolver() : LoginSolver() {
             完成后请输入任意字符
             $url
         """.trimIndent())
-        Forward.captchaChannel[bot.id]= Channel()
-        return Forward.captchaChannel[bot.id]!!.receive()
+        //需要验证码，开启通道并通知登录命令的发送者
+        captchaChannel[bot.id]= Channel()
+        return captchaChannel[bot.id]!!.receive()
     }
 
     override suspend fun onSolveUnsafeDeviceLoginVerify(bot: Bot, url: String): String? {
@@ -73,8 +77,8 @@ class MineLoginSolver() : LoginSolver() {
             这步操作将在后续的版本中优化
             $url"
         """.trimIndent())
-        Forward.captchaChannel[bot.id]= Channel()
-        return Forward.captchaChannel[bot.id]!!.receive()
+        //需要帐号认证，开启通道并通知登录命令的发送者
+        captchaChannel[bot.id]= Channel()
+        return captchaChannel[bot.id]!!.receive()
     }
-
 }
