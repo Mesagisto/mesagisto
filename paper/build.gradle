@@ -1,0 +1,60 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins{
+    id "com.github.johnrengelman.shadow" version "6.0.0"
+    id 'org.jetbrains.kotlin.jvm' version "1.4.0"
+    id 'java'
+}
+
+
+group = 'org.meowcat.minecraft'
+version = '1.0-SNAPSHOT'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+        name = 'papermc-repo'
+        url = 'https://papermc.io/repo/repository/maven-public/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+}
+
+dependencies {
+    compileOnly 'com.destroystokyo.paper:paper-api:1.16.2-R0.1-SNAPSHOT'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "net.mamoe:mirai-core-qqandroid:1.3.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9"
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}
+//buildscript {
+//    ext.kotlin_version = '1.4.10'
+//    repositories {
+//        mavenCentral()
+//    }
+//    dependencies {
+//        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//    }
+//}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
