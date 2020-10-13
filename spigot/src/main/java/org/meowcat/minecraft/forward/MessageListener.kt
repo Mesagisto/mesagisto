@@ -1,17 +1,14 @@
 package org.meowcat.minecraft.forward
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import net.mamoe.mirai.Bot
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerChatEvent
-import kotlin.coroutines.CoroutineContext
+import kotlin.random.Random
 
 class MessageListener:Listener{
-    private val bots:HashSet<Bot>
-        get() = Forward.bots
+    private val bots: HashMap<Long, Bot>
+        get() = Forward.listeners
 
     private val target  = 226556947L
 
@@ -19,8 +16,9 @@ class MessageListener:Listener{
     suspend fun onChat(event: AsyncPlayerChatEvent) {
         val msg = event.message
         val senderName = event.player.name
-        if (bots.isNotEmpty()) {
-            bots.random().getGroup(target).sendMessage("<$senderName> $msg")
+        if (Forward.speakers.isNotEmpty()) {
+            Forward.speakers.values.random()
+                    .getGroup(target).sendMessage("<$senderName> $msg")
         }
     }
 }

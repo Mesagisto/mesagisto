@@ -52,8 +52,8 @@ class MineLoginSolver : LoginSolver() {
         logger.info("请输入 4 位字母验证码. 若要更换验证码, 请直接回车")
 
         //需要验证码，开启通道并通知登录命令的发送者
-        Forward.captchaChannel[bot.id]= Channel()
-        return Forward.captchaChannel[bot.id]!!.receive()
+        captchaChannel[bot.id]= Channel()
+        return captchaChannel[bot.id]!!.receive()
     }
 
     override suspend fun onSolveSliderCaptcha(bot: Bot, url: String): String? {
