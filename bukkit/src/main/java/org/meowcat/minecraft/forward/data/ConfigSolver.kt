@@ -1,10 +1,11 @@
-package org.meowcat.minecraft.forward
+package org.meowcat.minecraft.forward.data
 
 import com.charleskorn.kaml.Yaml
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.meowcat.minecraft.forward.Forward
 import java.io.File
 
 class ConfigSolver() {

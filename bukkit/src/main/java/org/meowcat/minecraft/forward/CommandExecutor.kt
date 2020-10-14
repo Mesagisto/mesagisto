@@ -2,7 +2,6 @@ package org.meowcat.minecraft.forward
 
 import com.github.shynixn.mccoroutine.SuspendingCommandExecutor
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 
 import net.mamoe.mirai.Bot
@@ -12,18 +11,10 @@ import net.mamoe.mirai.utils.withSwitch
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.ConsoleCommandSender
+import org.meowcat.minecraft.forward.mirai.MineLogger
+import org.meowcat.minecraft.forward.mirai.MineLoginSolver
 
 class CommandExecutor :SuspendingCommandExecutor{
-
-    private val bots: HashMap<Long, Bot>
-        get() = Forward.listeners
-
-    private val operating:HashMap<Long,String>
-        get() = Forward.operating
-
-
-    private val captchaChannel:HashMap<Long,Channel<String>>
-        get() = Forward.captchaChannel
 
     override suspend fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         val senderName = if (sender is ConsoleCommandSender) "^Console^" else sender.name
@@ -41,8 +32,9 @@ class CommandExecutor :SuspendingCommandExecutor{
                 if (args.size!=3) return false
                 val account = args[1].toLong()
                 val password = args[2]
-                for(bot_ in bots.values){
-                    if (bot_.id==account) return false
+                //检查bot是否已经记录
+                for(bot in allBots.values){
+                    if (bot.id==account) return false
                     logger.warning("$account 已登录,切勿重复登陆")
                 }
                 //构建bot对象
@@ -64,15 +56,17 @@ class CommandExecutor :SuspendingCommandExecutor{
                     }
                 }
                 //将bot的操作者记录下来
-                operating[bot.id]=senderName
+                Forward.operating[bot.id]=senderName
                 //把bot保存
-                bots[bot.id] = bot
+                Forward.allBots[bot.id] = bot
                 return true
             }
             "captcha" -> {
                 //验证码接收
                 when(args.size){
+                    //当是字符验证码时，参量为3
                     3 -> captchaChannel[args[1].toLong()]!!.send(args[1])
+                    //其他验证码时，参量为2
                     2 -> captchaChannel[args[1].toLong()]!!.send(" ")
                 }
                 return true

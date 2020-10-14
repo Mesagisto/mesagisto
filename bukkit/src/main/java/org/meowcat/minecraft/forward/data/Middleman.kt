@@ -1,4 +1,4 @@
-package org.meowcat.minecraft.forward
+package org.meowcat.minecraft.forward.data
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

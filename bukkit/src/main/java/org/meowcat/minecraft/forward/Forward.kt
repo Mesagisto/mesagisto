@@ -12,6 +12,7 @@ import net.mamoe.mirai.message.GroupMessageEvent
 import net.mamoe.mirai.message.data.content
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
+import org.meowcat.minecraft.forward.data.ConfigSolver
 import kotlin.collections.HashMap
 import kotlin.collections.HashSet
 
@@ -36,15 +37,8 @@ class Forward : JavaPlugin() {
         val targetFrom by lazy { HashSet<Long>() }
 
         //记录机器人的类型
-        val type by lazy { HashMap<String,Type>() }
+        val type by lazy { HashMap<String, Type>() }
 
-        @Serializable
-        enum class Type(private val type: String) {
-            LISTEN("LISTEN"),SPEAK("SPEAK"),BOTH("BOTH"),NONE("NONE");
-            override fun toString(): String {
-                return this.type
-            }
-        }
     }
 
     override fun onEnable() {
@@ -67,5 +61,13 @@ class Forward : JavaPlugin() {
     }
 
     override fun onDisable() {
+    }
+
+    @Serializable
+    enum class Type(private val type: String) {
+        LISTEN("LISTEN"),SPEAK("SPEAK"),BOTH("BOTH"),NONE("NONE");
+        override fun toString(): String {
+            return this.type
+        }
     }
 }

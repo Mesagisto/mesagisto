@@ -1,35 +1,12 @@
-package org.meowcat.minecraft.forward
+package org.meowcat.minecraft.forward.mirai
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.utils.*
 import org.bukkit.Bukkit
+import org.meowcat.minecraft.forward.Forward
 import java.io.File
-import java.util.logging.Level
-
-class MineLogger(override val identity: String?) : MiraiLoggerPlatformBase(){
-    override fun debug0(message: String?, e: Throwable?) {
-        Bukkit.getLogger().log(Level.INFO,identity+message,e)
-    }
-
-    override fun error0(message: String?, e: Throwable?) {
-        Bukkit.getLogger().log(Level.WARNING,identity+message,e)
-    }
-
-    override fun info0(message: String?, e: Throwable?) {
-        Bukkit.getLogger().log(Level.INFO,identity+message,e)
-    }
-
-    override fun verbose0(message: String?, e: Throwable?) {
-        Bukkit.getLogger().log(Level.INFO,identity+message,e)
-    }
-
-    override fun warning0(message: String?, e: Throwable?) {
-        Bukkit.getLogger().log(Level.WARNING,identity+message,e)
-    }
-
-}
 
 class MineLoginSolver : LoginSolver() {
 
@@ -76,7 +53,7 @@ class MineLoginSolver : LoginSolver() {
             完成以下账号认证即可成功登录|理论本认证在mirai每个账户中最多出现1次
             请将该链接在QQ浏览器中打开并完成认证, 成功后输入任意字符
             这步操作将在后续的版本中优化
-            $url"
+            $url
         """.trimIndent())
         //需要帐号认证，开启通道并通知登录命令的发送者
         captchaChannel[bot.id]= Channel()
