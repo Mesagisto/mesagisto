@@ -28,9 +28,6 @@ val Dispatchers.Async: CoroutineContext
         return JavaPlugin.getPlugin(Forward::class.java).asyncDispatcher
     }
 
-val plugin:Forward
-    get() = JavaPlugin.getPlugin(Forward::class.java)
-
 val logger
     get() = Bukkit.getLogger()
 
