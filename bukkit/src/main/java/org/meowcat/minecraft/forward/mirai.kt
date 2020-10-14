@@ -43,6 +43,7 @@ class MineLoginSolver : LoginSolver() {
         withContext(Dispatchers.IO) {
             logger.info("需要图片验证码登录, 验证码为 4 字母")
             try {
+                tempFile.createNewFile()
                 tempFile.writeBytes(data)
                 logger.info("请查看文件 ${tempFile.absolutePath}")
             } catch (e: Exception) {

@@ -18,8 +18,9 @@ import kotlin.collections.HashSet
 class Forward : JavaPlugin() {
 
     companion object{
+        val configSolver by lazy { ConfigSolver.create() }
+
         //保存登录的机器人对象
-        //St
         val allBots by lazy { HashMap<Long,Bot>() }
         //记录用于监听的bot
         val listeners by lazy { HashMap<Long,Bot>() }
@@ -30,9 +31,9 @@ class Forward : JavaPlugin() {
         //用于保存机器人创建者的map
         val operating by lazy { HashMap<Long,String>() }
         //保存所有类型的群聊
-        val targets by lazy{ HashSet<Long>() }
+        val targets by lazy  { HashSet<Long>() }
         val targetTo by lazy { HashSet<Long>() }
-        val targetFrom by lazy{ HashSet<Long>() }
+        val targetFrom by lazy { HashSet<Long>() }
 
         //记录机器人的类型
         val type by lazy { HashMap<String,Type>() }
@@ -66,24 +67,5 @@ class Forward : JavaPlugin() {
     }
 
     override fun onDisable() {
-    }
-
-    fun initialize(key:String){
-        when(config.contains("Bots")){
-            true ->{
-                val apMap = config.getMap("Bots")
-                if (apMap != null) {
-                    for ((account,password) in apMap){
-                        val ap = dis((account to password) as Pair<String, String>,key)
-
-                    }
-
-                }
-            }
-            false ->{
-                config.setMap("Bots", HashMap<String,String>())
-            }
-        }
-
     }
 }
