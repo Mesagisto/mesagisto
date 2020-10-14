@@ -3,7 +3,6 @@ package org.meowcat.minecraft.forward
 import com.github.shynixn.mccoroutine.registerSuspendingEvents
 import com.github.shynixn.mccoroutine.setSuspendingExecutor
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
 import kotlinx.serialization.Serializable
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.contact.nameCardOrNick
@@ -12,25 +11,25 @@ import net.mamoe.mirai.message.GroupMessageEvent
 import net.mamoe.mirai.message.data.content
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
-import org.meowcat.minecraft.forward.data.ConfigSolver
+import org.meowcat.minecraft.forward.data.Agent
+import org.meowcat.minecraft.forward.data.ConfigService
 import kotlin.collections.HashMap
 import kotlin.collections.HashSet
 
 class Forward : JavaPlugin() {
 
     companion object{
-        val configSolver by lazy { ConfigSolver.create() }
+        val configSolver by lazy { ConfigService.create() }
 
         //保存登录的机器人对象
-        val allBots by lazy { HashMap<Long,Bot>() }
+        val allBots by lazy { HashMap<Agent,Bot>() }
         //记录用于监听的bot
-        val listeners by lazy { HashMap<Long,Bot>() }
+        val listeners by lazy { HashMap<Agent,Bot>() }
         //记录用于发言的bot
-        val speakers by lazy { HashMap<Long,Bot>() }
-        //传输验证码的通道
-        val captchaChannel by lazy { HashMap<Long,Channel<String>>() }
+        val speakers by lazy { HashMap<Agent,Bot>() }
+
         //用于保存机器人创建者的map
-        val operating by lazy { HashMap<Long,String>() }
+        val operating by lazy { HashMap<Agent,String>() }
         //保存所有类型的群聊
         val targets by lazy  { HashSet<Long>() }
         val targetTo by lazy { HashSet<Long>() }

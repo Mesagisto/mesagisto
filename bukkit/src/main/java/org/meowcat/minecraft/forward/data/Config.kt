@@ -3,5 +3,5 @@ package org.meowcat.minecraft.forward.data
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Config(val middlemanList: List<Middleman>, var crypto:Boolean)
+class Config(val agentList: List<Agent>, internal var crypto:Boolean)
 

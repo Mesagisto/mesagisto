@@ -6,12 +6,10 @@ import net.mamoe.mirai.Bot
 import net.mamoe.mirai.utils.*
 import org.bukkit.Bukkit
 import org.meowcat.minecraft.forward.Forward
+import org.meowcat.minecraft.forward.mirai.BotLoginSolver.Companion.captchaChannel
 import java.io.File
 
-class MineLoginSolver : LoginSolver() {
-
-    private val captchaChannel:HashMap<Long,Channel<String>>
-        get() = Forward.captchaChannel
+class MiraiLoginSolver : LoginSolver() {
 
     override suspend fun onSolvePicCaptcha(bot: Bot, data: ByteArray): String? {
         Bukkit.getConsoleSender()

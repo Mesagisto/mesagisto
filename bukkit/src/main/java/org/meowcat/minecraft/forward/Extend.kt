@@ -33,6 +33,3 @@ val logger
 
 val allBots
     get() = Forward.allBots
-
-val captchaChannel
-    get() = Forward.captchaChannel

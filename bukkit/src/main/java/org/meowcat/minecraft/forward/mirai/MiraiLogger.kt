@@ -4,7 +4,7 @@ import net.mamoe.mirai.utils.MiraiLoggerPlatformBase
 import org.bukkit.Bukkit
 import java.util.logging.Level
 
-class MineLogger(override val identity: String?) : MiraiLoggerPlatformBase(){
+class MiraiLogger(override val identity: String?) : MiraiLoggerPlatformBase(){
     override fun debug0(message: String?, e: Throwable?) {
         Bukkit.getLogger().log(Level.INFO,identity+message,e)
     }
