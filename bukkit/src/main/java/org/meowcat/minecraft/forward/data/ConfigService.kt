@@ -2,39 +2,15 @@ package org.meowcat.minecraft.forward.data
 
 import com.charleskorn.kaml.Yaml
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.withContext
-import org.meowcat.minecraft.forward.Forward
-import org.meowcat.minecraft.forward.decrypt
-import org.meowcat.minecraft.forward.encrypt
-import org.meowcat.minecraft.forward.launch
+import org.meowcat.minecraft.forward.*
 import java.io.File
-import java.net.URL
+
 /*
     当一个ConfigSolver被创建时就应该确保配置文件已经存在
  */
 class ConfigService() {
-    companion object Factory{
-        fun create(key:String): ConfigService {
-            val instance = ConfigService()
-            instance.apply {
-                if (!file.exists()){
-
-                    this.key = key
-
-                    GlobalScope.launch(Dispatchers.IO) {
-                        file.createNewFile()
-                        content = file.readText()
-                        file.writeText(content)
-                        config = Yaml.default.decodeFromString(Config.serializer(),content)
-                    }
-                    TODO("初始化过程")
-                }
-            }
-            return instance
-        }
-    }
 
     //对象化的配置
     lateinit var config: Config
@@ -44,6 +20,31 @@ class ConfigService() {
     private var content = ""
 
     private var key = ""
+
+    val keyChannel = Channel<String>()
+
+    /**
+     * 创建ConfigService实例
+     */
+    suspend fun create(): ConfigService {
+        val instance = ConfigService()
+        instance.apply {
+            if (!file.exists()){
+                //这里会一直堵塞直到用户输入密匙
+                key = keyChannel.receive()
+                withContext(Dispatchers.IO) {
+                    file.createNewFile()
+                    content = file.readText()
+                    file.writeText(content)
+                    config = Yaml.default.decodeFromString(Config.serializer(),content)
+
+                }
+                TODO("初始化过程")
+            }
+        }
+        return instance
+    }
+
     //保存配置文件
     suspend fun save(){
         //如果没加密则需要加密
@@ -89,11 +90,11 @@ class ConfigService() {
         }
 
     }
-
     /**
      * 改变密匙用
      */
-    private suspend fun changeKey(newKey:String){
+    suspend fun changeKey(newKey:String){
+        if (key=="DEFAULT")
         //若已加密则解密
         if (config.crypto) decrypt()
         this.key = newKey

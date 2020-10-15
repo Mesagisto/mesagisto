@@ -52,6 +52,15 @@ class CommandExecutor :SuspendingCommandExecutor{
             "help" -> {
 
             }
+            "changeKey" -> {
+                if (args[1].isNullOrEmpty()) return false
+                Forward.configService.changeKey(args[1])
+
+            }
+            "setKey" -> {
+                if (args[1].isNullOrEmpty()) return false
+                Forward.configService.keyChannel.send(args[1])
+            }
             else -> {
                 sender.sendMessage("输入/forward help获得帮助")
             }
