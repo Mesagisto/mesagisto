@@ -29,17 +29,15 @@ class ConfigService() {
     suspend fun create(): ConfigService {
         val instance = ConfigService()
         instance.apply {
+
+            //这里会一直阻塞直到用户输入密匙
+            key = keyChannel.receive()
+            //如果没有配置文件则新建一个,并写入默认配置
             if (!file.exists()){
-                //这里会一直堵塞直到用户输入密匙
-                key = keyChannel.receive()
                 withContext(Dispatchers.IO) {
                     file.createNewFile()
-                    content = file.readText()
-                    file.writeText(content)
-                    config = Yaml.default.decodeFromString(Config.serializer(),content)
-
+                    file.writeText(defaultConfig)
                 }
-                TODO("初始化过程")
             }
         }
         return instance

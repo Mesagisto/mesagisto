@@ -29,11 +29,12 @@ class Forward : JavaPlugin() {
         val listeners by lazy { HashMap<Agent,Bot>() }
         //记录用于发言的bot 后期分配
         val speakers by lazy { HashMap<Agent,Bot>() }
-
         //用于保存机器人创建者的map
         val operating by lazy { HashMap<Agent,String>() }
         //保存所有类型的群聊
-        val targets by lazy  { HashSet<Long>() }
+        var target = 12345678L
+        //是否是第一次加载
+        var firstLoad:Boolean = true
     }
 
     override fun onEnable() {
@@ -46,7 +47,7 @@ class Forward : JavaPlugin() {
         launch {
             subscribeAlways<GroupMessageEvent>(Dispatchers.Default) {
                 when(group.id){
-                    226556947L -> Bukkit.broadcastMessage("<${this.sender.nameCardOrNick}> ${message.content}")
+                    target -> Bukkit.broadcastMessage("<${this.sender.nameCardOrNick}> ${message.content}")
                 }
             }
         }
