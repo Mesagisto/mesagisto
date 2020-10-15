@@ -49,6 +49,12 @@ class CommandExecutor :SuspendingCommandExecutor{
                 }
                 return true
             }
+            "help" -> {
+
+            }
+            else -> {
+                sender.sendMessage("输入/forward help获得帮助")
+            }
         }
 
         //你不对劲

@@ -33,3 +33,7 @@ val logger
 
 val allBots
     get() = Forward.allBots
+
+val defaultConfig = """
+    
+""".trimIndent()
