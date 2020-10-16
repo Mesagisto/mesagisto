@@ -15,7 +15,6 @@ fun String.encrypt(key: String): String {
     //加密为16进制表示
     return aes.encryptHex(aes.encrypt(this))
 }
-
 /**
  * aes解密
  * @param key 密匙
@@ -26,4 +25,12 @@ fun String.decrypt(key: String):String {
 
     //解密
     return aes.decryptStr(this, CharsetUtil.CHARSET_UTF_8)
+}
+/**
+ * aes加密
+ * @param key 密匙
+ */
+fun Any.encrypt(key: String): String {
+    //加密为16进制表示
+    return this.toString().encrypt(key)
 }

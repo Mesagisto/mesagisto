@@ -18,32 +18,34 @@ class ConfigService() {
     private val file = File("forward.yml")
     //文件的内容
     private var content = ""
-
+    //密匙
     private var key = ""
-
+    //传输key的通道
     val keyChannel = Channel<String>()
-
-    /**
-     * 创建ConfigService实例
-     */
-    suspend fun create(): ConfigService {
-        val instance = ConfigService()
-        instance.apply {
-
-            //这里会一直阻塞直到用户输入密匙
-            key = keyChannel.receive()
-            //如果没有配置文件则新建一个,并写入默认配置
-            if (!file.exists()){
-                withContext(Dispatchers.IO) {
-                    file.createNewFile()
-                    file.writeText(defaultConfig)
+    companion object{
+        /**
+         * 创建ConfigService实例
+         */
+        suspend fun create(): ConfigService {
+            val instance = ConfigService()
+            instance.apply {
+                //这里会一直阻塞直到用户输入密匙
+                key = keyChannel.receive()
+                //如果没有配置文件则新建一个,并写入默认配置
+                if (!file.exists()){
+                    withContext(Dispatchers.IO) {
+                        file.createNewFile()
+                        file.writeText(defaultConfig)
+                    }
                 }
-            }
-        }
-        return instance
-    }
 
-    //保存配置文件
+            }
+            return instance
+        }
+    }
+    /**
+     * 保存配置文件
+     */
     suspend fun save(){
         //如果没加密则需要加密
         if (!config.crypto) encrypt()
@@ -58,6 +60,7 @@ class ConfigService() {
     }
     /**
      * 加密
+     * 此方法应该由ConfigService自行决定是否调用
      */
     private suspend fun encrypt(){
 
@@ -75,6 +78,7 @@ class ConfigService() {
     }
     /**
      * 解密
+     * 此方法应该由ConfigService自行决定是否调用
      */
     private suspend fun decrypt(){
         //若已解密则直接返回
@@ -97,5 +101,4 @@ class ConfigService() {
         if (config.crypto) decrypt()
         this.key = newKey
     }
-
 }

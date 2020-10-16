@@ -19,6 +19,7 @@ class CommandExecutor :SuspendingCommandExecutor{
             sender.sendMessage("权限不足")
             return false
         }
+        //手动命令解析
         when(args[0]){
             "login" -> {
                 if (args.size!=3) return false
