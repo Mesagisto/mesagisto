@@ -52,6 +52,5 @@ class ConfigService private constructor() {
         }
     }
     fun load(){
-
     }
 }

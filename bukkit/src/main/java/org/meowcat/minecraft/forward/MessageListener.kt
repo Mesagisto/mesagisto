@@ -8,7 +8,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent
 class MessageListener:Listener{
 
     private val target
-        get() = Forward.target
+        get() = Forward.botDispatcher.target
 
     @EventHandler
     suspend fun onChat(event: AsyncPlayerChatEvent) {

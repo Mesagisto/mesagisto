@@ -40,7 +40,10 @@ val allBots
     get() = Forward.allBots
 
 val defaultConfig = """
-    
+    agentList:
+    - account: "123456789"
+      password: "123456789"
+    target: 123456789
 """.trimIndent()
 
 
