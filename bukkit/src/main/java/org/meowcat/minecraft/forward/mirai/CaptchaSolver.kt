@@ -39,12 +39,23 @@ class CaptchaSolver : LoginSolver() {
     }
 
     override suspend fun onSolveSliderCaptcha(bot: Bot, url: String): String? {
-        bot.logger.info("""
+        val senderName = Forward.operating[bot.id]
+        val reply = """
             需要滑动验证码
             请在任意浏览器中打开以下链接并完成验证码.
             $url
             完成后请输入任意字符
-        """.trimIndent())
+        """.trimIndent()
+        when(senderName){
+            "^Console^" ->{
+                bot.logger.info(reply)
+            }
+            else -> {
+                Bukkit.getPlayer(senderName!!)?.
+                sendMessage(reply)
+            }
+        }
+
         //需要验证码，开启通道并 TODO 通知登录命令的发送者
         return bot.captchaChannel.receive()
     }

@@ -2,12 +2,10 @@ package org.meowcat.minecraft.forward.mirai
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.utils.SilentLogger
 import net.mamoe.mirai.utils.withSwitch
-import org.meowcat.minecraft.forward.encrypt
 
 class BotLoginSolver() {
     companion object {
@@ -21,8 +19,8 @@ class BotLoginSolver() {
         fun login(account:Long,password:String):Bot{
             //构建bot对象
             return Bot(account, password) {
-                // 覆盖默认的配置
-                // 使用 "device.json" 保存设备信息
+                //覆盖默认的配置
+                //使用"device.json" 保存设备信息
                 fileBasedDeviceInfo("device.json")
                 //禁用网络层输出
                 networkLoggerSupplier = { SilentLogger }

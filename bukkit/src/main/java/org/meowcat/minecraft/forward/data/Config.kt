@@ -4,7 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class  Config(val agentList: List<Agent>,
-              internal var crypto:Boolean,
-              var target:Long = 12345678L,
-              var check:String)
+              var target:Long = 12345678L)
 

@@ -1,44 +1,11 @@
 package org.meowcat.minecraft.forward
 
-import cn.hutool.core.util.CharsetUtil
-import cn.hutool.crypto.digest.DigestUtil
-import cn.hutool.crypto.symmetric.SymmetricAlgorithm
-import cn.hutool.crypto.symmetric.SymmetricCrypto
 import com.charleskorn.kaml.Yaml
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerializationStrategy
-
-/**
- * aes加密
- * @param key 密匙
- */
-fun String.encrypt(key: String): String {
-    //构建
-    val aes = SymmetricCrypto(SymmetricAlgorithm.AES, DigestUtil.md5Hex(key).toByteArray())
-    //加密为16进制表示
-    return aes.encryptBase64(this)
-}
-/**
- * aes解密
- * @param key 密匙
- */
-fun String.decrypt(key: String):String {
-    //构建
-    val aes = SymmetricCrypto(SymmetricAlgorithm.AES, DigestUtil.md5Hex(key).toByteArray())
-
-    //解密
-    return aes.decryptStr(this, CharsetUtil.CHARSET_UTF_8)
-}
-/**
- * aes加密
- * @param key 密匙
- */
-fun Any.encrypt(key: String): String {
-    //加密为16进制表示
-    return this.toString().encrypt(key)
-}
+import java.security.MessageDigest
 
 /**
  * 从String中反序列化为KotlinObject
@@ -49,7 +16,7 @@ fun Any.encrypt(key: String): String {
 suspend fun <T> decodeFromString(deserializer: DeserializationStrategy<T>, string: String): T{
     val result:T
     withContext(Dispatchers.Default){
-        result = Yaml.default.decodeFromString(deserializer,string)
+        result = Yaml.default.decodeFromString(deserializer, string)
     }
     return result
 }
@@ -63,7 +30,47 @@ suspend fun <T> decodeFromString(deserializer: DeserializationStrategy<T>, strin
 suspend fun <T> encodeToString(serializer: SerializationStrategy<T>, value: T): String {
     val result:String
     withContext(Dispatchers.Default){
-        result = Yaml.default.encodeToString(serializer,value)
+        result = Yaml.default.encodeToString(serializer, value)
     }
     return result
 }
+
+/**
+ * 拓展属性 计算字符串的MD5
+ * @author ryoii
+ */
+val String.md5:String
+    get() = MessageDigest.getInstance("MD5").
+    apply { update(this@md5.toByteArray()) }.digest().toUHexString("")
+
+/**
+ * 拓展方法 将十六进制字符串转为ByteArray
+ * @author ryoii
+ */
+internal fun String.chunkedHexToBytes(): ByteArray =
+        this.asSequence().chunked(2).map {
+            (it[0].toString() + it[1]).toUByte(16).toByte()
+        }.toList().toByteArray()
+
+/**
+ * From https://github.com/ryoii/mirai-console-addition
+ * @author ryoii
+ */
+internal fun ByteArray.toUHexString(separator: String = " ", offset: Int = 0, length: Int = this.size - offset): String {
+    if (length == 0) {
+        return ""
+    }
+    val lastIndex = offset + length
+    return buildString(length * 2) {
+        this@toUHexString.forEachIndexed { index, it ->
+            if (index in offset until lastIndex) {
+                var ret = it.toUByte().toString(16).toUpperCase()
+                if (ret.length == 1) ret = "0$ret"
+                append(ret)
+                if (index < lastIndex - 1) append(separator)
+            }
+        }
+    }
+}
+
+

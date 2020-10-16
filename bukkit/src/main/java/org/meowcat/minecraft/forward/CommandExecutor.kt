@@ -12,7 +12,6 @@ class CommandExecutor :SuspendingCommandExecutor{
 
     override suspend fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         val senderName = if (sender is ConsoleCommandSender) "^Console^" else sender.name
-
         //垃圾bukkit
         if (!sender.hasPermission("forward.use")){
             sender.sendMessage("权限不足")
@@ -35,10 +34,8 @@ class CommandExecutor :SuspendingCommandExecutor{
 
                 //把bot保存
                 Forward.allBots[account] = BotLoginSolver.login(account, password)
-
                 //将bot的操作者记录下来
                 Forward.operating[account] = senderName
-
                 return true
             }
             "captcha" -> {
@@ -59,22 +56,6 @@ class CommandExecutor :SuspendingCommandExecutor{
             }
             "help" -> {
 
-            }
-            "changeKey" -> {
-                if (args[1].isEmpty()) return false
-                Forward.configService.changeKey(args[1])
-                return true
-
-            }
-            "setKey" -> {
-                if (args[1].isEmpty()) return false
-                Forward.configService.keyChannel.send(args[1])
-                return true
-            }
-            "unlock" -> {
-                if (args[1].isEmpty()) return false
-                Forward.configService.keyChannel.send(args[1])
-                return true
             }
             "setTarget" -> {
                 if (args[1].isEmpty()) return false
