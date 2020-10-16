@@ -6,10 +6,10 @@ authors: [Itsusinn]
 commands:
   forward:
     description: "A message forward plugin"
-    aliases: [f, fd]
+    aliases: [f,fd]
     permission: forward.use
     permission-message: "YOU HAVE NO PERMISSION!"
 permissions:
   forward.use:
-    description: “Permission to use forward plugins”
+    description: "Permission to use forward plugins"
     default: op

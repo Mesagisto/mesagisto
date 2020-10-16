@@ -1,17 +1,14 @@
 package org.meowcat.minecraft.forward.data
 
-import com.charleskorn.kaml.Yaml
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.withContext
 import org.meowcat.minecraft.forward.*
 import java.io.File
-
 /*
     当一个ConfigSolver被创建时就应该确保配置文件已经存在
  */
 class ConfigService() {
-
     //对象化的配置
     lateinit var config: Config
     //配置文件
@@ -38,7 +35,12 @@ class ConfigService() {
                         file.writeText(defaultConfig)
                     }
                 }
-
+                withContext(Dispatchers.IO){
+                    content = file.readText()
+                }
+                withContext(Dispatchers.Default){
+                    config = decodeFromString(Config.serializer(),content)
+                }
             }
             return instance
         }
@@ -49,9 +51,9 @@ class ConfigService() {
     suspend fun save(){
         //如果没加密则需要加密
         if (!config.crypto) encrypt()
-
+        //序列化
         withContext(Dispatchers.Default) {
-            content = Yaml.default.encodeToString(Config.serializer(),config)
+            content = encodeToString(Config.serializer(),config)
         }
         //写入文件
         withContext(Dispatchers.IO) {
@@ -63,7 +65,6 @@ class ConfigService() {
      * 此方法应该由ConfigService自行决定是否调用
      */
     private suspend fun encrypt(){
-
         //如果已经加密则直接返回
         if (config.crypto) return
 

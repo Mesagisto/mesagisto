@@ -6,10 +6,11 @@ import net.mamoe.mirai.Bot
 import net.mamoe.mirai.utils.*
 import org.bukkit.Bukkit
 import org.meowcat.minecraft.forward.Forward
-import org.meowcat.minecraft.forward.mirai.BotLoginSolver.Companion.captchaChannel
 import java.io.File
 
-class MiraiLoginSolver : LoginSolver() {
+val Bot.captchaChannel by lazy { Channel<String>() }
+
+class CaptchaSolver : LoginSolver() {
 
     override suspend fun onSolvePicCaptcha(bot: Bot, data: ByteArray): String? {
         Bukkit.getConsoleSender()
@@ -25,36 +26,47 @@ class MiraiLoginSolver : LoginSolver() {
                 e.printStackTrace()
             }
         }
-        logger.info("请输入 4 位字母验证码. 若要更换验证码, 请直接回车")
+        val senderName = Forward.operating[bot.id]
+        if (senderName=="^Console^"){
+            logger.info("请输入 4 位字母验证码. 若要更换验证码, 请直接回车")
+        }else{
+            Bukkit.getPlayer(senderName!!)?.
+            sendMessage("需要 4 位字母验证码，请登陆服务器以查看图片")
+        }
 
-        //需要验证码，开启通道并通知登录命令的发送者
-        captchaChannel[bot.id]= Channel()
-        return captchaChannel[bot.id]!!.receive()
+        //需要验证码，开启通道并  通知登录命令的发送者
+        return bot.captchaChannel.receive()
     }
 
     override suspend fun onSolveSliderCaptcha(bot: Bot, url: String): String? {
         bot.logger.info("""
             需要滑动验证码
             请在任意浏览器中打开以下链接并完成验证码.
-            完成后请输入任意字符
             $url
+            完成后请输入任意字符
         """.trimIndent())
-        //需要验证码，开启通道并通知登录命令的发送者
-        captchaChannel[bot.id]= Channel()
-        return captchaChannel[bot.id]!!.receive()
+        //需要验证码，开启通道并 TODO 通知登录命令的发送者
+        return bot.captchaChannel.receive()
     }
 
     override suspend fun onSolveUnsafeDeviceLoginVerify(bot: Bot, url: String): String? {
-        bot.logger.info("""
-            "需要进行账户安全认证
+        val senderName = Forward.operating[bot.id]
+        val reply = """
+            ${bot.id}
+            需要进行账户安全认证
             该账户有[设备锁]/[不常用登录地点]/[不常用设备登录]的问题
             完成以下账号认证即可成功登录|理论本认证在mirai每个账户中最多出现1次
-            请将该链接在QQ浏览器中打开并完成认证, 成功后输入任意字符
-            这步操作将在后续的版本中优化
+            请将该链接在浏览器中打开并完成认证
             $url
-        """.trimIndent())
-        //需要帐号认证，开启通道并通知登录命令的发送者
-        captchaChannel[bot.id]= Channel()
-        return captchaChannel[bot.id]!!.receive()
+            成功后输入/forward captcha QQ号码
+        """.trimIndent()
+
+        if (senderName=="^Console^"){
+            bot.logger.info(reply)
+        }else{
+            Bukkit.getPlayer(senderName!!)?.sendMessage(reply)
+        }
+        //需要帐号认证 通知登录命令的发送者
+        return bot.captchaChannel.receive()
     }
 }

@@ -7,6 +7,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.serialization.Serializable
 import net.mamoe.mirai.Bot
+import net.mamoe.mirai.BotFactory
 import net.mamoe.mirai.contact.nameCardOrNick
 import net.mamoe.mirai.event.subscribeAlways
 import net.mamoe.mirai.message.GroupMessageEvent
@@ -24,13 +25,13 @@ class Forward : JavaPlugin() {
         lateinit var configService:ConfigService
 
         //保存登录的机器人对象
-        val allBots by lazy { HashMap<Agent,Bot>() }
+        val allBots by lazy { HashMap<Long,Bot>() }
         //记录用于监听的bot 后期分配
         val listeners by lazy { HashMap<Agent,Bot>() }
         //记录用于发言的bot 后期分配
         val speakers by lazy { HashMap<Agent,Bot>() }
         //用于保存机器人创建者的map
-        val operating by lazy { HashMap<Agent,String>() }
+        val operating by lazy { HashMap<Long,String>() }
         //保存所有类型的群聊
         var target = 12345678L
         //是否是第一次加载
@@ -40,7 +41,7 @@ class Forward : JavaPlugin() {
     override fun onEnable() {
         launch {
             val defer = async(Dispatchers.Default) {
-                configService = ConfigService().create()
+                configService = ConfigService.create()
             }
             defer.await()
         }
