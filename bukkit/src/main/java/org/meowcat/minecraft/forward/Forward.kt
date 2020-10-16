@@ -65,9 +65,7 @@ class Forward : JavaPlugin() {
     }
 
     override fun onDisable() {
-        for (bot in allBots){
-            BotLoginSolver.logout(bot)
-        }
+        BotLoginSolver.logoutAll(allBots)
         //保存配置
         configService.save()
     }

@@ -48,9 +48,7 @@ val String.md5:String
  * @author ryoii
  */
 internal fun String.chunkedHexToBytes(): ByteArray =
-        this.asSequence().chunked(2).map {
-            (it[0].toString() + it[1]).toUByte(16).toByte()
-        }.toList().toByteArray()
+        this.asSequence().chunked(2).map { (it[0].toString() + it[1]).toUByte(16).toByte() }.toList().toByteArray()
 
 /**
  * From https://github.com/ryoii/mirai-console-addition

@@ -28,7 +28,7 @@ class CaptchaSolver : LoginSolver() {
         }
         val senderName = Forward.operating[bot.id]
         if (senderName=="^Console^"){
-            logger.info("请输入 4 位字母验证码. 若要更换验证码, 请直接回车")
+            logger.info("请输入 /forward captcha [4位字母验证码]. 若要更换验证码,请直接/forward captcha")
         }else{
             Bukkit.getPlayer(senderName!!)?.
             sendMessage("需要 4 位字母验证码，请登陆服务器以查看图片")
@@ -44,7 +44,7 @@ class CaptchaSolver : LoginSolver() {
             需要滑动验证码
             请在任意浏览器中打开以下链接并完成验证码.
             $url
-            完成后请输入任意字符
+            完成后请输入/forward captcha
         """.trimIndent()
         when(senderName){
             "^Console^" ->{
@@ -56,7 +56,7 @@ class CaptchaSolver : LoginSolver() {
             }
         }
 
-        //需要验证码，开启通道并 TODO 通知登录命令的发送者
+        //需要验证码，开启通道并通知登录命令的发送者
         return bot.captchaChannel.receive()
     }
 

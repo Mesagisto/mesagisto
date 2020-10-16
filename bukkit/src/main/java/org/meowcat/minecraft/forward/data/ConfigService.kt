@@ -1,8 +1,6 @@
 package org.meowcat.minecraft.forward.data
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.meowcat.minecraft.forward.*
 import java.io.File
@@ -43,16 +41,14 @@ class ConfigService private constructor() {
     /**
      * 保存配置文件
      */
-    fun save(){
-        launch {
-            //序列化
-            withContext(Dispatchers.Default) {
-                content = encodeToString(Config.serializer(),config)
-            }
-            //写入文件
-            withContext(Dispatchers.IO) {
-                file.writeText(content)
-            }
+    fun save() = launch {
+        //序列化
+        withContext(Dispatchers.Default) {
+            content = encodeToString(Config.serializer(),config)
+        }
+        //写入文件
+        withContext(Dispatchers.IO) {
+            file.writeText(content)
         }
     }
     fun load(){

@@ -12,14 +12,17 @@ import net.mamoe.mirai.Bot
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
 fun launch(f: suspend CoroutineScope.() -> Unit) {
     JavaPlugin.getPlugin(Forward::class.java).launch(f)
 }
+fun launch(dispatcher: CoroutineContext, f: suspend CoroutineScope.() -> Unit){
+    JavaPlugin.getPlugin(Forward::class.java).launch(dispatcher,f)
+}
 fun launchAsync(f: suspend CoroutineScope.() -> Unit) {
     JavaPlugin.getPlugin(Forward::class.java).launchAsync(f)
 }
-
 val Dispatchers.Minecraft: CoroutineContext
     get() {
         return JavaPlugin.getPlugin(Forward::class.java).minecraftDispatcher

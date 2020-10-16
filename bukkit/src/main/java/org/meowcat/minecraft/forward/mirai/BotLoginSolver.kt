@@ -16,7 +16,7 @@ class BotLoginSolver() {
             }
         }
 
-        fun login(account:Long,password:String):Bot{
+        fun login(account:Long,password:ByteArray):Bot{
             //构建bot对象
             return Bot(account, password) {
                 //覆盖默认的配置
@@ -34,9 +34,18 @@ class BotLoginSolver() {
 
         }
 
-        fun logout(bot: Bot){
+        private fun logout(bot: Bot){
             GlobalScope.launch (Dispatchers.Default) {
                 bot.close()
+            }
+        }
+        /**
+         * 登出所有Bot
+         */
+        fun logoutAll(bots:HashSet<Bot>){
+            bots.forEach{
+                logout(it)
+                bots.remove(it)
             }
         }
     }

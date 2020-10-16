@@ -15,6 +15,7 @@ class BotDispatcher private constructor() {
             return BotDispatcher()
         }
     }
+
     val allBots = HashSet<Bot>()
     val speakers = HashSet<Bot>()
     var listener = 12345678L
@@ -23,9 +24,12 @@ class BotDispatcher private constructor() {
     fun reDispatch(){
         changeTarget(this.target)
     }
-    fun addBot(bot: Bot){
+
+    fun addBot(bot: Bot):BotDispatcher{
         allBots.add(bot)
+        return this
     }
+
     fun changeTarget(target:Long){
         this.target = target
         if (allBots.isEmpty()) return
@@ -36,5 +40,12 @@ class BotDispatcher private constructor() {
             speakers.add(it)
         }
         var listener = speakers.random().id
+    }
+
+    fun findBotByID(id:Long):Bot?{
+        allBots.forEach {
+            if (it.id == id) return it
+        }
+        return null
     }
 }
