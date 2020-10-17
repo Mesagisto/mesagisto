@@ -7,12 +7,9 @@ import com.github.shynixn.mccoroutine.launch
 import com.github.shynixn.mccoroutine.asyncDispatcher
 import com.github.shynixn.mccoroutine.minecraftDispatcher
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.Channel
-import net.mamoe.mirai.Bot
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
 
 val plugin
     get() = JavaPlugin.getPlugin(Forward::class.java)

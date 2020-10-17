@@ -1,3 +1,5 @@
+@file:Suppress("EXPERIMENTAL_API_USAGE")
+
 package org.meowcat.minecraft.forward
 
 import com.charleskorn.kaml.Yaml
@@ -56,6 +58,8 @@ internal fun String.chunkedHexToBytes(): ByteArray =
  * From https://github.com/ryoii/mirai-console-addition
  * @author ryoii
  */
+@JvmOverloads
+@Suppress("DuplicatedCode")
 internal fun ByteArray.toUHexString(separator: String = " ", offset: Int = 0, length: Int = this.size - offset): String {
     if (length == 0) {
         return ""
@@ -72,5 +76,3 @@ internal fun ByteArray.toUHexString(separator: String = " ", offset: Int = 0, le
         }
     }
 }
-
-

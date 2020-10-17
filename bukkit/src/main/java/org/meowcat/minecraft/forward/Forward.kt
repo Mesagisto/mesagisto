@@ -3,20 +3,15 @@ package org.meowcat.minecraft.forward
 import com.github.shynixn.mccoroutine.registerSuspendingEvents
 import com.github.shynixn.mccoroutine.setSuspendingExecutor
 import kotlinx.coroutines.*
-import kotlinx.serialization.Serializable
-import net.mamoe.mirai.Bot
-import net.mamoe.mirai.BotFactory
 import net.mamoe.mirai.contact.nameCardOrNick
 import net.mamoe.mirai.event.subscribeAlways
 import net.mamoe.mirai.message.GroupMessageEvent
 import net.mamoe.mirai.message.data.content
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
-import org.meowcat.minecraft.forward.data.Agent
 import org.meowcat.minecraft.forward.data.ConfigService
 import org.meowcat.minecraft.forward.mirai.BotLoginSolver
 import kotlin.collections.HashMap
-import kotlin.collections.HashSet
 
 class Forward : JavaPlugin() {
 
@@ -60,7 +55,7 @@ class Forward : JavaPlugin() {
 
     }
 
-    override fun onDisable() = launch{
+    override fun onDisable() = runBlocking {
         BotLoginSolver.logoutAll(allBots)
         //保存配置
         configService.save()

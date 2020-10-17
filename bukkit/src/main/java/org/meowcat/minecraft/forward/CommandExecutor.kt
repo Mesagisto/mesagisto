@@ -36,7 +36,7 @@ class CommandExecutor :SuspendingCommandExecutor{
                 val bot:Bot
                 try {
                     //构造bot
-                     bot = BotLoginSolver.login(account, password.md5.chunkedHexToBytes())
+                     bot = BotLoginSolver.login(account, password.md5)
                 }catch (e:Exception){
                     e.printStackTrace()
                     return false

@@ -3,6 +3,7 @@ package org.meowcat.minecraft.forward.data
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.meowcat.minecraft.forward.*
+import org.meowcat.minecraft.forward.mirai.BotLoginSolver
 import java.io.File
 /*
     当一个ConfigSolver被创建时就应该确保配置文件已经存在
@@ -51,6 +52,14 @@ class ConfigService private constructor() {
             file.writeText(content)
         }
     }
+
+    /**
+     * 实现从配置中加载保存的bot对象的登陆操作
+     * 登陆交由 BotLoginSolver 实现
+     */
     suspend fun load(){
+        config.botList.forEach {
+            BotLoginSolver.autoLogin(it)
+        }
     }
 }
