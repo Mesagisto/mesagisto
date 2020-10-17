@@ -37,6 +37,7 @@ suspend fun <T> encodeToString(serializer: SerializationStrategy<T>, value: T): 
 
 /**
  * 拓展属性 计算字符串的MD5
+ * From https://github.com/ryoii/mirai-console-addition
  * @author ryoii
  */
 val String.md5:String
@@ -45,6 +46,7 @@ val String.md5:String
 
 /**
  * 拓展方法 将十六进制字符串转为ByteArray
+ * From https://github.com/ryoii/mirai-console-addition
  * @author ryoii
  */
 internal fun String.chunkedHexToBytes(): ByteArray =

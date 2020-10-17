@@ -45,26 +45,22 @@ class Forward : JavaPlugin() {
         var firstLoad:Boolean = true
     }
 
-    override fun onEnable() {
-
-        launch {
-            subscribeAlways<GroupMessageEvent>(Dispatchers.Default) {
-                when(group.id){
-                    botDispatcher.target ->
-                        Bukkit.broadcastMessage("<${this.sender.nameCardOrNick}> ${message.content}")
-                }
+    override fun onEnable() = launch {
+        subscribeAlways<GroupMessageEvent>(Dispatchers.Default) {
+            when(group.id){
+                botDispatcher.target ->
+                    Bukkit.broadcastMessage("<${this.sender.nameCardOrNick}> ${message.content}")
             }
         }
-
         logger.info("Forward Loading")
         //注册消息监听器
-        server.pluginManager.registerSuspendingEvents(MessageListener(),this)
+        server.pluginManager.registerSuspendingEvents(MessageListener(),plugin)
         //注册命令处理器
         server.getPluginCommand("forward")!!.setSuspendingExecutor(CommandExecutor())
 
     }
 
-    override fun onDisable() {
+    override fun onDisable() = launch{
         BotLoginSolver.logoutAll(allBots)
         //保存配置
         configService.save()

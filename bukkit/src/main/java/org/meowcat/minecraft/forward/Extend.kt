@@ -14,6 +14,9 @@ import org.bukkit.plugin.java.JavaPlugin
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
+val plugin
+    get() = JavaPlugin.getPlugin(Forward::class.java)
+
 fun launch(f: suspend CoroutineScope.() -> Unit) {
     JavaPlugin.getPlugin(Forward::class.java).launch(f)
 }

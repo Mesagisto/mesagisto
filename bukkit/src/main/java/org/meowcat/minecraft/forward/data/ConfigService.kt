@@ -41,7 +41,7 @@ class ConfigService private constructor() {
     /**
      * 保存配置文件
      */
-    fun save() = launch {
+    suspend fun save()  {
         //序列化
         withContext(Dispatchers.Default) {
             content = encodeToString(Config.serializer(),config)
@@ -51,6 +51,6 @@ class ConfigService private constructor() {
             file.writeText(content)
         }
     }
-    fun load(){
+    suspend fun load(){
     }
 }
