@@ -16,12 +16,7 @@ import kotlin.collections.HashMap
 class Forward : JavaPlugin() {
 
     companion object{
-        val configService:ConfigService
-            get() {
-                var instance:ConfigService
-                runBlocking { instance = ConfigService.create() }
-                return instance
-            }
+        val configService = ConfigService.create()
         //bot调度器
         val botDispatcher by lazy { BotDispatcher.create() }
         //保存登录的机器人对象
@@ -38,8 +33,11 @@ class Forward : JavaPlugin() {
         subscribeAlways<GroupMessageEvent>(Dispatchers.Default) {
             if (bot.id!= botDispatcher.listener) return@subscribeAlways //防止重复监听
             when(group.id){
-                botDispatcher.target ->
+                botDispatcher.target -> {
+                    botDispatcher.speakers.forEach { if (it.id == sender.id) return@subscribeAlways }
                     Bukkit.broadcastMessage("<${this.sender.nameCardOrNick}> ${message.content}")
+                }
+
             }
         }
         logger.info("Forward is Loading")
@@ -51,8 +49,7 @@ class Forward : JavaPlugin() {
         server.getPluginCommand("forward")!!.setSuspendingExecutor(CommandExecutor())
     }
 
-    override fun onDisable() = runBlocking {
-        BotLoginSolver.logoutAll(allBots)
+    override fun onDisable() {
         //保存配置
         configService.save()
     }

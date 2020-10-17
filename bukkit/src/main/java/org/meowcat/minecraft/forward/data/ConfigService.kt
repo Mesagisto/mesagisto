@@ -1,7 +1,6 @@
 package org.meowcat.minecraft.forward.data
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.meowcat.minecraft.forward.*
 import org.meowcat.minecraft.forward.mirai.BotLoginSolver
 import java.io.File
@@ -19,7 +18,7 @@ class ConfigService private constructor() {
         /**
          * 创建ConfigService实例
          */
-        suspend fun create(): ConfigService{
+        fun create(): ConfigService = runBlocking{
             val instance = ConfigService()
             instance.apply {
                 //如果没有配置文件则新建一个,并写入默认配置
@@ -27,6 +26,8 @@ class ConfigService private constructor() {
                     withContext(Dispatchers.IO) {
                         file.createNewFile()
                         file.writeText(defaultConfig)
+                        logger.info("不存在配置文件->写入默认配置")
+                        println()
                     }
                 }
                 withContext(Dispatchers.IO){
@@ -36,20 +37,27 @@ class ConfigService private constructor() {
                     config = decodeFromString(Config.serializer(),content)
                 }
             }
-            return instance
+            return@runBlocking instance
         }
     }
     /**
      * 保存配置文件
      */
-    suspend fun save()  {
-        //序列化
-        withContext(Dispatchers.Default) {
-            content = encodeToString(Config.serializer(),config)
-        }
-        //写入文件
-        withContext(Dispatchers.IO) {
-            file.writeText(content)
+    fun save() {
+        GlobalScope.launch {
+            try {
+                withContext(Dispatchers.Default){
+                    //序列化
+                    content = encodeToString(Config.serializer(),config)
+                }
+                withContext(Dispatchers.IO){
+                    //写入文件
+                    file.writeText(content)
+                }
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
         }
     }
 
@@ -58,7 +66,7 @@ class ConfigService private constructor() {
      * 登陆交由 BotLoginSolver 实现
      */
     fun load(){
-        logger.info("从配置中准备加载${config.botList.size}个Bot")
+        logger.info("从配置中准备加载${config.botList.size-1}个Bot")
         config.botList.forEach {
             BotLoginSolver.autoLogin(it)
         }

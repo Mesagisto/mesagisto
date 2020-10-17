@@ -20,6 +20,9 @@ class BotLoginSolver private constructor() {
         private fun login(bot: Bot){
             GlobalScope.launch(Dispatchers.Default){
                 try{
+                    //这个是保证配置文件非空，所以直接忽略
+                    if(bot.id == 123456789L) return@launch
+                    //登录
                     bot.login()
                 }catch (e:Exception){
                     e.printStackTrace()
@@ -44,16 +47,14 @@ class BotLoginSolver private constructor() {
             return Bot(account, passwordMD5.chunkedHexToBytes()) {
                 //覆盖默认的配置
                 //使用"device.json" 保存设备信息
-                fileBasedDeviceInfo("device.json")
+                fileBasedDeviceInfo("Device$account")
                 //禁用网络层输出
                 networkLoggerSupplier = { SilentLogger }
                 //使用bukkit的logger
                 botLoggerSupplier = { MiraiLogger("Bot ${it.id}: ").withSwitch() }
                 //将登录处理器与bukkit-command结合
                 loginSolver = CaptchaSolver()
-            }.also {
-                login(it)
-            }
+            }.also { login(it) }
         }
 
         /**
@@ -63,7 +64,7 @@ class BotLoginSolver private constructor() {
             return Bot(agent.account.toLong(), agent.passwordMD5.chunkedHexToBytes()) {
                 //覆盖默认的配置
                 //使用"device.json" 保存设备信息
-                fileBasedDeviceInfo("device.json")
+                fileBasedDeviceInfo("Device${agent.account}")
                 //禁用网络层输出
                 networkLoggerSupplier = { SilentLogger }
                 //使用bukkit的logger
@@ -72,21 +73,6 @@ class BotLoginSolver private constructor() {
                 loginSolver = CaptchaSolver()
             }.also {
                 login(it)
-            }
-        }
-
-        private fun logout(bot: Bot){
-            GlobalScope.launch (Dispatchers.Default) {
-                bot.close()
-            }
-        }
-        /**
-         * 登出所有Bot
-         */
-        fun logoutAll(bots:HashSet<Bot>){
-            bots.forEach{
-                logout(it)
-                bots.remove(it)
             }
         }
     }

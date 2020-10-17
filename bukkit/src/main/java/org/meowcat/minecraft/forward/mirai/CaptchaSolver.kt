@@ -1,12 +1,18 @@
 package org.meowcat.minecraft.forward.mirai
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.withContext
 import net.mamoe.mirai.Bot
-import net.mamoe.mirai.utils.*
+import net.mamoe.mirai.utils.LoginSolver
+import net.md_5.bungee.api.ChatColor
+import net.md_5.bungee.api.chat.ClickEvent
+import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
+import org.bukkit.Color
 import org.meowcat.minecraft.forward.Forward
 import java.io.File
+
 
 val Bot.captchaChannel by lazy { Channel<String>() }
 
@@ -43,16 +49,19 @@ class CaptchaSolver : LoginSolver() {
         val reply = """
             需要滑动验证码
             请在任意浏览器中打开以下链接并完成验证码.
-            $url
-            完成后请输入/forward captcha
+            完成后请输入/forward captcha QQ号码
         """.trimIndent()
         when(senderName){
-            "^Console^" ->{
+            "^Console^" -> {
                 bot.logger.info(reply)
             }
             else -> {
                 Bukkit.getPlayer(senderName!!)?.
                 sendMessage(reply)
+                val message = TextComponent("验证链接")
+                message.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, url)
+                message.color = ChatColor.YELLOW
+                Bukkit.getPlayer(senderName)?.spigot()?.sendMessage(message)
             }
         }
 
@@ -68,14 +77,18 @@ class CaptchaSolver : LoginSolver() {
             该账户有[设备锁]/[不常用登录地点]/[不常用设备登录]的问题
             完成以下账号认证即可成功登录|理论本认证在mirai每个账户中最多出现1次
             请将该链接在浏览器中打开并完成认证
-            $url
             成功后输入/forward captcha QQ号码
         """.trimIndent()
 
         if (senderName=="^Console^"){
             bot.logger.info(reply)
+            bot.logger.info(url)
         }else{
             Bukkit.getPlayer(senderName!!)?.sendMessage(reply)
+            val message = TextComponent("验证链接")
+            message.color = ChatColor.YELLOW
+            message.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, url)
+            Bukkit.getPlayer(senderName)?.spigot()?.sendMessage(message)
         }
         //需要帐号认证 通知登录命令的发送者
         return bot.captchaChannel.receive()

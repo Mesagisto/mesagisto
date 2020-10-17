@@ -27,6 +27,7 @@ class BotDispatcher private constructor() {
 
     fun addBot(bot: Bot):BotDispatcher{
         allBots.add(bot)
+        reDispatch()
         return this
     }
 
