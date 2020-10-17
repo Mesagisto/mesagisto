@@ -14,7 +14,7 @@ import org.meowcat.minecraft.forward.data.Agent
  * 不仅会处理bot的登陆
  * 还负责将bot通知给调度器
  */
-class BotLoginSolver() {
+class BotLoginSolver private constructor() {
     companion object {
 
         private fun login(bot: Bot){
@@ -32,7 +32,6 @@ class BotLoginSolver() {
                     return@launch
                 }
                 Forward.botDispatcher.addBot(bot)
-
             }
         }
         /**
@@ -55,7 +54,6 @@ class BotLoginSolver() {
             }.also {
                 login(it)
             }
-
         }
 
         /**

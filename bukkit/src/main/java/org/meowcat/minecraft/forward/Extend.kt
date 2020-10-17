@@ -1,3 +1,4 @@
+@file:Suppress("UNUSED")
 package org.meowcat.minecraft.forward
 /*
  Some of code is from https://github.com/Shynixn/MCCoroutine

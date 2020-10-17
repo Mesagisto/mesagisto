@@ -42,7 +42,7 @@ class CommandExecutor :SuspendingCommandExecutor{
                     return false
                 }
                 //把bot保存
-                Forward.botDispatcher.addBot(bot).reDispatch()
+                botDispatcher.addBot(bot).reDispatch()
                 //将bot的操作者记录下来
                 Forward.operating[account] = senderName
                 return true

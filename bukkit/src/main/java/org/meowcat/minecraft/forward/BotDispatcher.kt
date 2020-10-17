@@ -39,7 +39,8 @@ class BotDispatcher private constructor() {
             it.containsGroup(target)
             speakers.add(it)
         }
-        var listener = speakers.random().id
+        listener = speakers.random().id
+        Forward.configService.config.target = target
     }
 
     fun findBotByID(id:Long):Bot?{

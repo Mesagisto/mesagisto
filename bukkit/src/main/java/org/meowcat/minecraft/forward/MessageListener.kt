@@ -17,7 +17,10 @@ class MessageListener:Listener{
         if (Forward.speakers.isNotEmpty()) {
             var rBot = Forward.speakers.random()
             //如果随机到的这个bot没有加入群的话就再获取一个
+            //是为了防止bot被踢出产生错误
             while (!rBot.containsGroup(target)){
+                Forward.botDispatcher.reDispatch()
+                if (Forward.botDispatcher.speakers.isEmpty()) return
                 rBot = Forward.speakers.random()
             }
             rBot.getGroup(target).sendMessage("<$senderName> $msg")

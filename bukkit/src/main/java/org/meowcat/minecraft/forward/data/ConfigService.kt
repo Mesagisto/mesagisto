@@ -57,9 +57,11 @@ class ConfigService private constructor() {
      * 实现从配置中加载保存的bot对象的登陆操作
      * 登陆交由 BotLoginSolver 实现
      */
-    suspend fun load(){
+    fun load(){
+        logger.info("从配置中准备加载${config.botList.size}个Bot")
         config.botList.forEach {
             BotLoginSolver.autoLogin(it)
         }
+        Forward.botDispatcher.changeTarget(config.target)
     }
 }

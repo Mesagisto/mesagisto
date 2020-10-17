@@ -22,37 +22,33 @@ class Forward : JavaPlugin() {
                 runBlocking { instance = ConfigService.create() }
                 return instance
             }
-
         //bot调度器
         val botDispatcher by lazy { BotDispatcher.create() }
-
         //保存登录的机器人对象
         val allBots
             get() = botDispatcher.allBots
-
-        //记录用于发言的bot 后期分配
+        //记录用于发言的bot 由调度器分配
         val speakers
             get() = botDispatcher.allBots
-
         //用于保存机器人创建者的map
         val operating by lazy { HashMap<Long,String>() }
-        //是否是第一次加载
-        var firstLoad:Boolean = true
     }
 
     override fun onEnable() = launch {
         subscribeAlways<GroupMessageEvent>(Dispatchers.Default) {
+            if (bot.id!= botDispatcher.listener) return@subscribeAlways //防止重复监听
             when(group.id){
                 botDispatcher.target ->
                     Bukkit.broadcastMessage("<${this.sender.nameCardOrNick}> ${message.content}")
             }
         }
-        logger.info("Forward Loading")
+        logger.info("Forward is Loading")
+        logger.info("GitHub: https://github.com/itsusinn/Minecraft-Forward")
+        configService.load()
         //注册消息监听器
         server.pluginManager.registerSuspendingEvents(MessageListener(),plugin)
         //注册命令处理器
         server.getPluginCommand("forward")!!.setSuspendingExecutor(CommandExecutor())
-
     }
 
     override fun onDisable() = runBlocking {
