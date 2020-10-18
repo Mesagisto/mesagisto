@@ -7,6 +7,7 @@ import net.mamoe.mirai.contact.nameCardOrNick
 import net.mamoe.mirai.event.subscribeAlways
 import net.mamoe.mirai.message.GroupMessageEvent
 import net.mamoe.mirai.message.data.content
+import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import org.meowcat.minecraft.forward.data.ConfigService
@@ -30,6 +31,10 @@ class Forward : JavaPlugin() {
     }
 
     override fun onEnable() = launch {
+
+        val pluginID = 9145
+        Metrics(this@Forward,pluginID)
+
         subscribeAlways<GroupMessageEvent>(Dispatchers.Default) {
             if (bot.id!= botDispatcher.listener) return@subscribeAlways //防止重复监听
             when(group.id){

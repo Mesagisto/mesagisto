@@ -17,6 +17,10 @@ repositories {
     mavenCentral()
     jcenter()
     maven {
+        name = 'code-mc'
+        url = 'https://repo.codemc.org/repository/maven-public'
+    }
+    maven {
         name = 'papermc-repo'
         url = 'https://papermc.io/repo/repository/maven-public/'
     }
@@ -39,6 +43,7 @@ repositories {
 }
 
 dependencies {
+    implementation "org.bstats:bstats-bukkit:1.7"
     compileOnly "com.destroystokyo.paper:paper-api:1.16.3-R0.1-SNAPSHOT"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
