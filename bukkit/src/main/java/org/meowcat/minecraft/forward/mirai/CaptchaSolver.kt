@@ -13,7 +13,6 @@ import org.bukkit.Color
 import org.meowcat.minecraft.forward.Forward
 import java.io.File
 
-
 val Bot.captchaChannel by lazy { Channel<String>() }
 
 class CaptchaSolver : LoginSolver() {
@@ -39,7 +38,6 @@ class CaptchaSolver : LoginSolver() {
             Bukkit.getPlayer(senderName!!)?.
             sendMessage("需要 4 位字母验证码，请登陆服务器以查看图片")
         }
-
         //需要验证码，开启通道并  通知登录命令的发送者
         return bot.captchaChannel.receive()
     }

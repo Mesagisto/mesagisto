@@ -2,6 +2,8 @@ package org.meowcat.minecraft.forward
 
 import com.github.shynixn.mccoroutine.SuspendingCommandExecutor
 import net.mamoe.mirai.Bot
+import net.md_5.bungee.api.ChatColor
+import net.md_5.bungee.api.chat.TextComponent
 
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
@@ -14,11 +16,6 @@ class CommandExecutor :SuspendingCommandExecutor{
 
     override suspend fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         val senderName = if (sender is ConsoleCommandSender) "^Console^" else sender.name
-        //垃圾bukkit
-        if (!sender.hasPermission("forward.use")){
-            sender.sendMessage("权限不足")
-            return false
-        }
         //手动命令解析
         when(args[0]){
             "login" -> {
@@ -29,7 +26,7 @@ class CommandExecutor :SuspendingCommandExecutor{
                 //检查bot是否已经记录
                 for (bot in allBots) {
                     if (bot.id == account) {
-                        logger.warning("$account 已登录,切勿重复登陆")
+                        sender.sendMessage("$account 已登录,切勿重复登陆".toTextComponent(ChatColor.YELLOW))
                         return false
                     }
                 }
@@ -64,14 +61,18 @@ class CommandExecutor :SuspendingCommandExecutor{
                 return true
             }
             "help" -> {
-
+                val reply = """
+                    /forward add QQ帐号 QQ密码 来登录一个bot
+                    /forward setTarget QQ群号 来设置需要转发的qq群
+                """.trimIndent()
+                sender.sendMessage(reply.toTextComponent(ChatColor.YELLOW))
             }
             "setTarget" -> {
                 if (args[1].isEmpty()) return false
                 botDispatcher.changeTarget(args[1].toLong())
             }
             else -> {
-                sender.sendMessage("输入/forward help获得帮助")
+                sender.sendMessage("输入/forward help获得帮助".toTextComponent(ChatColor.YELLOW))
                 return true
             }
         }

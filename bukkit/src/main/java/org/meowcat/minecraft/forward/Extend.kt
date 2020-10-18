@@ -8,6 +8,8 @@ import com.github.shynixn.mccoroutine.launch
 import com.github.shynixn.mccoroutine.asyncDispatcher
 import com.github.shynixn.mccoroutine.minecraftDispatcher
 import kotlinx.coroutines.*
+import net.md_5.bungee.api.ChatColor
+import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import kotlin.coroutines.CoroutineContext
@@ -23,6 +25,9 @@ fun launch(dispatcher: CoroutineContext, f: suspend CoroutineScope.() -> Unit){
 }
 fun launchAsync(f: suspend CoroutineScope.() -> Unit) {
     JavaPlugin.getPlugin(Forward::class.java).launchAsync(f)
+}
+fun String.toTextComponent(color: ChatColor): TextComponent {
+    return TextComponent(this).apply { this.color = color }
 }
 val Dispatchers.Minecraft: CoroutineContext
     get() {
