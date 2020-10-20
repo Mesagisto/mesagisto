@@ -8,11 +8,15 @@ import com.github.shynixn.mccoroutine.launch
 import com.github.shynixn.mccoroutine.asyncDispatcher
 import com.github.shynixn.mccoroutine.minecraftDispatcher
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
+import net.mamoe.mirai.Bot
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import kotlin.coroutines.CoroutineContext
+
+val Bot.captchaChannel by lazy { Channel<String>() }
 
 val plugin
     get() = JavaPlugin.getPlugin(Forward::class.java)
@@ -39,11 +43,8 @@ val Dispatchers.Async: CoroutineContext
         return JavaPlugin.getPlugin(Forward::class.java).asyncDispatcher
     }
 
-val logger
+val bukkitLogger
     get() = Bukkit.getLogger()
-
-val allBots
-    get() = Forward.allBots
 
 val defaultConfig = """
     botList:

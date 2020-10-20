@@ -3,16 +3,14 @@ package org.meowcat.minecraft.forward
 import com.github.shynixn.mccoroutine.SuspendingCommandExecutor
 import net.mamoe.mirai.Bot
 import net.md_5.bungee.api.ChatColor
-import net.md_5.bungee.api.chat.TextComponent
 
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.ConsoleCommandSender
-import org.meowcat.minecraft.forward.Forward.Companion.botDispatcher
+import org.meowcat.minecraft.forward.BotDispatcher.allBots
 import org.meowcat.minecraft.forward.mirai.BotLoginSolver
-import org.meowcat.minecraft.forward.mirai.captchaChannel
 
-class CommandExecutor :SuspendingCommandExecutor{
+object ForwardCommandExecutor :SuspendingCommandExecutor{
 
     override suspend fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         val senderName = if (sender is ConsoleCommandSender) "^Console^" else sender.name
@@ -39,7 +37,7 @@ class CommandExecutor :SuspendingCommandExecutor{
                     return false
                 }
                 //把bot保存
-                botDispatcher.addBot(bot).reDispatch()
+                BotDispatcher.addBot(bot).reDispatch()
                 //将bot的操作者记录下来
                 Forward.operating[account] = senderName
                 return true
@@ -49,12 +47,12 @@ class CommandExecutor :SuspendingCommandExecutor{
                 when (args.size) {
                     //当是字符验证码时，参量为3
                     3 -> {
-                        val bot = botDispatcher.findBotByID(args[1].toLong()) ?: return false
+                        val bot = BotDispatcher.findBotByID(args[1].toLong()) ?: return false
                         bot.captchaChannel.send(args[2])
                     }
                     //其他验证码时，参量为2
                     2 -> {
-                        val bot = botDispatcher.findBotByID(args[1].toLong()) ?: return false
+                        val bot = BotDispatcher.findBotByID(args[1].toLong()) ?: return false
                         bot.captchaChannel.send("R")
                     }
                 }
@@ -69,7 +67,7 @@ class CommandExecutor :SuspendingCommandExecutor{
             }
             "setTarget" -> {
                 if (args[1].isEmpty()) return false
-                botDispatcher.changeTarget(args[1].toLong())
+                BotDispatcher.changeTarget(args[1].toLong())
             }
             else -> {
                 sender.sendMessage("输入/forward help获得帮助".toTextComponent(ChatColor.YELLOW))

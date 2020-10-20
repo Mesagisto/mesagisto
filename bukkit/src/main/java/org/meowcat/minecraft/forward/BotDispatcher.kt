@@ -2,6 +2,7 @@ package org.meowcat.minecraft.forward
 
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.containsGroup
+import org.meowcat.minecraft.forward.data.ConfigService
 
 /**
  * 一个bot调度器
@@ -9,13 +10,7 @@ import net.mamoe.mirai.containsGroup
  * 哪些bot进行发送
  * 还负责校检合法性
  */
-class BotDispatcher private constructor() {
-    companion object{
-        fun create():BotDispatcher{
-            return BotDispatcher()
-        }
-    }
-
+object BotDispatcher{
     val allBots = HashSet<Bot>()
     val speakers = HashSet<Bot>()
     var listener = 12345678L
@@ -41,7 +36,7 @@ class BotDispatcher private constructor() {
             speakers.add(it)
         }
         listener = speakers.random().id
-        Forward.configService.config.target = target
+        ConfigService.config.target = target
     }
 
     fun findBotByID(id:Long):Bot?{

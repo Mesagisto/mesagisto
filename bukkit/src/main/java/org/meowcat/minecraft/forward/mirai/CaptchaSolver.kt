@@ -11,11 +11,10 @@ import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
 import org.bukkit.Color
 import org.meowcat.minecraft.forward.Forward
+import org.meowcat.minecraft.forward.captchaChannel
 import java.io.File
 
-val Bot.captchaChannel by lazy { Channel<String>() }
-
-class CaptchaSolver : LoginSolver() {
+object CaptchaSolver : LoginSolver() {
 
     override suspend fun onSolvePicCaptcha(bot: Bot, data: ByteArray): String? {
         Bukkit.getConsoleSender()
