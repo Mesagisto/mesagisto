@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.command.ConsoleCommandSender
 import org.meowcat.minecraft.forward.BotDispatcher.allBots
 import org.meowcat.minecraft.forward.mirai.BotLoginSolver
+import org.meowcat.minecraft.forward.mirai.BotLoginSolver.operating
 
 object ForwardCommandExecutor :SuspendingCommandExecutor{
 
@@ -39,7 +40,7 @@ object ForwardCommandExecutor :SuspendingCommandExecutor{
                 //把bot保存
                 BotDispatcher.addBot(bot).reDispatch()
                 //将bot的操作者记录下来
-                Forward.operating[account] = senderName
+                operating[account] = senderName
                 return success
             }
             "captcha" -> {

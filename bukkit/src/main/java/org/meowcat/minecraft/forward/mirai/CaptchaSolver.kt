@@ -12,6 +12,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Color
 import org.meowcat.minecraft.forward.Forward
 import org.meowcat.minecraft.forward.captchaChannel
+import org.meowcat.minecraft.forward.mirai.BotLoginSolver.operating
 import java.io.File
 
 object CaptchaSolver : LoginSolver() {
@@ -30,7 +31,7 @@ object CaptchaSolver : LoginSolver() {
                 e.printStackTrace()
             }
         }
-        val senderName = Forward.operating[bot.id]
+        val senderName = operating[bot.id]
         if (senderName=="^Console^"){
             logger.info("请输入 /forward captcha [4位字母验证码]. 若要更换验证码,请直接/forward captcha")
         }else{
@@ -42,7 +43,7 @@ object CaptchaSolver : LoginSolver() {
     }
 
     override suspend fun onSolveSliderCaptcha(bot: Bot, url: String): String? {
-        val senderName = Forward.operating[bot.id]
+        val senderName = operating[bot.id]
         val reply = """
             需要滑动验证码
             请在任意浏览器中打开以下链接并完成验证码.
@@ -67,7 +68,7 @@ object CaptchaSolver : LoginSolver() {
     }
 
     override suspend fun onSolveUnsafeDeviceLoginVerify(bot: Bot, url: String): String? {
-        val senderName = Forward.operating[bot.id]
+        val senderName = operating[bot.id]
         val reply = """
             ${bot.id}
             需要进行账户安全认证

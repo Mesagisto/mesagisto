@@ -2,7 +2,6 @@ package org.meowcat.minecraft.forward
 
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.containsGroup
-import org.meowcat.minecraft.forward.data.ConfigService
 
 /**
  * 一个bot调度器

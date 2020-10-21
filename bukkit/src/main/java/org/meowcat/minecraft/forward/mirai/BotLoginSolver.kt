@@ -9,7 +9,7 @@ import net.mamoe.mirai.utils.withSwitch
 import org.meowcat.minecraft.forward.BotDispatcher
 import org.meowcat.minecraft.forward.chunkedHexToBytes
 import org.meowcat.minecraft.forward.data.Agent
-import org.meowcat.minecraft.forward.data.ConfigService
+import org.meowcat.minecraft.forward.ConfigService
 
 /**
  * 不仅会处理bot的登陆
@@ -17,8 +17,8 @@ import org.meowcat.minecraft.forward.data.ConfigService
  */
 object BotLoginSolver{
 
-
-
+    //用于保存机器人创建者的map
+    val operating by lazy { HashMap<Long,String>() }
 
     /**
      * 通过指令登陆bot时调用的方法

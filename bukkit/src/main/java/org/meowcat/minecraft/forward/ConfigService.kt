@@ -1,7 +1,7 @@
-package org.meowcat.minecraft.forward.data
+package org.meowcat.minecraft.forward
 
 import kotlinx.coroutines.*
-import org.meowcat.minecraft.forward.*
+import org.meowcat.minecraft.forward.data.Config
 import org.meowcat.minecraft.forward.mirai.BotLoginSolver
 import java.io.File
 /*
@@ -29,7 +29,7 @@ object ConfigService{
                 content = file.readText()
             }
             withContext(Dispatchers.Default){
-                config = decodeFromString(Config.serializer(),content)
+                config = decodeFromString(Config.serializer(), content)
             }
         }
     }
@@ -42,7 +42,7 @@ object ConfigService{
             try {
                 withContext(Dispatchers.Default){
                     //序列化
-                    content = encodeToString(Config.serializer(),config)
+                    content = encodeToString(Config.serializer(), config)
                 }
                 withContext(Dispatchers.IO){
                     //写入文件

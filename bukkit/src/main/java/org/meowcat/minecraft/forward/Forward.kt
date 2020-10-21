@@ -11,18 +11,15 @@ import net.mamoe.mirai.message.MessageEvent
 import net.mamoe.mirai.message.TempMessageEvent
 import net.mamoe.mirai.message.data.content
 import org.bstats.bukkit.Metrics
-import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import org.meowcat.minecraft.forward.BotDispatcher.speakers
 import org.meowcat.minecraft.forward.BotDispatcher.target
-import org.meowcat.minecraft.forward.data.ConfigService
 import kotlin.collections.HashMap
 
 class Forward : JavaPlugin() {
 
     companion object{
-        //用于保存机器人创建者的map
-        val operating by lazy { HashMap<Long,String>() }
+
     }
 
     override fun onEnable() = launch {
@@ -36,7 +33,7 @@ class Forward : JavaPlugin() {
             //防止回环监听
             if(group.id == target){
                 speakers.forEach { if (it.id == sender.id) return@subscribeAlways }
-                Bukkit.broadcastMessage("<${this.sender.nameCardOrNick}> ${message.content}")
+                broadcastMessage("<${this.sender.nameCardOrNick}> ${message.content}")
             }
         }
         subscribeAlways<MessageEvent>{
