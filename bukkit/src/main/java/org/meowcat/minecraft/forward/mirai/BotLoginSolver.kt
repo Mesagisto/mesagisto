@@ -16,26 +16,10 @@ import org.meowcat.minecraft.forward.data.ConfigService
  * 还负责将bot通知给调度器
  */
 object BotLoginSolver{
-    private fun login(bot: Bot){
-        GlobalScope.launch(Dispatchers.Default){
-            try{
-                //这个是保证配置文件非空，所以直接忽略
-                if(bot.id == 123456789L) return@launch
-                //登录
-                bot.login()
-            }catch (e:Exception){
-                e.printStackTrace()
-                //登陆失败就从配置中移除
-                ConfigService.config.botList.forEach {
-                    if (it.account == bot.id.toString()){
-                        ConfigService.config.botList.remove(it)
-                    }
-                }
-                return@launch
-            }
-            BotDispatcher.addBot(bot)
-        }
-    }
+
+
+
+
     /**
      * 通过指令登陆bot时调用的方法
      * 登陆过程不阻塞
@@ -56,7 +40,6 @@ object BotLoginSolver{
             loginSolver = CaptchaSolver
         }.also { login(it) }
     }
-
     /**
      * 通过配置登陆Bot的方法
      * 登陆过程不阻塞
@@ -74,6 +57,26 @@ object BotLoginSolver{
             loginSolver = CaptchaSolver
         }.also {
             login(it)
+        }
+    }
+    private fun login(bot: Bot){
+        GlobalScope.launch(Dispatchers.Default){
+            try{
+                //这个默认账号是为了保证配置文件非空，所以直接忽略
+                if(bot.id == 123456789L) return@launch
+                //登录
+                bot.login()
+            }catch (e:Exception){
+                e.printStackTrace()
+                //登陆失败就从配置中移除
+                ConfigService.config.botList.forEach {
+                    if (it.account == bot.id.toString()){
+                        ConfigService.config.botList.remove(it)
+                    }
+                }
+                return@launch
+            }
+            BotDispatcher.addBot(bot)
         }
     }
 }

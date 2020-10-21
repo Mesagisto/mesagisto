@@ -25,7 +25,7 @@ object ForwardCommandExecutor :SuspendingCommandExecutor{
                 for (bot in allBots) {
                     if (bot.id == account) {
                         sender.sendMessage("$account 已登录,切勿重复登陆".toTextComponent(ChatColor.YELLOW))
-                        return false
+                        return failure
                     }
                 }
                 val bot:Bot
@@ -34,13 +34,13 @@ object ForwardCommandExecutor :SuspendingCommandExecutor{
                      bot = BotLoginSolver.login(account, password.md5)
                 }catch (e:Exception){
                     e.printStackTrace()
-                    return false
+                    return failure
                 }
                 //把bot保存
                 BotDispatcher.addBot(bot).reDispatch()
                 //将bot的操作者记录下来
                 Forward.operating[account] = senderName
-                return true
+                return success
             }
             "captcha" -> {
                 //验证码接收
@@ -56,7 +56,7 @@ object ForwardCommandExecutor :SuspendingCommandExecutor{
                         bot.captchaChannel.send("R")
                     }
                 }
-                return true
+                return success
             }
             "help" -> {
                 val reply = """
@@ -71,11 +71,11 @@ object ForwardCommandExecutor :SuspendingCommandExecutor{
             }
             else -> {
                 sender.sendMessage("输入/forward help获得帮助".toTextComponent(ChatColor.YELLOW))
-                return true
+                return success
             }
         }
         //你不对劲
-        return false
+        return failure
     }
 
 }
