@@ -5,7 +5,7 @@ import net.mamoe.mirai.Bot
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
-import org.bukkit.command.ConsoleCommandSender
+import org.bukkit.entity.Player
 import org.kodein.di.DI
 import org.kodein.di.instance
 import org.meowcat.minecraft.forward.extension.failure
@@ -28,8 +28,15 @@ class ForwardCommandExecutor(di:DI) :SuspendingCommandExecutor{
 
    private val logger:Logger by di.instance()
 
-   override suspend fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-      val senderName = sender.name
+   override suspend fun onCommand(
+      sender: CommandSender,
+      command: Command,
+      label: String,
+      args: Array<out String>
+   ): Boolean {
+      val senderName =
+         if (sender is Player) "P-${sender.name}"
+         else sender.name
 
       if (args.isEmpty()){
          sender.sendMessage(*HelpReply)
@@ -52,7 +59,7 @@ class ForwardCommandExecutor(di:DI) :SuspendingCommandExecutor{
             }
             val bot:Bot
             //将bot的操作者记录下来
-            bd.operating[account] = senderName
+            bd.creators[account] = senderName
             logger.info(senderName)
             try {
                bot = botLoginService.login(account, password.md5)

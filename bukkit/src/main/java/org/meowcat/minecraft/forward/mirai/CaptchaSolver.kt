@@ -19,13 +19,14 @@ val Bot.captchaChannel by lazy { Channel<String>() }
 
 class CaptchaSolver(di:DI) : LoginSolver() {
    private val bd:BotDispatcher by di.instance()
-   private val operating = bd.operating
+   private val creators = bd.creators
 
-   private val ConsoleName = "CONSOLE"
+   private val consoleName = "CONSOLE"
 
-   override suspend fun onSolvePicCaptcha(bot: Bot, data: ByteArray): String? {
+   override suspend fun onSolvePicCaptcha(bot: Bot, data: ByteArray): String {
       val logger = bot.logger
       val tempFile: File = createTempFile(suffix = ".png").apply { deleteOnExit() }
+      var senderName:String = creators[bot.id] ?: error("Not creator found")
       logger.info("需要图片验证码登录, 验证码为 4 字母")
       withContext(Dispatchers.IO) {
          try {
@@ -36,12 +37,13 @@ class CaptchaSolver(di:DI) : LoginSolver() {
             e.printStackTrace()
          }
       }
-      when (val senderName = operating[bot.id]){
-         ConsoleName ->{
+      when (senderName){
+         consoleName ->{
             logger.info("请输入 /forward captcha [4位字母验证码]. 若要更换验证码,请直接/forward captcha")
          }
          else -> {
-            Bukkit.getPlayer(senderName!!)?.sendMessage("需要 4 位字母验证码，请登陆服务器以查看图片")
+            senderName = senderName.substring(2)
+            Bukkit.getPlayer(senderName)?.sendMessage("需要 4 位字母验证码，请登陆服务器以查看图片")
          }
       }
 
@@ -49,19 +51,20 @@ class CaptchaSolver(di:DI) : LoginSolver() {
       return bot.captchaChannel.receive()
    }
 
-   override suspend fun onSolveSliderCaptcha(bot: Bot, url: String): String? {
-      val senderName = operating[bot.id]
+   override suspend fun onSolveSliderCaptcha(bot: Bot, url: String): String {
+      var senderName:String = creators[bot.id] ?: error("Not creator found")
       val reply = """
             需要滑动验证码
             请在任意浏览器中打开以下链接并完成验证码.
             完成后请输入/forward captcha QQ号码
         """.trimIndent()
       when(senderName){
-         ConsoleName -> {
+         consoleName -> {
             bot.logger.info(reply)
          }
          else -> {
-            Bukkit.getPlayer(senderName!!)?.sendMessage(reply)
+            senderName = senderName.substring(2)
+            Bukkit.getPlayer(senderName)?.sendMessage(reply)
             val message = TextComponent("验证链接")
             message.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, url)
             message.color = ChatColor.YELLOW
@@ -73,8 +76,8 @@ class CaptchaSolver(di:DI) : LoginSolver() {
       return bot.captchaChannel.receive()
    }
 
-   override suspend fun onSolveUnsafeDeviceLoginVerify(bot: Bot, url: String): String? {
-      val senderName = operating[bot.id]
+   override suspend fun onSolveUnsafeDeviceLoginVerify(bot: Bot, url: String): String {
+      var senderName:String = creators[bot.id] ?: error("Not creator found")
       val reply = """
             ${bot.id}
             需要进行账户安全认证
@@ -84,16 +87,19 @@ class CaptchaSolver(di:DI) : LoginSolver() {
             成功后输入/forward captcha QQ号码
         """.trimIndent()
       when(senderName){
-         ConsoleName -> {
+         consoleName -> {
             bot.logger.info(reply)
             bot.logger.info(url)
          }
          else -> {
-            Bukkit.getPlayer(senderName!!)?.sendMessage(reply)
+            senderName = senderName.substring(2)
+            val player = Bukkit.getPlayer(senderName)
+               ?: error("Player not found")
+            player.sendMessage(reply)
             val message = TextComponent("验证链接")
             message.color = ChatColor.YELLOW
             message.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, url)
-            Bukkit.getPlayer(senderName)?.spigot()?.sendMessage(message)
+            player.spigot().sendMessage(message)
          }
       }
 

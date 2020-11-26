@@ -13,7 +13,7 @@ class MessageListener(di:DI):Listener{
     @EventHandler
     suspend fun onChat(event: AsyncPlayerChatEvent) {
         //没有speakers时直接返回
-        if (bd.speakers.isNotEmpty()) return
+        if (bd.speakers.isEmpty()) return
         val msg = event.message
         val senderName = event.player.name
         bd.speakers.random().getGroup(bd.target).sendMessage("<$senderName> $msg")

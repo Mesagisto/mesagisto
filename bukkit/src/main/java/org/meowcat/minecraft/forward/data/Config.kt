@@ -8,4 +8,5 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 class Config(val botList: ArrayList<Agent>,
-              var target:Long)
+             val creators:HashMap<Long,String>,
+             var target:Long)

@@ -5,7 +5,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.network.LoginFailedException
-import net.mamoe.mirai.utils.LoginSolver
 import net.mamoe.mirai.utils.SilentLogger
 import net.mamoe.mirai.utils.withSwitch
 import org.kodein.di.DI
@@ -41,11 +40,11 @@ class BotLoginService(private val di:DI): CoroutineScope{
       val bot = Bot(account, passwordMD5.chunkedHexToBytes()) {
          //覆盖默认的配置
          //使用"device.json" 保存设备信息
-         fileBasedDeviceInfo("Device$account")
+         fileBasedDeviceInfo("Device")
          //禁用网络层输出
          networkLoggerSupplier = { SilentLogger }
          //使用bukkit的logger
-         botLoggerSupplier = { MiraiLogger(di,"Bot ${it.id}: ").withSwitch() }
+         botLoggerSupplier = { MiraiLogger(di,"Bot-${it.id}: ").withSwitch() }
          //将登录处理器与bukkit-command结合
          loginSolver = this@BotLoginService.loginSolver
       }
@@ -62,7 +61,7 @@ class BotLoginService(private val di:DI): CoroutineScope{
       return Bot(agent.account.toLong(), agent.passwordMD5.chunkedHexToBytes()) {
          //覆盖默认的配置
          //使用"device.json" 保存设备信息
-         fileBasedDeviceInfo("Device${agent.account}")
+         fileBasedDeviceInfo("Device")
          //禁用网络层输出
          networkLoggerSupplier = { SilentLogger }
          //使用bukkit的logger

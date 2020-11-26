@@ -15,11 +15,12 @@ import org.meowcat.minecraft.forward.service.ConfigService
 class BotDispatcher(di:DI){
    private val configService by di.instance<ConfigService>()
 
-   val operating = HashMap<Long,String>()
+   private val config by lazy{ configService.config }
+   val creators = config.creators
    val allBots = HashSet<Bot>()
    val speakers = HashSet<Bot>()
    var listener = 12345678L
-   var target = 12345678L
+   var target = config.target
 
    fun reDispatch(){
       changeTarget(this.target)

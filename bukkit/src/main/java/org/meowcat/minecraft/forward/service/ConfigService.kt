@@ -15,7 +15,7 @@ import kotlin.coroutines.CoroutineContext
 /*
     当一个ConfigSolver被创建时就应该确保配置文件已经存在
  */
-class ConfigService(private val di: DI):CoroutineScope{
+class ConfigService(di: DI):CoroutineScope{
 
    override val coroutineContext:CoroutineContext by di.instance("async")
    val minecraftDispatcher:CoroutineContext by di.instance("minecraft")
@@ -49,18 +49,18 @@ class ConfigService(private val di: DI):CoroutineScope{
     */
    fun save() = GlobalScope.launch {
 
-         try {
-            withContext(Dispatchers.Default){
-               //序列化
-               content = encodeToString(Config.serializer(), config)
-            }
-            withContext(Dispatchers.IO){
-               //写入文件
-               file.writeText(content)
-            }
-         }catch (e:Exception){
-            e.printStackTrace()
+      try {
+         withContext(Dispatchers.Default){
+            //序列化
+            content = encodeToString(Config.serializer(), config)
          }
+         withContext(Dispatchers.IO){
+            //写入文件
+            file.writeText(content)
+         }
+      }catch (e:Exception){
+         e.printStackTrace()
+      }
    }
 
    /**
