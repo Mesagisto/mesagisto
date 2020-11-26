@@ -7,6 +7,6 @@ import kotlinx.serialization.Serializable
  * @param passwordMD5 MD5密码
  */
 @Serializable
-data class Agent(var account:String,var passwordMD5:String) {
+data class Agent(var account:String,var passwordMD5:String,var creator:String) {
     constructor(account: Long,password: String):this(account.toString(),password)
 }

@@ -3,8 +3,6 @@
 package org.meowcat.minecraft.forward
 
 import com.charleskorn.kaml.Yaml
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerializationStrategy
 import java.security.MessageDigest
@@ -15,12 +13,8 @@ import java.security.MessageDigest
  * @param string 需要反序列化的字符串
  * @author Itsusinn
  */
-suspend fun <T> decodeFromString(deserializer: DeserializationStrategy<T>, string: String): T{
-    val result:T
-    withContext(Dispatchers.Default){
-        result = Yaml.default.decodeFromString(deserializer, string)
-    }
-    return result
+fun <T> decodeFromString(deserializer: DeserializationStrategy<T>, string: String): T{
+   return Yaml.default.decodeFromString(deserializer, string)
 }
 
 /**
@@ -29,12 +23,8 @@ suspend fun <T> decodeFromString(deserializer: DeserializationStrategy<T>, strin
  * @param value 需要序列化的KotlinObject
  * @author Itsusinn
  */
-suspend fun <T> encodeToString(serializer: SerializationStrategy<T>, value: T): String {
-    val result:String
-    withContext(Dispatchers.Default){
-        result = Yaml.default.encodeToString(serializer, value)
-    }
-    return result
+fun <T> encodeToString(serializer: SerializationStrategy<T>, value: T): String {
+   return Yaml.default.encodeToString(serializer, value)
 }
 
 /**

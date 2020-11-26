@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
  * @param target 目标群聊
  */
 @Serializable
-class  Config(val botList: ArrayList<Agent>,
+class Config(val botList: ArrayList<Agent>,
               var target:Long)

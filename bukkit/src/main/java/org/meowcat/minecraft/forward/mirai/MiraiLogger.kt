@@ -1,29 +1,31 @@
 package org.meowcat.minecraft.forward.mirai
 
 import net.mamoe.mirai.utils.MiraiLoggerPlatformBase
-import org.bukkit.Bukkit
-import org.meowcat.minecraft.forward.bukkitLogger
+import org.kodein.di.DI
+import org.kodein.di.instance
 import java.util.logging.Level
+import java.util.logging.Logger
 
-class MiraiLogger(override val identity: String?) : MiraiLoggerPlatformBase(){
-    override fun debug0(message: String?, e: Throwable?) {
-        bukkitLogger.log(Level.INFO,identity+message,e)
-    }
+class MiraiLogger(di:DI,override val identity: String?) : MiraiLoggerPlatformBase(){
+   private val logger:Logger by di.instance()
+   override fun debug0(message: String?, e: Throwable?) {
+      logger.log(Level.INFO,identity+message,e)
+   }
 
-    override fun error0(message: String?, e: Throwable?) {
-        bukkitLogger.log(Level.WARNING,identity+message,e)
-    }
+   override fun error0(message: String?, e: Throwable?) {
+      logger.log(Level.WARNING,identity+message,e)
+   }
 
-    override fun info0(message: String?, e: Throwable?) {
-        bukkitLogger.log(Level.INFO,identity+message,e)
-    }
+   override fun info0(message: String?, e: Throwable?) {
+      logger.log(Level.INFO,identity+message,e)
+   }
 
-    override fun verbose0(message: String?, e: Throwable?) {
-        bukkitLogger.log(Level.INFO,identity+message,e)
-    }
+   override fun verbose0(message: String?, e: Throwable?) {
+      logger.log(Level.INFO,identity+message,e)
+   }
 
-    override fun warning0(message: String?, e: Throwable?) {
-        bukkitLogger.log(Level.WARNING,identity+message,e)
-    }
+   override fun warning0(message: String?, e: Throwable?) {
+      logger.log(Level.WARNING,identity+message,e)
+   }
 
 }

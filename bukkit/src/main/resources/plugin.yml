@@ -1,8 +1,7 @@
 name: Forward
-version: @version@
+version: 0.0.1
 main: org.meowcat.minecraft.forward.Forward
-api-version: 1.16
-authors: [Itsusinn]
+author: Itsusinn
 commands:
   forward:
     description: "A message forward plugin"
