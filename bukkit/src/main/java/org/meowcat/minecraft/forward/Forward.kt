@@ -6,17 +6,14 @@ import com.github.shynixn.mccoroutine.setSuspendingExecutor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import net.mamoe.mirai.contact.nameCardOrNick
 import net.mamoe.mirai.event.subscribeAlways
 import net.mamoe.mirai.message.GroupMessageEvent
 import net.mamoe.mirai.message.data.content
-import net.mamoe.mirai.utils.LoginSolver
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
-import org.meowcat.minecraft.forward.extension.broadcastMessage
 import org.meowcat.minecraft.forward.kotlin.KotlinPlugin
 import org.meowcat.minecraft.forward.mirai.CaptchaSolver
 import org.meowcat.minecraft.forward.service.BotLoginService

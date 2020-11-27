@@ -7,7 +7,7 @@ import org.meowcat.minecraft.forward.BotDispatcher
 import org.meowcat.minecraft.forward.data.Config
 import org.meowcat.minecraft.forward.decodeFromString
 import org.meowcat.minecraft.forward.encodeToString
-import org.meowcat.minecraft.forward.extension.defaultConfig
+import org.meowcat.minecraft.forward.defaultConfig
 import java.io.File
 import java.util.logging.Logger
 import kotlin.coroutines.CoroutineContext
@@ -18,14 +18,12 @@ import kotlin.coroutines.CoroutineContext
 class ConfigService(di: DI):CoroutineScope{
 
    override val coroutineContext:CoroutineContext by di.instance("async")
-   val minecraftDispatcher:CoroutineContext by di.instance("minecraft")
 
    private val botLoginService: BotLoginService by di.instance()
    private val botDispatcher:BotDispatcher by di.instance()
 
    private val logger:Logger by di.instance()
 
-   //对象化的配置
    val config: Config
    //配置文件
    private val file = File("forward.yml")
@@ -33,15 +31,23 @@ class ConfigService(di: DI):CoroutineScope{
    private var content = ""
 
    init {
+      var configInstance:Config
       //如果没有配置文件则新建一个,并写入默认配置
       if (!file.exists()){
+         logger.info("不存在配置文件->写入默认配置")
          file.createNewFile()
          file.writeText(defaultConfig)
-         logger.info("不存在配置文件->写入默认配置")
-
       }
       content = file.readText()
-      config = decodeFromString(Config.serializer(), content)
+      try {
+         configInstance = decodeFromString(Config.serializer(), content)
+      }catch (e:Exception){
+         logger.warning("配置文件与当前版本不匹配->写入默认配置")
+         logger.warning(e.message)
+         content = defaultConfig
+         configInstance = decodeFromString(Config.serializer(), content)
+      }
+      config = configInstance
    }
 
    /**
@@ -74,6 +80,4 @@ class ConfigService(di: DI):CoroutineScope{
       }
       botDispatcher.changeTarget(config.target)
    }
-
-
 }

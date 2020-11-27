@@ -3,12 +3,12 @@
 plugins {
    id ("com.github.johnrengelman.shadow") version ("5.2.0")
    java
-   kotlin ("jvm") version "1.4.10"
-   id("org.jetbrains.kotlin.plugin.serialization") version("1.4.10")
+   kotlin ("jvm") version "1.4.20"
+   id("org.jetbrains.kotlin.plugin.serialization") version("1.4.20")
 }
 
 group = "io.github.itsusinn.mc"
-version = "1.0-SNAPSHOT"
+version = "0.0.2-SNAPSHOT"
 
 val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
 compileKotlin.kotlinOptions.jvmTarget = "1.8"

@@ -1,5 +1,5 @@
 name: Forward
-version: 0.0.1
+version: 0.0.2
 main: org.meowcat.minecraft.forward.Forward
 author: Itsusinn
 commands:

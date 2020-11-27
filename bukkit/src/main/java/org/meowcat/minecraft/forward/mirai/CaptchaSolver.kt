@@ -15,6 +15,7 @@ import org.meowcat.minecraft.forward.BotDispatcher
 import java.io.File
 
 
+
 val Bot.captchaChannel by lazy { Channel<String>() }
 
 class CaptchaSolver(di:DI) : LoginSolver() {
