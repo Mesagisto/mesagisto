@@ -10,18 +10,21 @@ import org.kodein.di.DI
 import org.kodein.di.instance
 import org.meowcat.minecraft.forward.mirai.captchaChannel
 import org.meowcat.minecraft.forward.service.BotLoginService
+import org.meowcat.minecraft.forward.service.ConfigService
 import java.util.logging.Logger
 
 val HelpReply = arrayOf(
-   "/forward add QQ帐号 QQ密码 来登录一个bot".toTextComponent(ChatColor.YELLOW),
-   "/forward setTarget QQ群号 来设置需要转发的qq群".toTextComponent(ChatColor.YELLOW)
+   "/forward add [QQ帐号] [QQ密码] 来登录一个bot".toTextComponent(ChatColor.YELLOW),
+   "/forward setTarget [QQ群号] 来设置需要转发的qq群".toTextComponent(ChatColor.YELLOW),
+   "/forward smms [token] to add a smms token".toTextComponent(ChatColor.YELLOW)
 )
 
 class ForwardCommandExecutor(di:DI) :SuspendingCommandExecutor{
 
    private val bd:BotDispatcher by di.instance()
    private val botLoginService: BotLoginService by di.instance()
-
+   private val configService:ConfigService by di.instance()
+   private val config = configService.config
    private val logger:Logger by di.instance()
 
    override suspend fun onCommand(
@@ -48,7 +51,7 @@ class ForwardCommandExecutor(di:DI) :SuspendingCommandExecutor{
 
             //检查bot是否已经记录
             bd.allBots.forEach{
-               if (it.id == account) {
+               if (it.id == account && it.isOnline) {
                   sender.sendMessage("$account 已登录,切勿重复登陆".toTextComponent(ChatColor.YELLOW))
                   return false
                }
@@ -91,6 +94,10 @@ class ForwardCommandExecutor(di:DI) :SuspendingCommandExecutor{
             bd.allBots.forEach {
                logger.info("${it.nick} ${it.id} ${it.isOnline}")
             }
+         }
+         "smms" -> {
+            if (args.size!=2)return false
+            config.smms = args[1]
          }
          else -> {
             sender.sendMessage("输入/forward help获得帮助".toTextComponent(ChatColor.YELLOW))

@@ -8,4 +8,5 @@ botList:
 creators:
   123456789: "CONSOLE"
 target: 123456789
+smms: "4rllP8FcldmAJ726VqqCSNFKkvSNW4MG"
 """

@@ -5,6 +5,8 @@ package org.meowcat.minecraft.forward
 import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerializationStrategy
+import java.awt.Image
+import java.awt.image.BufferedImage
 import java.security.MessageDigest
 
 /**

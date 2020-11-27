@@ -21,6 +21,7 @@ repositories {
    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
    maven("https://oss.sonatype.org/content/groups/public/")
    maven("https://kotlin.bintray.com/kotlinx")
+
 }
 
 dependencies {
@@ -31,7 +32,7 @@ dependencies {
    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
    implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.10")
 
-   implementation ("org.kodein.di:kodein-di:7.1.0")
+   implementation("org.kodein.di:kodein-di:7.1.0")
 
    compileOnly("com.github.shynixn.mccoroutine:mccoroutine-bukkit-api:0.0.5")
    implementation("com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:0.0.5")
@@ -42,7 +43,5 @@ dependencies {
    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.1")
 
    compileOnly("org.spigotmc:spigot-api:1.16.3-R0.1-SNAPSHOT")
-
+   implementation("com.squareup.okhttp3:okhttp:4.9.0")
 }
-
-

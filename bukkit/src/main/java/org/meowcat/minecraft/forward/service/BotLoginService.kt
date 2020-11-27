@@ -14,6 +14,7 @@ import org.meowcat.minecraft.forward.chunkedHexToBytes
 import org.meowcat.minecraft.forward.data.Agent
 import org.meowcat.minecraft.forward.mirai.CaptchaSolver
 import org.meowcat.minecraft.forward.mirai.MiraiLogger
+import java.util.logging.Logger
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -25,6 +26,7 @@ class BotLoginService(private val di:DI): CoroutineScope{
 
    private val configService: ConfigService by di.instance()
    private val loginSolver: CaptchaSolver by di.instance()
+   private val logger:Logger by di.instance()
    private val bd: BotDispatcher by di.instance()
    //用于保存机器人创建者的map
 
@@ -76,22 +78,27 @@ class BotLoginService(private val di:DI): CoroutineScope{
    /**
     * @throws LoginFailedException
     */
-   private fun loginAsync(bot: Bot) {
+   private fun loginAsync(bot: Bot) = launch(Dispatchers.Default) {
       try{
          //这个默认账号是为了保证配置文件非空，所以直接忽略
-         if(bot.id == 123456789L) return
+         if(bot.id == 123456789L) return@launch
          //登录
-         launch(Dispatchers.Default){
-            bot.login()
-         }
+         bot.login()
       }catch (e: LoginFailedException){
+
          //登陆失败就从配置中移除
-         configService.config.botList.forEach {
-            if (it.account == bot.id.toString()){
-               configService.config.botList.remove(it)
+         var removeIndex = -1
+         for ((index,agent) in configService.config.botList.withIndex()){
+            if (agent.account == bot.id.toString()) {
+               removeIndex = index
             }
          }
-         throw e
+         if (removeIndex!=-1){
+            configService.config.botList.removeAt(removeIndex)
+         }
+
+         logger.warning("登录失败，移除${bot.id}")
+         return@launch
       }
       bd.addBot(bot)
    }

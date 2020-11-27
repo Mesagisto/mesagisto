@@ -18,6 +18,7 @@ import org.meowcat.minecraft.forward.kotlin.KotlinPlugin
 import org.meowcat.minecraft.forward.mirai.CaptchaSolver
 import org.meowcat.minecraft.forward.service.BotLoginService
 import org.meowcat.minecraft.forward.service.ConfigService
+import org.meowcat.minecraft.forward.service.ImageUploadService
 import java.util.logging.Logger
 import kotlin.coroutines.CoroutineContext
 
@@ -38,6 +39,8 @@ class Forward : KotlinPlugin() {
       bind<KotlinPlugin>() with singleton { this@Forward }
 
       bind<Logger>() with singleton { this@Forward.logger }
+
+      bind<ImageUploadService>() with singleton { ImageUploadService(di) }
    }
 
    private val configService:ConfigService by di.instance()
