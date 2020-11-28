@@ -80,6 +80,7 @@ class BotLoginService(private val di:DI): CoroutineScope{
     */
    private fun loginAsync(bot: Bot) = launch(Dispatchers.Default) {
       try{
+         bd.addBot(bot)
          //这个默认账号是为了保证配置文件非空，所以直接忽略
          if(bot.id == 123456789L) return@launch
          //登录
@@ -96,11 +97,12 @@ class BotLoginService(private val di:DI): CoroutineScope{
          if (removeIndex!=-1){
             configService.config.botList.removeAt(removeIndex)
          }
+         bd.removeBot(bot)
 
          logger.warning("登录失败，移除${bot.id}")
+         e.printStackTrace()
          return@launch
       }
-      bd.addBot(bot)
    }
 
 }

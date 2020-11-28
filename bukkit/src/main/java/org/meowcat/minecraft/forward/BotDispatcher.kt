@@ -19,17 +19,25 @@ class BotDispatcher(di:DI){
    val creators = config.creators
    val allBots = HashSet<Bot>()
    val speakers = HashSet<Bot>()
-   var listener = 12345678L
-   var target = config.target
+   private var listener = 12345678L
+   private var target = config.target
 
-   fun reDispatch(){
+   private fun reDispatch(){
       changeTarget(this.target)
    }
 
-   fun addBot(bot: Bot):BotDispatcher{
+   fun getListener():Long = listener
+
+   fun getTarget():Long = target
+
+   fun addBot(bot: Bot){
       allBots.add(bot)
       reDispatch()
-      return this
+   }
+
+   fun removeBot(bot: Bot){
+      allBots.remove(bot)
+      reDispatch()
    }
 
    fun changeTarget(target:Long){

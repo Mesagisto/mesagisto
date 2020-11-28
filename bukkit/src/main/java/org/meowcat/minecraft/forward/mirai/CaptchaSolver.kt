@@ -5,14 +5,12 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.withContext
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.utils.LoginSolver
-import net.md_5.bungee.api.ChatColor
-import net.md_5.bungee.api.chat.ClickEvent
-import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
-import org.bukkit.command.CommandSender
 import org.kodein.di.DI
 import org.kodein.di.instance
 import org.meowcat.minecraft.forward.BotDispatcher
+import org.meowcat.minecraft.forward.getCommandSender
+import org.meowcat.minecraft.forward.makeClickUrl
 import org.meowcat.minecraft.forward.sendMessage
 import org.meowcat.minecraft.forward.service.ImageUploadService
 import java.io.File
@@ -32,7 +30,7 @@ class CaptchaSolver(di:DI) : LoginSolver() {
       val senderName:String = creators[bot.id] ?: error("Not creator found")
       val sender = getCommandSender(senderName)
 
-      sender.sendMessage("需要图片验证码登录, 验证码为 4 字母")
+      sender.sendMessage("${bot.id} 需要图片验证码登录, 验证码为 4 字母")
 
       withContext(Dispatchers.IO) {
          tempFile.createNewFile()
@@ -41,12 +39,14 @@ class CaptchaSolver(di:DI) : LoginSolver() {
             ?: error("上传图床失败")
       }
       val urlMessage = makeClickUrl("验证码链接",imgUrl)
-      console.sendMessage(imgUrl)
+      bot.logger.info(imgUrl)
 
       sender.sendMessage(urlMessage)
       sender.sendMessage("请输入 /forward captcha [QQ号码] [4位字母验证码]. 若要更换验证码,请直接/forward captcha")
       //需要验证码，开启通道并  通知登录命令的发送者
-      return bot.captchaChannel.receive()
+      val captcha = bot.captchaChannel.receive()
+      sender.sendMessage("接收到验证码 $captcha")
+      return captcha
    }
 
    override suspend fun onSolveSliderCaptcha(bot: Bot, url: String): String {
@@ -58,15 +58,17 @@ class CaptchaSolver(di:DI) : LoginSolver() {
         """.trimIndent()
 
       val sender = getCommandSender(senderName)
-      val message = makeClickUrl("验证链接",url)
+      val message = makeClickUrl("滑动验证码验证链接",url)
 
-      console.sendMessage(url)
+      bot.logger.info(url)
 
       sender.sendMessage(reply)
       sender.sendMessage(message)
 
       //需要验证码，开启通道并通知登录命令的发送者
-      return bot.captchaChannel.receive()
+      val captcha = bot.captchaChannel.receive()
+      sender.sendMessage("接收到验证码 $captcha")
+      return captcha
    }
 
    override suspend fun onSolveUnsafeDeviceLoginVerify(bot: Bot, url: String): String {
@@ -81,30 +83,15 @@ class CaptchaSolver(di:DI) : LoginSolver() {
         """.trimIndent()
 
       val sender = getCommandSender(senderName)
-      val message = makeClickUrl("验证链接",url)
+      val message = makeClickUrl("账号认证验证链接",url)
+      bot.logger.info(url)
 
       sender.sendMessage(reply)
       sender.sendMessage(message)
 
       //需要帐号认证 通知登录命令的发送者
-      return bot.captchaChannel.receive()
+      val captcha = bot.captchaChannel.receive()
+      sender.sendMessage("接收到验证码 $captcha")
+      return captcha
    }
-}
-
-fun getCommandSender(name:String): CommandSender {
-   return when(name){
-      "CONSOLE" -> {
-         Bukkit.getConsoleSender()
-      }
-      else -> {
-         Bukkit.getPlayer(name) ?: Bukkit.getConsoleSender()
-      }
-   }
-}
-
-fun makeClickUrl(title:String,url:String): TextComponent {
-   val message = TextComponent(title)
-   message.color = ChatColor.YELLOW
-   message.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, url)
-   return message
 }

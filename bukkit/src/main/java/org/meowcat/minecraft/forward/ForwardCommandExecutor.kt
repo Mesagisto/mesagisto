@@ -1,6 +1,7 @@
 package org.meowcat.minecraft.forward
 
 import com.github.shynixn.mccoroutine.SuspendingCommandExecutor
+import kotlinx.coroutines.*
 import net.mamoe.mirai.Bot
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.command.Command
@@ -12,6 +13,7 @@ import org.meowcat.minecraft.forward.mirai.captchaChannel
 import org.meowcat.minecraft.forward.service.BotLoginService
 import org.meowcat.minecraft.forward.service.ConfigService
 import java.util.logging.Logger
+import kotlin.coroutines.CoroutineContext
 
 val HelpReply = arrayOf(
    "/forward add [QQ帐号] [QQ密码] 来登录一个bot".toTextComponent(ChatColor.YELLOW),
@@ -19,13 +21,14 @@ val HelpReply = arrayOf(
    "/forward smms [token] to add a smms token".toTextComponent(ChatColor.YELLOW)
 )
 
-class ForwardCommandExecutor(di:DI) :SuspendingCommandExecutor{
+class ForwardCommandExecutor(di:DI,) :SuspendingCommandExecutor,CoroutineScope{
 
    private val bd:BotDispatcher by di.instance()
    private val botLoginService: BotLoginService by di.instance()
    private val configService:ConfigService by di.instance()
    private val config = configService.config
    private val logger:Logger by di.instance()
+   override val coroutineContext: CoroutineContext = Dispatchers.Default
 
    override suspend fun onCommand(
       sender: CommandSender,
@@ -56,14 +59,12 @@ class ForwardCommandExecutor(di:DI) :SuspendingCommandExecutor{
                   return false
                }
             }
-            val bot:Bot
             //将bot的操作者记录下来
             bd.creators[account] = senderName
-            logger.info(senderName)
-            try { bot = botLoginService.login(account, password.md5)
+
+            try { botLoginService.login(account, password.md5)
             }catch (e:Exception){ throw e }
-            //把bot保存
-            bd.addBot(bot).reDispatch()
+
             return true
          }
          "captcha" -> {
@@ -71,13 +72,15 @@ class ForwardCommandExecutor(di:DI) :SuspendingCommandExecutor{
             when (args.size) {
                //当是字符验证码时，参量为3
                3 -> {
-                  val bot = bd.findBotByID(args[1].toLong()) ?: return false
+                  val bot = bd.findBotByID(args[1].toLong())
+                     ?: error("Bot Not Found")
                   bot.captchaChannel.send(args[2])
                }
                //其他验证码时，参量为2
                2 -> {
-                  val bot = bd.findBotByID(args[1].toLong()) ?: return false
-                  bot.captchaChannel.send("")
+                  val bot = bd.findBotByID(args[1].toLong())
+                     ?: error("Bot Not Found")
+                  bot.captchaChannel.send("Other")
                }
                else -> {
                   sender.sendMessage(*HelpReply)
