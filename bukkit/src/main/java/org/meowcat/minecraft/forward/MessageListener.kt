@@ -22,6 +22,5 @@ class MessageListener(di:DI):Listener{
       }catch (e:Exception){
          logger.warning("发送消息失败")
       }
-
    }
 }

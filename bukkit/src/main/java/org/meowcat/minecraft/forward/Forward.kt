@@ -74,8 +74,9 @@ class Forward : KotlinPlugin() {
 
    private fun init() = GlobalScope.launch{
       subscribeAlways<GroupMessageEvent>(Dispatchers.Default) {
-         logger.info("Running on ${Thread.currentThread().id}")
+
          if (bot.id!= botDispatcher.getListener()) return@subscribeAlways
+
          //防止回环监听
          if(group.id == botDispatcher.getTarget()){
             botDispatcher.speakers.forEach { if (it.id == sender.id) return@subscribeAlways }

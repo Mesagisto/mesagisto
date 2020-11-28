@@ -30,7 +30,9 @@ class CaptchaSolver(di:DI) : LoginSolver() {
       val senderName:String = creators[bot.id] ?: error("Not creator found")
       val sender = getCommandSender(senderName)
 
-      sender.sendMessage("${bot.id} 需要图片验证码登录, 验证码为 4 字母")
+      sender.sendMessage("""
+         ${bot.id} 需要图片验证码登录, 验证码为 4 字母
+      """.trimIndent())
 
       withContext(Dispatchers.IO) {
          tempFile.createNewFile()
@@ -38,11 +40,14 @@ class CaptchaSolver(di:DI) : LoginSolver() {
          imgUrl = imageUploadService.upload(tempFile)
             ?: error("上传图床失败")
       }
+
       val urlMessage = makeClickUrl("验证码链接",imgUrl)
       bot.logger.info(imgUrl)
-
       sender.sendMessage(urlMessage)
-      sender.sendMessage("请输入 /forward captcha [QQ号码] [4位字母验证码]. 若要更换验证码,请直接/forward captcha")
+      sender.sendMessage("""
+         请输入 /forward captcha ${bot.id} [4位字母验证码]. 
+         若要更换验证码,请直接/forward captcha ${bot.id}
+      """.trimIndent())
       //需要验证码，开启通道并  通知登录命令的发送者
       val captcha = bot.captchaChannel.receive()
       sender.sendMessage("接收到验证码 $captcha")
@@ -52,9 +57,9 @@ class CaptchaSolver(di:DI) : LoginSolver() {
    override suspend fun onSolveSliderCaptcha(bot: Bot, url: String): String {
       val senderName:String = creators[bot.id] ?: error("Not creator found")
       val reply = """
-            需要滑动验证码
+            ${bot.id} 需要滑动验证码
             请在任意浏览器中打开以下链接并完成验证码.
-            完成后请输入/forward captcha [QQ号码]
+            完成后请输入/forward captcha ${bot.id}
         """.trimIndent()
 
       val sender = getCommandSender(senderName)
@@ -74,16 +79,15 @@ class CaptchaSolver(di:DI) : LoginSolver() {
    override suspend fun onSolveUnsafeDeviceLoginVerify(bot: Bot, url: String): String {
       val senderName:String = creators[bot.id] ?: error("Not creator found")
       val reply = """
-            ${bot.id}
-            需要进行账户安全认证
+            ${bot.id} 需要进行账户安全认证
             该账户有[设备锁]/[不常用登录地点]/[不常用设备登录]的问题
             完成以下账号认证即可成功登录|理论本认证在mirai每个账户中最多出现1次
             请将该链接在浏览器中打开并完成认证
-            成功后输入/forward captcha [QQ号码]
+            成功后输入/forward captcha ${bot.id}
         """.trimIndent()
-
       val sender = getCommandSender(senderName)
       val message = makeClickUrl("账号认证验证链接",url)
+      if (url.isBlank()) error("账号认证验证链接为空")
       bot.logger.info(url)
 
       sender.sendMessage(reply)
