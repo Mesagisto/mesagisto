@@ -3,15 +3,12 @@ package org.meowcat.minecraft.forward
 import com.github.shynixn.mccoroutine.minecraftDispatcher
 import com.github.shynixn.mccoroutine.registerSuspendingEvents
 import com.github.shynixn.mccoroutine.setSuspendingExecutor
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.contact.nameCardOrNick
-import net.mamoe.mirai.event.subscribeAlways
-import net.mamoe.mirai.message.GroupMessageEvent
-import net.mamoe.mirai.message.data.PlainText
-import net.mamoe.mirai.message.data.PokeMessage
-import net.mamoe.mirai.message.data.content
+import net.mamoe.mirai.event.subscribeGroupMessages
+import net.mamoe.mirai.message.data.*
+import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
 import org.kodein.di.DI
 import org.kodein.di.bind
@@ -54,8 +51,6 @@ class Forward : KotlinPlugin() {
 
    override fun onEnable(){
 
-      init()
-
       logger.info("Forward is Loading")
       logger.info("GitHub: https://github.com/Itsusinn/minecraft-message-forward")
 
@@ -75,22 +70,33 @@ class Forward : KotlinPlugin() {
       configService.save()
    }
 
-   private fun init() = GlobalScope.launch{
-      subscribeAlways<GroupMessageEvent>(Dispatchers.Default) {
-         if (this.message.contains(PokeMessage.Poke)){
-            val nums = Bukkit.getOnlinePlayers().size
-            reply(PlainText("$nums players are online"))
-            return@subscribeAlways
-         }
-
-         if (bot.id!= botDispatcher.getListener()) return@subscribeAlways
-
-         //防止回环监听
-         if(group.id == botDispatcher.getTarget()){
-            botDispatcher.speakers.forEach { if (it.id == sender.id) return@subscribeAlways }
-            broadcastMessage("<${this.sender.nameCardOrNick}> ${message.content}")
+   init {
+      GlobalScope.launch{
+         subscribeGroupMessages {
+            sentFrom(botDispatcher.getTarget()).invoke {
+               //只接受listener收到的消息
+               if (bot.id!= botDispatcher.getListener()) return@invoke
+               //防止转发speaker发送的消息
+               botDispatcher.speakers.forEach {
+                  if (it.id == sender.id) return@invoke
+               }
+               if (message.isPlain()){
+                  broadcastTextMessage("<${this.sender.nameCardOrNick}> ${message.content}")
+                  return@invoke
+               }
+               if(message.firstOrNull(Image) != null){
+                  val complexMessage = TextComponent("<${this.sender.nameCardOrNick}> ")
+                  complexMessage.addExtra(makeClickUrl("图片",message.first(Image).url()))
+                  broadcastComponentMessage(complexMessage)
+                  return@invoke
+               }
+               if (message.contains(PokeMessage.Poke)){
+                  val nums = Bukkit.getOnlinePlayers().size
+                  reply(PlainText("$nums players are online"))
+                  return@invoke
+               }
+            }
          }
       }
-
    }
 }

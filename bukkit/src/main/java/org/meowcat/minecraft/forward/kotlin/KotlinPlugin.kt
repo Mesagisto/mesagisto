@@ -8,7 +8,5 @@ import org.bukkit.plugin.java.JavaPlugin
 import kotlin.coroutines.CoroutineContext
 
 open class KotlinPlugin :JavaPlugin(),CoroutineScope {
-   override val coroutineContext: CoroutineContext by lazy{
-      asyncDispatcher
-   }
+   override val coroutineContext by lazy{ asyncDispatcher }
 }

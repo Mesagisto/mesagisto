@@ -11,10 +11,10 @@ import org.bukkit.command.CommandSender
 fun String.toTextComponent(color: ChatColor): TextComponent =
    TextComponent(this).apply { this.color = color }
 
-fun broadcastMessage(message:String) =
+fun broadcastTextMessage(message:String) =
    Bukkit.broadcastMessage(message)
 
-fun broadcast(component: BaseComponent) =
+inline fun <reified T> broadcastComponentMessage(component:T) where T:BaseComponent =
    Bukkit.spigot().broadcast(component)
 
 fun CommandSender.sendMessage(component: BaseComponent) =
