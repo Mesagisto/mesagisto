@@ -1,8 +1,16 @@
-package org.meowcat.minecraft.forward
+package io.github.itsusinn.mc.easyforward
 
 import com.github.shynixn.mccoroutine.minecraftDispatcher
 import com.github.shynixn.mccoroutine.registerSuspendingEvents
 import com.github.shynixn.mccoroutine.setSuspendingExecutor
+import io.github.itsusinn.mc.easyforward.extension.KotlinPlugin
+import io.github.itsusinn.mc.easyforward.extension.broadcastMessage
+import io.github.itsusinn.mc.easyforward.extension.makeClickUrl
+import io.github.itsusinn.mc.easyforward.mirai.CaptchaSolver
+import io.github.itsusinn.mc.easyforward.service.BotDispatcher
+import io.github.itsusinn.mc.easyforward.service.BotLoginService
+import io.github.itsusinn.mc.easyforward.service.ConfigService
+import io.github.itsusinn.mc.easyforward.service.ImageUploadService
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.contact.nameCardOrNick
@@ -14,22 +22,14 @@ import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
-import org.meowcat.minecraft.forward.extension.KotlinPlugin
-import org.meowcat.minecraft.forward.extension.broadcastMessage
-import org.meowcat.minecraft.forward.extension.makeClickUrl
-import org.meowcat.minecraft.forward.mirai.CaptchaSolver
-import org.meowcat.minecraft.forward.service.BotDispatcher
-import org.meowcat.minecraft.forward.service.BotLoginService
-import org.meowcat.minecraft.forward.service.ConfigService
-import org.meowcat.minecraft.forward.service.ImageUploadService
 import java.util.logging.Logger
 import kotlin.coroutines.CoroutineContext
 
-class Forward : KotlinPlugin() {
+class EasyForward : KotlinPlugin() {
 
-   private val di = DI{
-      bind<CoroutineContext>("minecraft") with singleton { this@Forward.minecraftDispatcher }
-      bind<CoroutineContext>("async") with singleton { this@Forward.coroutineContext }
+   private val di = DI {
+      bind<CoroutineContext>("minecraft") with singleton { this@EasyForward.minecraftDispatcher }
+      bind<CoroutineContext>("async") with singleton { this@EasyForward.coroutineContext }
 
       bind<ConfigService>() with singleton { ConfigService(di) }
       bind<BotLoginService>() with singleton { BotLoginService(di) }
@@ -39,20 +39,20 @@ class Forward : KotlinPlugin() {
       bind<MessageListener>() with singleton { MessageListener(di) }
       bind<ForwardCommandExecutor>() with singleton { ForwardCommandExecutor(di) }
 
-      bind<KotlinPlugin>() with singleton { this@Forward }
+      bind<KotlinPlugin>() with singleton { this@EasyForward }
 
-      bind<Logger>() with singleton { this@Forward.logger }
+      bind<Logger>() with singleton { this@EasyForward.logger }
 
       bind<ImageUploadService>() with singleton { ImageUploadService(di) }
    }
 
-   private val configService:ConfigService by di.instance()
+   private val configService: ConfigService by di.instance()
    private val botDispatcher: BotDispatcher by di.instance()
 
-   private val messageListener:MessageListener by di.instance()
-   private val forwardCommandExecutor:ForwardCommandExecutor by di.instance()
+   private val messageListener: MessageListener by di.instance()
+   private val forwardCommandExecutor: ForwardCommandExecutor by di.instance()
 
-   override fun onEnable(){
+   override fun onEnable() {
 
       logger.info("Forward is Loading")
       logger.info("GitHub: https://github.com/Itsusinn/minecraft-message-forward")

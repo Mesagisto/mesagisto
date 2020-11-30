@@ -1,4 +1,4 @@
-package org.meowcat.minecraft.forward.extension
+package io.github.itsusinn.mc.easyforward.extension
 
 import com.github.shynixn.mccoroutine.asyncDispatcher
 import kotlinx.coroutines.CoroutineScope

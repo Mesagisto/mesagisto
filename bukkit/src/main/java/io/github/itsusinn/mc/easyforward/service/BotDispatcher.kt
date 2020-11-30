@@ -1,4 +1,4 @@
-package org.meowcat.minecraft.forward.service
+package io.github.itsusinn.mc.easyforward.service
 
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.containsGroup

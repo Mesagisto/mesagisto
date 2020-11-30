@@ -1,4 +1,4 @@
-package org.meowcat.minecraft.forward.data
+package io.github.itsusinn.mc.easyforward.data
 
 const val defaultConfig =
 """

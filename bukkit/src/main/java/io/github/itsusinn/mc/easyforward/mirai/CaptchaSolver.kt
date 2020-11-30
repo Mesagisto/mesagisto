@@ -1,5 +1,10 @@
-package org.meowcat.minecraft.forward.mirai
+package io.github.itsusinn.mc.easyforward.mirai
 
+import io.github.itsusinn.mc.easyforward.extension.getCommandSender
+import io.github.itsusinn.mc.easyforward.extension.makeClickUrl
+import io.github.itsusinn.mc.easyforward.extension.sendMessage
+import io.github.itsusinn.mc.easyforward.service.BotDispatcher
+import io.github.itsusinn.mc.easyforward.service.ImageUploadService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.withContext
@@ -8,11 +13,6 @@ import net.mamoe.mirai.utils.LoginSolver
 import org.bukkit.Bukkit
 import org.kodein.di.DI
 import org.kodein.di.instance
-import org.meowcat.minecraft.forward.service.BotDispatcher
-import org.meowcat.minecraft.forward.extension.getCommandSender
-import org.meowcat.minecraft.forward.extension.makeClickUrl
-import org.meowcat.minecraft.forward.extension.sendMessage
-import org.meowcat.minecraft.forward.service.ImageUploadService
 import java.io.File
 
 val Bot.captchaChannel by lazy { Channel<String>() }
@@ -21,7 +21,7 @@ class CaptchaSolver(di:DI) : LoginSolver() {
    private val bd: BotDispatcher by di.instance()
    private val creators = bd.creators
 
-   private val imageUploadService:ImageUploadService by di.instance()
+   private val imageUploadService: ImageUploadService by di.instance()
    private val console = Bukkit.getConsoleSender()
 
    override suspend fun onSolvePicCaptcha(bot: Bot, data: ByteArray): String {

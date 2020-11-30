@@ -1,9 +1,11 @@
-package org.meowcat.minecraft.forward.service
+package io.github.itsusinn.mc.easyforward.service
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.RequestBody.Companion.asRequestBody
 import org.kodein.di.DI
 import org.kodein.di.instance
@@ -11,7 +13,7 @@ import java.io.File
 
 class ImageUploadService(di: DI) {
    private val client by lazy { OkHttpClient() }
-   private val configService:ConfigService by di.instance()
+   private val configService: ConfigService by di.instance()
    private val token = configService.config.smms
 
    suspend fun upload(file:File):String?{

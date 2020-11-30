@@ -1,6 +1,6 @@
-name: Forward
+name: EasyForward
 version: 0.0.2
-main: org.meowcat.minecraft.forward.Forward
+main: io.github.itsusinn.mc.easyforward.EasyForward
 author: Itsusinn
 commands:
   forward:

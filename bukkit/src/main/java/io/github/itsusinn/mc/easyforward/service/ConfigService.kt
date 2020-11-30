@@ -1,12 +1,12 @@
-package org.meowcat.minecraft.forward.service
+package io.github.itsusinn.mc.easyforward.service
 
+import io.github.itsusinn.mc.easyforward.data.Config
+import io.github.itsusinn.mc.easyforward.data.defaultConfig
+import io.github.itsusinn.mc.easyforward.extension.decodeFromString
+import io.github.itsusinn.mc.easyforward.extension.encodeToString
 import kotlinx.coroutines.*
 import org.kodein.di.DI
 import org.kodein.di.instance
-import org.meowcat.minecraft.forward.data.Config
-import org.meowcat.minecraft.forward.extension.decodeFromString
-import org.meowcat.minecraft.forward.extension.encodeToString
-import org.meowcat.minecraft.forward.data.defaultConfig
 import java.io.File
 import java.util.logging.Logger
 import kotlin.coroutines.CoroutineContext
@@ -30,7 +30,7 @@ class ConfigService(di: DI):CoroutineScope{
    private var content = ""
 
    init {
-      var configInstance:Config
+      var configInstance: Config
       //如果没有配置文件则新建一个,并写入默认配置
       if (!file.exists()){
          logger.info("不存在配置文件->写入默认配置")

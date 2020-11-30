@@ -1,5 +1,9 @@
-package org.meowcat.minecraft.forward.service
+package io.github.itsusinn.mc.easyforward.service
 
+import io.github.itsusinn.mc.easyforward.data.Agent
+import io.github.itsusinn.mc.easyforward.extension.chunkedHexToBytes
+import io.github.itsusinn.mc.easyforward.mirai.CaptchaSolver
+import io.github.itsusinn.mc.easyforward.mirai.MiraiLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -9,10 +13,6 @@ import net.mamoe.mirai.utils.SilentLogger
 import net.mamoe.mirai.utils.withSwitch
 import org.kodein.di.DI
 import org.kodein.di.instance
-import org.meowcat.minecraft.forward.extension.chunkedHexToBytes
-import org.meowcat.minecraft.forward.data.Agent
-import org.meowcat.minecraft.forward.mirai.CaptchaSolver
-import org.meowcat.minecraft.forward.mirai.MiraiLogger
 import java.util.logging.Logger
 import kotlin.coroutines.CoroutineContext
 
@@ -55,12 +55,13 @@ class BotLoginService(private val di:DI): CoroutineScope{
       loginAsync(bot)
       return bot
    }
+
    /**
     * 通过配置登陆Bot的方法
     * 登陆过程不阻塞
     * @throws LoginFailedException
     */
-   fun autoLogin(agent:Agent):Bot{
+   fun autoLogin(agent: Agent): Bot {
       return Bot(agent.account.toLong(), agent.passwordMD5.chunkedHexToBytes()) {
          //覆盖默认的配置
          //使用"device.json" 保存设备信息
@@ -68,7 +69,7 @@ class BotLoginService(private val di:DI): CoroutineScope{
          //禁用网络层输出
          networkLoggerSupplier = { SilentLogger }
          //使用bukkit的logger
-         botLoggerSupplier = { MiraiLogger(di,"Bot ${it.id}: ").withSwitch() }
+         botLoggerSupplier = { MiraiLogger(di, "Bot ${it.id}: ").withSwitch() }
          //将登录处理器与bukkit-command结合
          loginSolver = this@BotLoginService.loginSolver
       }.also {

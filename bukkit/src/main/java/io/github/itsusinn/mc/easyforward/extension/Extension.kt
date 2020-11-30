@@ -1,5 +1,5 @@
 @file:Suppress("UNUSED")
-package org.meowcat.minecraft.forward.extension
+package io.github.itsusinn.mc.easyforward.extension
 
 
 

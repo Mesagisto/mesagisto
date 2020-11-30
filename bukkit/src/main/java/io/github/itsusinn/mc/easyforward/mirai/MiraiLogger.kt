@@ -1,4 +1,4 @@
-package org.meowcat.minecraft.forward.mirai
+package io.github.itsusinn.mc.easyforward.mirai
 
 import net.mamoe.mirai.utils.MiraiLoggerPlatformBase
 import org.kodein.di.DI

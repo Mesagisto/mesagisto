@@ -1,11 +1,11 @@
-package org.meowcat.minecraft.forward
+package io.github.itsusinn.mc.easyforward
 
+import io.github.itsusinn.mc.easyforward.service.BotDispatcher
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerChatEvent
 import org.kodein.di.DI
 import org.kodein.di.instance
-import org.meowcat.minecraft.forward.service.BotDispatcher
 import java.util.logging.Logger
 
 class MessageListener(di:DI):Listener{

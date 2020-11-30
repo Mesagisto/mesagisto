@@ -1,20 +1,21 @@
-package org.meowcat.minecraft.forward
+package io.github.itsusinn.mc.easyforward
 
 import com.github.shynixn.mccoroutine.SuspendingCommandExecutor
-import kotlinx.coroutines.*
+import io.github.itsusinn.mc.easyforward.extension.md5
+import io.github.itsusinn.mc.easyforward.extension.sendMessage
+import io.github.itsusinn.mc.easyforward.extension.toTextComponent
+import io.github.itsusinn.mc.easyforward.mirai.captchaChannel
+import io.github.itsusinn.mc.easyforward.service.BotDispatcher
+import io.github.itsusinn.mc.easyforward.service.BotLoginService
+import io.github.itsusinn.mc.easyforward.service.ConfigService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.kodein.di.DI
 import org.kodein.di.instance
-import org.meowcat.minecraft.forward.extension.md5
-import org.meowcat.minecraft.forward.extension.sendMessage
-import org.meowcat.minecraft.forward.extension.toTextComponent
-import org.meowcat.minecraft.forward.mirai.captchaChannel
-import org.meowcat.minecraft.forward.service.BotDispatcher
-import org.meowcat.minecraft.forward.service.BotLoginService
-import org.meowcat.minecraft.forward.service.ConfigService
 import java.util.logging.Logger
 import kotlin.coroutines.CoroutineContext
 
@@ -28,7 +29,7 @@ class ForwardCommandExecutor(di:DI,) :SuspendingCommandExecutor,CoroutineScope{
 
    private val bd: BotDispatcher by di.instance()
    private val botLoginService: BotLoginService by di.instance()
-   private val configService:ConfigService by di.instance()
+   private val configService: ConfigService by di.instance()
    private val config = configService.config
    private val logger:Logger by di.instance()
    override val coroutineContext: CoroutineContext = Dispatchers.Default

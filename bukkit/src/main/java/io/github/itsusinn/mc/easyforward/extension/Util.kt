@@ -1,6 +1,6 @@
 @file:Suppress("EXPERIMENTAL_API_USAGE")
 
-package org.meowcat.minecraft.forward.extension
+package io.github.itsusinn.mc.easyforward.extension
 
 import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.DeserializationStrategy
