@@ -1,6 +1,6 @@
 import org.meowcat.minecraft.forward.data.Agent
 import org.meowcat.minecraft.forward.data.Config
-import org.meowcat.minecraft.forward.encodeToString
+import org.meowcat.minecraft.forward.extension.encodeToString
 
 fun main(){
    val defaultConfig = Config(

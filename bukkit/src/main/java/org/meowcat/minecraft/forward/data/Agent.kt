@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Agent(
    var account:String,
-   var passwordMD5:String
-   ) {
+   var passwordMD5:String) {
+
     constructor(account: Long,password: String): this(account.toString(),password)
 }

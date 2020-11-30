@@ -5,13 +5,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.network.LoginFailedException
-import net.mamoe.mirai.utils.BotConfiguration
 import net.mamoe.mirai.utils.SilentLogger
 import net.mamoe.mirai.utils.withSwitch
 import org.kodein.di.DI
 import org.kodein.di.instance
-import org.meowcat.minecraft.forward.BotDispatcher
-import org.meowcat.minecraft.forward.chunkedHexToBytes
+import org.meowcat.minecraft.forward.extension.chunkedHexToBytes
 import org.meowcat.minecraft.forward.data.Agent
 import org.meowcat.minecraft.forward.mirai.CaptchaSolver
 import org.meowcat.minecraft.forward.mirai.MiraiLogger

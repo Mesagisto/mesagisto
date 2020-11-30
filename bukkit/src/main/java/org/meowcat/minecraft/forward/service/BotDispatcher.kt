@@ -1,10 +1,9 @@
-package org.meowcat.minecraft.forward
+package org.meowcat.minecraft.forward.service
 
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.containsGroup
 import org.kodein.di.DI
 import org.kodein.di.instance
-import org.meowcat.minecraft.forward.service.ConfigService
 
 /**
  * 一个bot调度器

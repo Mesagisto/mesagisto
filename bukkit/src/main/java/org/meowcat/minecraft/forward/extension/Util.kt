@@ -1,12 +1,10 @@
 @file:Suppress("EXPERIMENTAL_API_USAGE")
 
-package org.meowcat.minecraft.forward
+package org.meowcat.minecraft.forward.extension
 
 import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerializationStrategy
-import java.awt.Image
-import java.awt.image.BufferedImage
 import java.security.MessageDigest
 
 /**

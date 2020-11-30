@@ -2,14 +2,15 @@ package org.meowcat.minecraft.forward
 
 import com.github.shynixn.mccoroutine.SuspendingCommandExecutor
 import kotlinx.coroutines.*
-import net.mamoe.mirai.Bot
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.kodein.di.DI
 import org.kodein.di.instance
+import org.meowcat.minecraft.forward.extension.md5
 import org.meowcat.minecraft.forward.mirai.captchaChannel
+import org.meowcat.minecraft.forward.service.BotDispatcher
 import org.meowcat.minecraft.forward.service.BotLoginService
 import org.meowcat.minecraft.forward.service.ConfigService
 import java.util.logging.Logger
@@ -23,7 +24,7 @@ val HelpReply = arrayOf(
 
 class ForwardCommandExecutor(di:DI,) :SuspendingCommandExecutor,CoroutineScope{
 
-   private val bd:BotDispatcher by di.instance()
+   private val bd: BotDispatcher by di.instance()
    private val botLoginService: BotLoginService by di.instance()
    private val configService:ConfigService by di.instance()
    private val config = configService.config

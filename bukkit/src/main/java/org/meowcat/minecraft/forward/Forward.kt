@@ -14,8 +14,9 @@ import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
-import org.meowcat.minecraft.forward.kotlin.KotlinPlugin
+import org.meowcat.minecraft.forward.extension.KotlinPlugin
 import org.meowcat.minecraft.forward.mirai.CaptchaSolver
+import org.meowcat.minecraft.forward.service.BotDispatcher
 import org.meowcat.minecraft.forward.service.BotLoginService
 import org.meowcat.minecraft.forward.service.ConfigService
 import org.meowcat.minecraft.forward.service.ImageUploadService
@@ -44,7 +45,7 @@ class Forward : KotlinPlugin() {
    }
 
    private val configService:ConfigService by di.instance()
-   private val botDispatcher:BotDispatcher by di.instance()
+   private val botDispatcher: BotDispatcher by di.instance()
 
    private val messageListener:MessageListener by di.instance()
    private val forwardCommandExecutor:ForwardCommandExecutor by di.instance()

@@ -3,10 +3,9 @@ package org.meowcat.minecraft.forward.service
 import kotlinx.coroutines.*
 import org.kodein.di.DI
 import org.kodein.di.instance
-import org.meowcat.minecraft.forward.BotDispatcher
 import org.meowcat.minecraft.forward.data.Config
-import org.meowcat.minecraft.forward.decodeFromString
-import org.meowcat.minecraft.forward.encodeToString
+import org.meowcat.minecraft.forward.extension.decodeFromString
+import org.meowcat.minecraft.forward.extension.encodeToString
 import org.meowcat.minecraft.forward.defaultConfig
 import java.io.File
 import java.util.logging.Logger
@@ -20,7 +19,7 @@ class ConfigService(di: DI):CoroutineScope{
    override val coroutineContext:CoroutineContext by di.instance("async")
 
    private val botLoginService: BotLoginService by di.instance()
-   private val botDispatcher:BotDispatcher by di.instance()
+   private val botDispatcher: BotDispatcher by di.instance()
 
    private val logger:Logger by di.instance()
 

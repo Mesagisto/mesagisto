@@ -8,7 +8,7 @@ import net.mamoe.mirai.utils.LoginSolver
 import org.bukkit.Bukkit
 import org.kodein.di.DI
 import org.kodein.di.instance
-import org.meowcat.minecraft.forward.BotDispatcher
+import org.meowcat.minecraft.forward.service.BotDispatcher
 import org.meowcat.minecraft.forward.getCommandSender
 import org.meowcat.minecraft.forward.makeClickUrl
 import org.meowcat.minecraft.forward.sendMessage
@@ -18,7 +18,7 @@ import java.io.File
 val Bot.captchaChannel by lazy { Channel<String>() }
 
 class CaptchaSolver(di:DI) : LoginSolver() {
-   private val bd:BotDispatcher by di.instance()
+   private val bd: BotDispatcher by di.instance()
    private val creators = bd.creators
 
    private val imageUploadService:ImageUploadService by di.instance()

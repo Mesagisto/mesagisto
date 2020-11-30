@@ -5,11 +5,12 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerChatEvent
 import org.kodein.di.DI
 import org.kodein.di.instance
+import org.meowcat.minecraft.forward.service.BotDispatcher
 import java.util.logging.Logger
 
 class MessageListener(di:DI):Listener{
 
-   private val bd:BotDispatcher by di.instance()
+   private val bd: BotDispatcher by di.instance()
    private val logger:Logger by di.instance()
    @EventHandler
    suspend fun onChat(event: AsyncPlayerChatEvent) {
