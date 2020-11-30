@@ -9,6 +9,8 @@ import org.bukkit.entity.Player
 import org.kodein.di.DI
 import org.kodein.di.instance
 import org.meowcat.minecraft.forward.extension.md5
+import org.meowcat.minecraft.forward.extension.sendMessage
+import org.meowcat.minecraft.forward.extension.toTextComponent
 import org.meowcat.minecraft.forward.mirai.captchaChannel
 import org.meowcat.minecraft.forward.service.BotDispatcher
 import org.meowcat.minecraft.forward.service.BotLoginService

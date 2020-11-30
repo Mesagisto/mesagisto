@@ -15,6 +15,8 @@ import org.kodein.di.bind
 import org.kodein.di.instance
 import org.kodein.di.singleton
 import org.meowcat.minecraft.forward.extension.KotlinPlugin
+import org.meowcat.minecraft.forward.extension.broadcastMessage
+import org.meowcat.minecraft.forward.extension.makeClickUrl
 import org.meowcat.minecraft.forward.mirai.CaptchaSolver
 import org.meowcat.minecraft.forward.service.BotDispatcher
 import org.meowcat.minecraft.forward.service.BotLoginService
@@ -82,13 +84,13 @@ class Forward : KotlinPlugin() {
                   if (it.id == sender.id) return@invoke
                }
                if (message.isPlain()){
-                  broadcastTextMessage("<${this.sender.nameCardOrNick}> ${message.content}")
+                  broadcastMessage("<${sender.nameCardOrNick}> ${message.content}")
                   return@invoke
                }
                if(message.firstOrNull(Image) != null){
                   val complexMessage = TextComponent("<${this.sender.nameCardOrNick}> ")
                   complexMessage.addExtra(makeClickUrl("图片",message.first(Image).url()))
-                  broadcastComponentMessage(complexMessage)
+                  broadcastMessage(complexMessage)
                   return@invoke
                }
                if (message.contains(PokeMessage.Poke)){

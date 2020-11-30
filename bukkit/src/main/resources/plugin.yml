@@ -10,5 +10,5 @@ commands:
     permission-message: "YOU HAVE NO PERMISSION!"
 permissions:
   forward.use:
-    description: "Permission to use forward plugins"
+    description: "Permission to use forward plugin"
     default: op

@@ -9,9 +9,9 @@ import org.bukkit.Bukkit
 import org.kodein.di.DI
 import org.kodein.di.instance
 import org.meowcat.minecraft.forward.service.BotDispatcher
-import org.meowcat.minecraft.forward.getCommandSender
-import org.meowcat.minecraft.forward.makeClickUrl
-import org.meowcat.minecraft.forward.sendMessage
+import org.meowcat.minecraft.forward.extension.getCommandSender
+import org.meowcat.minecraft.forward.extension.makeClickUrl
+import org.meowcat.minecraft.forward.extension.sendMessage
 import org.meowcat.minecraft.forward.service.ImageUploadService
 import java.io.File
 

@@ -6,7 +6,7 @@ import org.kodein.di.instance
 import org.meowcat.minecraft.forward.data.Config
 import org.meowcat.minecraft.forward.extension.decodeFromString
 import org.meowcat.minecraft.forward.extension.encodeToString
-import org.meowcat.minecraft.forward.defaultConfig
+import org.meowcat.minecraft.forward.data.defaultConfig
 import java.io.File
 import java.util.logging.Logger
 import kotlin.coroutines.CoroutineContext

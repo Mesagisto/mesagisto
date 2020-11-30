@@ -1,4 +1,4 @@
-package org.meowcat.minecraft.forward
+package org.meowcat.minecraft.forward.data
 
 const val defaultConfig =
 """
