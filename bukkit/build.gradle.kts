@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "io.github.itsusinn.mc"
-version = "0.0.2-rc3"
+version = "0.0.2-rc4"
 
 val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
 compileKotlin.kotlinOptions.jvmTarget = "1.8"

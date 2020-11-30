@@ -1,2 +1,2 @@
 rootProject.buildFileName = "build.gradle.kts"
-rootProject.name = 'forward'
+rootProject.name = "mc-message-forward"
