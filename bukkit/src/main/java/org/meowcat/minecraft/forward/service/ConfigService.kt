@@ -65,6 +65,7 @@ class ConfigService(di: DI):CoroutineScope{
             file.writeText(content)
          }
       }catch (e:Exception){
+         logger.warning("保存配置文件失败")
          e.printStackTrace()
       }
    }
@@ -74,7 +75,7 @@ class ConfigService(di: DI):CoroutineScope{
     * 登陆交由 BotLoginSolver 实现
     */
    fun load(){
-      logger.info("从配置中准备加载${config.botList.size-1}个Bot")
+      logger.info("正在从配置中准备加载${config.botList.size-1}个Bot")
       config.botList.forEach {
          botLoginService.autoLogin(it)
       }

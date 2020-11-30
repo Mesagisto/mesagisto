@@ -9,7 +9,10 @@ import kotlinx.coroutines.launch
 import net.mamoe.mirai.contact.nameCardOrNick
 import net.mamoe.mirai.event.subscribeAlways
 import net.mamoe.mirai.message.GroupMessageEvent
+import net.mamoe.mirai.message.data.PlainText
+import net.mamoe.mirai.message.data.PokeMessage
 import net.mamoe.mirai.message.data.content
+import org.bukkit.Bukkit
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
@@ -74,6 +77,11 @@ class Forward : KotlinPlugin() {
 
    private fun init() = GlobalScope.launch{
       subscribeAlways<GroupMessageEvent>(Dispatchers.Default) {
+         if (this.message.contains(PokeMessage.Poke)){
+            val nums = Bukkit.getOnlinePlayers().size
+            reply(PlainText("$nums players are online"))
+            return@subscribeAlways
+         }
 
          if (bot.id!= botDispatcher.getListener()) return@subscribeAlways
 
@@ -83,5 +91,6 @@ class Forward : KotlinPlugin() {
             broadcastMessage("<${this.sender.nameCardOrNick}> ${message.content}")
          }
       }
+
    }
 }

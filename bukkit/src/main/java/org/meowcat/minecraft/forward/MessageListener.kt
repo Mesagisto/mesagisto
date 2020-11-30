@@ -18,7 +18,7 @@ class MessageListener(di:DI):Listener{
       val msg = event.message
       val senderName = event.player.name
       try {
-         bd.speakers.random().getGroup(bd.getTarget()).sendMessage("<$senderName> $msg")
+         bd.randomSpeaker.getGroup(bd.getTarget()).sendMessage("<$senderName> $msg")
       }catch (e:Exception){
          logger.warning("发送消息失败")
       }

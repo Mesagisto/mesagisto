@@ -27,7 +27,9 @@ class BotLoginService(private val di:DI): CoroutineScope{
 
    private val configService: ConfigService by di.instance()
    private val loginSolver: CaptchaSolver by di.instance()
+
    private val logger:Logger by di.instance()
+
    private val bd: BotDispatcher by di.instance()
    //用于保存机器人创建者的map
 
@@ -46,9 +48,8 @@ class BotLoginService(private val di:DI): CoroutineScope{
          fileBasedDeviceInfo("Device")
          //禁用网络层输出
          networkLoggerSupplier = { SilentLogger }
-         protocol = BotConfiguration.MiraiProtocol.ANDROID_PHONE
          //使用bukkit的logger
-         botLoggerSupplier = { MiraiLogger(di,"Bot-${it.id}: ").withSwitch() }
+         botLoggerSupplier = { MiraiLogger(di,"Bot-${it.id}: ") }
          //将登录处理器与bukkit-command结合
          loginSolver = this@BotLoginService.loginSolver
       }
@@ -68,7 +69,6 @@ class BotLoginService(private val di:DI): CoroutineScope{
          fileBasedDeviceInfo("Device")
          //禁用网络层输出
          networkLoggerSupplier = { SilentLogger }
-         protocol = BotConfiguration.MiraiProtocol.ANDROID_PHONE
          //使用bukkit的logger
          botLoggerSupplier = { MiraiLogger(di,"Bot ${it.id}: ").withSwitch() }
          //将登录处理器与bukkit-command结合

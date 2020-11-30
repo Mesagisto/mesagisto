@@ -30,6 +30,15 @@ class BotDispatcher(di:DI){
 
    fun getTarget():Long = target
 
+   val randomSpeaker:Bot
+      get() = run {
+         var r = speakers.random()
+         if (!r.isOnline) removeBot(r)
+         r = randomSpeaker
+         return@run r
+      }
+
+
    fun addBot(bot: Bot){
       allBots.add(bot)
       reDispatch()
