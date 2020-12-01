@@ -82,9 +82,10 @@ class BotLoginService(private val di:DI): CoroutineScope{
     */
    private fun loginAsync(bot: Bot) = launch(Dispatchers.Default) {
       try{
-         bd.addBot(bot)
          //这个默认账号是为了保证配置文件非空，所以直接忽略
-         if(bot.id == 123456789L) return@launch
+         if (bot.id == 123456789L) return@launch
+
+         bd.addBot(bot)
          //登录
          bot.login()
       }catch (e: LoginFailedException){

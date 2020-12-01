@@ -1,7 +1,7 @@
 package io.github.itsusinn.mc.easyforward.mirai
 
 import io.github.itsusinn.mc.easyforward.extension.getCommandSender
-import io.github.itsusinn.mc.easyforward.extension.makeClickUrl
+import io.github.itsusinn.mc.easyforward.extension.makeHoverClickUrl
 import io.github.itsusinn.mc.easyforward.extension.sendMessage
 import io.github.itsusinn.mc.easyforward.service.BotDispatcher
 import io.github.itsusinn.mc.easyforward.service.ImageUploadService
@@ -41,7 +41,7 @@ class CaptchaSolver(di:DI) : LoginSolver() {
             ?: error("上传图床失败")
       }
 
-      val urlMessage = makeClickUrl("验证码链接",imgUrl)
+      val urlMessage = makeHoverClickUrl("验证码链接", imgUrl)
       bot.logger.info(imgUrl)
       sender.sendMessage(urlMessage)
       sender.sendMessage("""
@@ -63,7 +63,7 @@ class CaptchaSolver(di:DI) : LoginSolver() {
         """.trimIndent()
 
       val sender = getCommandSender(senderName)
-      val message = makeClickUrl("滑动验证码验证链接",url)
+      val message = makeHoverClickUrl("滑动验证码验证链接", url)
 
       bot.logger.info(url)
 
@@ -86,7 +86,7 @@ class CaptchaSolver(di:DI) : LoginSolver() {
             成功后输入/forward captcha ${bot.id}
         """.trimIndent()
       val sender = getCommandSender(senderName)
-      val message = makeClickUrl("账号认证验证链接",url)
+      val message = makeHoverClickUrl("账号认证验证链接", url)
       if (url.isBlank()) error("账号认证验证链接为空")
       bot.logger.info(url)
 

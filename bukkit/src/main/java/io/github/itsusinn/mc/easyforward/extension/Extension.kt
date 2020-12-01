@@ -1,17 +1,14 @@
 @file:Suppress("UNUSED")
 package io.github.itsusinn.mc.easyforward.extension
 
-
-
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.BaseComponent
 import net.md_5.bungee.api.chat.ClickEvent
+import net.md_5.bungee.api.chat.HoverEvent
 import net.md_5.bungee.api.chat.TextComponent
-
+import net.md_5.bungee.api.chat.hover.content.Text
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
-
-
 
 fun String.toTextComponent(color: ChatColor): TextComponent =
    TextComponent(this).apply { this.color = color }
@@ -40,9 +37,13 @@ fun getCommandSender(name:String): CommandSender {
    }
 }
 
-fun makeClickUrl(title:String, url:String): TextComponent {
+fun makeHoverClickUrl(title: String, url: String): TextComponent {
    val message = TextComponent(title)
-   message.color = ChatColor.YELLOW
-   message.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, url)
+   message.apply {
+      color = ChatColor.YELLOW
+      clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, url)
+      hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, Text("点击打开链接"))
+   }
+
    return message
 }

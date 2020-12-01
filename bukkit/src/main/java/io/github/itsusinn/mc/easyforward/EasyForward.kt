@@ -5,7 +5,7 @@ import com.github.shynixn.mccoroutine.registerSuspendingEvents
 import com.github.shynixn.mccoroutine.setSuspendingExecutor
 import io.github.itsusinn.mc.easyforward.extension.KotlinPlugin
 import io.github.itsusinn.mc.easyforward.extension.broadcastMessage
-import io.github.itsusinn.mc.easyforward.extension.makeClickUrl
+import io.github.itsusinn.mc.easyforward.extension.makeHoverClickUrl
 import io.github.itsusinn.mc.easyforward.mirai.CaptchaSolver
 import io.github.itsusinn.mc.easyforward.service.BotDispatcher
 import io.github.itsusinn.mc.easyforward.service.BotLoginService
@@ -54,18 +54,17 @@ class EasyForward : KotlinPlugin() {
 
    override fun onEnable() {
 
-      logger.info("Forward is Loading")
-      logger.info("GitHub: https://github.com/Itsusinn/minecraft-message-forward")
+      logger.fine("EasyForward is Loading")
+      logger.fine("GitHub: https://github.com/Itsusinn/easy-forward")
 
       configService.load()
-
       //注册消息监听器
       server.pluginManager.registerSuspendingEvents(messageListener, this)
-      logger.info("Register listener successfully")
+      logger.fine("Register listener successfully")
       //注册命令处理器
       server.getPluginCommand("forward")!!.setSuspendingExecutor(forwardCommandExecutor)
 
-      logger.info("Register command executor successfully")
+      logger.fine("Register command executor successfully")
    }
 
    override fun onDisable() {
@@ -78,25 +77,35 @@ class EasyForward : KotlinPlugin() {
          subscribeGroupMessages {
             sentFrom(botDispatcher.getTarget()).invoke {
                //只接受listener收到的消息
-               if (bot.id!= botDispatcher.getListener()) return@invoke
+               if (bot.id != botDispatcher.getListener()) return@invoke
                //防止转发speaker发送的消息
                botDispatcher.speakers.forEach {
                   if (it.id == sender.id) return@invoke
                }
-               if (message.isPlain()){
-                  broadcastMessage("<${sender.nameCardOrNick}> ${message.content}")
-                  return@invoke
+
+               if (message.firstOrNull(PlainText) != null) {
+                  val textMessage = message.first(PlainText).content
+                  if (textMessage.startsWith("online")
+                     || textMessage.startsWith("在线")
+                     || textMessage.startsWith("zx")
+                  ) {
+                     val players = Bukkit.getOnlinePlayers()
+                     reply("当前有${players.size}个玩家在线")
+                     var playerList = ""
+                     players.forEach {
+                        playerList += "${it.name}\n"
+                     }
+                     if (playerList != "") {
+                        reply(playerList.dropLast(1))
+                        return@invoke
+                     }
+                  }
+                  broadcastMessage("<${sender.nameCardOrNick}> $textMessage")
                }
-               if(message.firstOrNull(Image) != null){
+               if (message.firstOrNull(Image) != null) {
                   val complexMessage = TextComponent("<${this.sender.nameCardOrNick}> ")
-                  complexMessage.addExtra(makeClickUrl("图片",message.first(Image).url()))
+                  complexMessage.addExtra(makeHoverClickUrl("[ImageLink]", message.first(Image).url()))
                   broadcastMessage(complexMessage)
-                  return@invoke
-               }
-               if (message.contains(PokeMessage.Poke)){
-                  val nums = Bukkit.getOnlinePlayers().size
-                  reply(PlainText("$nums players are online"))
-                  return@invoke
                }
             }
          }
