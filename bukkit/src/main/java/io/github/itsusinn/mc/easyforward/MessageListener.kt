@@ -18,13 +18,13 @@ class MessageListener(di:DI):Listener{
       if (bd.speakers.isEmpty()) return
       val msg = event.message
       val senderName = event.player.name
+      val speaker = bd.randomSpeaker()
       try {
-         val speaker = bd.randomSpeaker()
          logger.info("Speaker is ${speaker.id}")
          speaker.getGroup(bd.getTarget()).sendMessage("<$senderName> $msg")
       }catch (e:Exception){
+         bd.removeBot(speaker)
          logger.warning("发送消息失败")
-         e.printStackTrace()
       }
    }
 }

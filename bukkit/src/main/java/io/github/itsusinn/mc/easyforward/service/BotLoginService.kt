@@ -36,9 +36,19 @@ class BotLoginService(private val di:DI): CoroutineScope{
     * 登陆过程不阻塞
     * @throws LoginFailedException
     */
-   fun login(account:Long, passwordMD5: String):Bot{
+   fun commandLogin(account: Long, passwordMD5: String): Bot {
+      var exists = false
       //先加入配置
-      configService.config.botList.add(Agent(account,passwordMD5))
+      configService.config.botList.forEach { agent ->
+         if (agent.account.toLong() == account) {
+            exists = true
+            agent.passwordMD5 = passwordMD5
+         }
+      }
+      if (!exists) {
+         configService.config.botList.add(Agent(account, passwordMD5))
+      }
+
 
       val bot = Bot(account, passwordMD5.chunkedHexToBytes()) {
          //覆盖默认的配置
@@ -47,7 +57,7 @@ class BotLoginService(private val di:DI): CoroutineScope{
          //禁用网络层输出
          networkLoggerSupplier = { SilentLogger }
          //使用bukkit的logger
-         botLoggerSupplier = { MiraiLogger(di,"Bot-${it.id}: ") }
+         botLoggerSupplier = { MiraiLogger(di, "Bot-${it.id}: ") }
          //将登录处理器与bukkit-command结合
          loginSolver = this@BotLoginService.loginSolver
       }
@@ -103,7 +113,6 @@ class BotLoginService(private val di:DI): CoroutineScope{
          bd.removeBot(bot)
 
          logger.warning("登录失败，移除${bot.id}")
-         e.printStackTrace()
          return@launch
       }
    }

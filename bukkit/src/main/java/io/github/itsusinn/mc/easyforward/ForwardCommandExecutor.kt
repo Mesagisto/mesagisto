@@ -57,7 +57,7 @@ class ForwardCommandExecutor(di:DI,) :SuspendingCommandExecutor,CoroutineScope{
             val password = args[2]
 
             //检查bot是否已经记录
-            bd.allBots.forEach{
+            bd.allBots.forEach {
                if (it.id == account && it.isOnline) {
                   sender.sendMessage("$account 已登录,切勿重复登陆".toTextComponent(ChatColor.YELLOW))
                   return false
@@ -66,8 +66,11 @@ class ForwardCommandExecutor(di:DI,) :SuspendingCommandExecutor,CoroutineScope{
             //将bot的操作者记录下来
             bd.creators[account] = senderName
 
-            try { botLoginService.login(account, password.md5)
-            }catch (e:Exception){ throw e }
+            try {
+               botLoginService.commandLogin(account, password.md5)
+            } catch (e: Exception) {
+               throw e
+            }
 
             return true
          }
