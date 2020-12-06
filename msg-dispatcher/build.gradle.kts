@@ -4,7 +4,7 @@ plugins {
    kotlin("jvm") version "1.4.20"
    id("com.github.johnrengelman.shadow") version "5.2.0"
 }
-val mainClass = "io.github.itsusinn.easyforward.dispatcher.Main"
+val mainClass = "i.g.i.easyforward.dispatcher.Main"
 
 group = "io.github.itsusinn.easyforward"
 version = "0.0.3-rc1"
@@ -28,6 +28,7 @@ application {
 dependencies {
 
    //vertx
+   implementation("io.vertx:vertx-core:$vertxVersion")
    implementation("io.vertx:vertx-web:$vertxVersion")
    implementation("io.vertx:vertx-lang-kotlin-coroutines:$vertxVersion")
    implementation("io.vertx:vertx-lang-kotlin:$vertxVersion")

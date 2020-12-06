@@ -1,6 +1,6 @@
-import io.github.itsusinn.mc.easyforward.data.Agent
-import io.github.itsusinn.mc.easyforward.data.Config
-import io.github.itsusinn.mc.easyforward.extension.encodeToString
+import i.g.i.easyforward.bukkit.data.Agent
+import i.g.i.easyforward.bukkit.data.Config
+import i.g.i.easyforward.bukkit.extension.encodeToString
 
 fun main(){
    val defaultConfig = Config(

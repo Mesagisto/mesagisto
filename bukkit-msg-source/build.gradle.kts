@@ -42,4 +42,5 @@ dependencies {
    implementation("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
 
+   compileOnly ("net.md-5:bungeecord-chat:1.16-R0.3")
 }

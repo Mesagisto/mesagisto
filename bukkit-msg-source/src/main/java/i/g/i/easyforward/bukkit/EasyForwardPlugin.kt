@@ -19,7 +19,7 @@ class EasyForwardPlugin : JavaPlugin() {
       bind<MessageSpeaker>() with singleton { MessageSpeaker(di) }
    }
    override fun onEnable() {
-      EasyForwardClient(di)
+      EasyForwardClient("127.0.0.1",1431,di)
       MessageSpeaker(di)
       val listener = MessageListener(di)
       server.pluginManager.registerEvents(listener,this)

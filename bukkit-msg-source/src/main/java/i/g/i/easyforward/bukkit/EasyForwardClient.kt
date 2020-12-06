@@ -6,20 +6,21 @@ import io.vertx.core.http.WebSocket
 import org.kodein.di.DI
 import org.kodein.di.instance
 
-class EasyForwardClient(di:DI) {
+class EasyForwardClient(address:String,port:Int,di:DI) {
    private val eventBus: EventBus by di.instance()
    private val httpClient by di.instance<HttpClient>()
    private lateinit var wsClient :WebSocket
    init {
-      httpClient
-         .webSocket(1431,"127.0.0.1","/source"){
-            wsClient = it.result() ?: error("Null WsClient")
-            wsClient.frameHandler { frame->
-               eventBus.publish("in",frame.textData())
-            }
-            eventBus.consumer<String>("out"){ msg ->
-               wsClient.writeFinalTextFrame(msg.body())
-            }
+      httpClient.webSocket(port,address,"/source"){
+         wsClient = it.result() ?: throw ConnectFailedException()
+         wsClient.registerFrameHandler()
+         eventBus.consumer<String>("out"){ msg ->
+            wsClient.writeFinalTextFrame(msg.body())
          }
+      }
    }
+   private fun WebSocket.registerFrameHandler(): WebSocket = frameHandler{ frame ->
+      eventBus.publish("in",frame.textData())
+   }
+
 }
