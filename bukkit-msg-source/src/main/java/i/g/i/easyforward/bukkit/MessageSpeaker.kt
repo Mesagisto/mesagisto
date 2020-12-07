@@ -8,7 +8,7 @@ import org.kodein.di.instance
 class MessageSpeaker(di:DI) {
    private val eventBus: EventBus by di.instance()
    init {
-      eventBus.consumer<String>("in"){
+      eventBus.consumer<String>(Address.In){
          Bukkit.broadcastMessage(it.body())
       }
    }

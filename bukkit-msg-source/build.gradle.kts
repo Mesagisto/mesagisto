@@ -29,6 +29,7 @@ dependencies {
 
    implementation("org.kodein.di:kodein-di:7.1.0")
    compileOnly("org.spigotmc:spigot-api:1.16.3-R0.1-SNAPSHOT")
+   compileOnly ("net.md-5:bungeecord-chat:1.16-R0.3")
    //vertx
    implementation("io.vertx:vertx-core:$vertxVersion"){
       exclude("io.netty")
@@ -41,6 +42,4 @@ dependencies {
    implementation("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
    implementation("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
-
-   compileOnly ("net.md-5:bungeecord-chat:1.16-R0.3")
 }

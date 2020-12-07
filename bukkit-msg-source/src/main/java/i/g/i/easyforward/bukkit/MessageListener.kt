@@ -12,6 +12,6 @@ class MessageListener(di: DI):Listener{
    private val eventBus: EventBus by di.instance()
    @EventHandler
    fun onChat(event: AsyncPlayerChatEvent) {
-      eventBus.publish("out","<${event.player.name}> ${event.message}")
+      eventBus.publish(Address.Out,"<${event.player.name}> ${event.message}")
    }
 }
