@@ -13,6 +13,7 @@ val vertxVersion = "3.8.0"
 val junitJupiterVersion = "5.6.0"
 val coroutineVersion = "1.4.1"
 val jacksonVersion = "2.11.3"
+val mccoroutine = "0.0.5"
 
 val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
 compileKotlin.kotlinOptions.jvmTarget = "1.8"
@@ -37,9 +38,14 @@ dependencies {
    compileOnly("io.netty:netty-all:4.1.6.Final")
    //kotlin
    implementation(kotlin("stdlib-jdk8"))
+   implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
    //jackson
    implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
    implementation("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
    implementation("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
+   //coroutine
+   compileOnly("com.github.shynixn.mccoroutine:mccoroutine-bukkit-api:$mccoroutine")
+   implementation("com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:$mccoroutine")
+   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1")
 }

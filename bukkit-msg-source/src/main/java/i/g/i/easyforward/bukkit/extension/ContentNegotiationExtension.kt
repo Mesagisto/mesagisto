@@ -13,29 +13,20 @@ import org.bukkit.command.CommandSender
 fun String.toTextComponent(color: ChatColor): TextComponent =
    TextComponent(this).apply { this.color = color }
 
-fun broadcastMessage(message:String) =
+fun publish(message:String) =
    Bukkit.broadcastMessage(message)
 
-inline fun <reified T> broadcastMessage(component:T) where T: BaseComponent =
+inline fun <reified T> publish(component:T) where T: BaseComponent =
    Bukkit.spigot().broadcast(component)
+
+inline fun <reified T> publish(component:T,permission:String) where T: BaseComponent =
+   Bukkit.broadcast(component.toLegacyText(),permission)
 
 inline fun <reified T>  CommandSender.sendMessage(component: T) where T: BaseComponent=
    spigot().sendMessage(component)
 
 inline fun <reified T>  CommandSender.sendMessage(vararg components: T) where T: BaseComponent =
    components.forEach { this.spigot().sendMessage(it) }
-
-fun getCommandSender(name:String): CommandSender {
-   return when(name){
-      "CONSOLE" -> {
-         Bukkit.getConsoleSender()
-      }
-      else -> {
-         val trueName = name.substring(2)
-         Bukkit.getPlayer(trueName) ?: Bukkit.getConsoleSender()
-      }
-   }
-}
 
 fun makeHoverClickUrl(title: String, url: String): TextComponent {
    val message = TextComponent(title)
@@ -44,6 +35,6 @@ fun makeHoverClickUrl(title: String, url: String): TextComponent {
       clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, url)
       hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, Text("点击打开链接"))
    }
-
    return message
 }
+

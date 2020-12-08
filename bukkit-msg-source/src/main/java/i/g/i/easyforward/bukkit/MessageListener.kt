@@ -6,12 +6,11 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerChatEvent
 import org.kodein.di.DI
 import org.kodein.di.instance
-import java.util.logging.Logger
 
 class MessageListener(di: DI):Listener{
    private val eventBus: EventBus by di.instance()
    @EventHandler
    fun onChat(event: AsyncPlayerChatEvent) {
-      eventBus.publish(Address.Out,"<${event.player.name}> ${event.message}")
+      eventBus.publish(Address.Listen,event)
    }
 }

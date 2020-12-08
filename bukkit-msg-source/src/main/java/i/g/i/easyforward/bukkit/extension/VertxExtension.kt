@@ -1,5 +1,6 @@
 package i.g.i.easyforward.bukkit.extension
 
+import io.vertx.core.eventbus.EventBus
 import io.vertx.core.http.HttpClient
 import io.vertx.core.http.WebSocket
 import kotlin.coroutines.resume
