@@ -1,6 +1,8 @@
 package i.g.i.easyforward.bukkit.data
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 sealed class Message{
    class TextMessage(val content:String): Message()
    class ImageMessage(val url:String): Message()

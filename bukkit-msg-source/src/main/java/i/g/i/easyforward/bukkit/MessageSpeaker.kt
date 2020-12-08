@@ -20,18 +20,6 @@ class MessageSpeaker(di:DI) {
       }
    }
    fun onDisable(){
-
+      //TODO
    }
 }
-//// when it's player,name should start with "P-"
-//fun getCommandSender(name:String): CommandSender {
-//   return when(name){
-//      "CONSOLE" -> {
-//         Bukkit.getConsoleSender()
-//      }
-//      else -> {
-//         val trueName = name.substring(2)
-//         Bukkit.getPlayer(trueName) ?: Bukkit.getConsoleSender()
-//      }
-//   }
-//}
