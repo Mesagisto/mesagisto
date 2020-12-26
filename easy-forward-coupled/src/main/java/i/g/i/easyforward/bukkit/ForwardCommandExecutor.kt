@@ -20,9 +20,9 @@ import java.util.logging.Logger
 import kotlin.coroutines.CoroutineContext
 
 val HelpReply = arrayOf(
-   "/forward add [QQ帐号] [QQ密码] 来登录一个bot".toTextComponent(ChatColor.YELLOW),
-   "/forward setTarget [QQ群号] 来设置需要转发的qq群".toTextComponent(ChatColor.YELLOW),
-   "/forward smms [token] to add a smms token".toTextComponent(ChatColor.YELLOW)
+   "/forward add QQ帐号 QQ密码 来登录一个bot".toTextComponent(ChatColor.YELLOW),
+   "/forward setTarget QQ群号 来设置需要转发的qq群".toTextComponent(ChatColor.YELLOW),
+   "/forward smms token to add a smms token".toTextComponent(ChatColor.YELLOW)
 )
 
 class ForwardCommandExecutor(di:DI,) :SuspendingCommandExecutor,CoroutineScope{

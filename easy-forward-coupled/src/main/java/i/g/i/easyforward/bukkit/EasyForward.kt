@@ -13,7 +13,9 @@ import io.vertx.core.eventbus.EventBus
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.contact.nameCardOrNick
+import net.mamoe.mirai.event.subscribeAlways
 import net.mamoe.mirai.event.subscribeGroupMessages
+import net.mamoe.mirai.message.GroupMessageEvent
 import net.mamoe.mirai.message.data.*
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
@@ -80,13 +82,13 @@ class EasyForward : KotlinPlugin() {
 
    init {
       GlobalScope.launch{
-         subscribeGroupMessages {
-            sentFrom(botDispatcher.getTarget()).invoke {
+         subscribeAlways<GroupMessageEvent> {
+            if (this.group.id == botDispatcher.getTarget()){
                //只接受listener收到的消息
-               if (bot.id != botDispatcher.getListener()) return@invoke
+               if (bot.id != botDispatcher.getListener()) return@subscribeAlways
                //防止转发speaker发送的消息
                botDispatcher.speakers.forEach {
-                  if (it.id == sender.id) return@invoke
+                  if (it.id == sender.id) return@subscribeAlways
                }
 
                if (message.firstOrNull(PlainText) != null) {
@@ -103,7 +105,7 @@ class EasyForward : KotlinPlugin() {
                      }
                      if (playerList != "") {
                         reply(playerList.dropLast(1))
-                        return@invoke
+                        return@subscribeAlways
                      }
                   }
                   broadcastMessage("<${sender.nameCardOrNick}> $textMessage")

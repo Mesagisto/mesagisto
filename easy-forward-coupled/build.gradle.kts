@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "io.github.itsusinn.easyforward.bukkit"
-version = "0.0.1"
+version = "0.0.2-rc5"
 
 val kotlinVersion = "1.4.20"
 val vertxVersion = "3.8.0"

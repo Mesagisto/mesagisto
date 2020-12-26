@@ -15,9 +15,6 @@ import java.io.File
 import java.util.logging.Level
 import java.util.logging.Logger
 
-class MiraiExtension {
-}
-
 val Bot.captchaChannel by lazy { Channel<String>() }
 
 class CaptchaSolver(di: DI) : LoginSolver() {
@@ -45,13 +42,13 @@ class CaptchaSolver(di: DI) : LoginSolver() {
       }
 
       val urlMessage = makeHoverClickUrl("验证码链接", imgUrl)
-      bot.logger.info(imgUrl)
+      console.sendMessage(imgUrl)
       sender.sendMessage(urlMessage)
       sender.sendMessage("""
          请输入 /forward captcha ${bot.id} [4位字母验证码]. 
          若要更换验证码,请直接/forward captcha ${bot.id}
       """.trimIndent())
-      //需要验证码，开启通道并  通知登录命令的发送者
+      //需要验证码，开启通道并 通知登录命令的发送者
       val captcha = bot.captchaChannel.receive()
       sender.sendMessage("接收到验证码 $captcha")
       return captcha
