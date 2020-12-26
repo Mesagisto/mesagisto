@@ -1,4 +1,4 @@
-package i.g.i.easyforward.bukkit.service
+package io.github.itsusinn.easyforward.bukkit.service
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

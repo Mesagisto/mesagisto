@@ -1,13 +1,13 @@
-package i.g.i.easyforward.bukkit
+package io.github.itsusinn.easyforward.bukkit
 
 import com.github.shynixn.mccoroutine.SuspendingCommandExecutor
-import i.g.i.easyforward.bukkit.extension.md5
-import i.g.i.easyforward.bukkit.extension.sendMessage
-import i.g.i.easyforward.bukkit.extension.toTextComponent
-import i.g.i.easyforward.bukkit.extension.captchaChannel
-import i.g.i.easyforward.bukkit.service.BotDispatcher
-import i.g.i.easyforward.bukkit.service.BotLoginService
-import i.g.i.easyforward.bukkit.service.ConfigService
+import io.github.itsusinn.easyforward.bukkit.extension.md5
+import io.github.itsusinn.easyforward.bukkit.extension.sendMessage
+import io.github.itsusinn.easyforward.bukkit.extension.toTextComponent
+import io.github.itsusinn.easyforward.bukkit.extension.captchaChannel
+import io.github.itsusinn.easyforward.bukkit.service.BotDispatcher
+import io.github.itsusinn.easyforward.bukkit.service.BotLoginService
+import io.github.itsusinn.easyforward.bukkit.service.ConfigService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import net.md_5.bungee.api.ChatColor

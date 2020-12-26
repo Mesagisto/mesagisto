@@ -1,7 +1,7 @@
-package i.g.i.easyforward.bukkit.extension
+package io.github.itsusinn.easyforward.bukkit.extension
 
-import i.g.i.easyforward.bukkit.service.BotDispatcher
-import i.g.i.easyforward.bukkit.service.ImageUploadService
+import io.github.itsusinn.easyforward.bukkit.service.BotDispatcher
+import io.github.itsusinn.easyforward.bukkit.service.ImageUploadService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.withContext

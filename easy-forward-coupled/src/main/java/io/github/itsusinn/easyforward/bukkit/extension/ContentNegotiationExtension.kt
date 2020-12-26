@@ -1,5 +1,5 @@
 @file:Suppress("UNUSED")
-package i.g.i.easyforward.bukkit.extension
+package io.github.itsusinn.easyforward.bukkit.extension
 
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.BaseComponent

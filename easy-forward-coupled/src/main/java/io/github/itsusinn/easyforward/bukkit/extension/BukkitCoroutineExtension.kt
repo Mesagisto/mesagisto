@@ -1,4 +1,4 @@
-package i.g.i.easyforward.bukkit.extension
+package io.github.itsusinn.easyforward.bukkit.extension
 
 import com.github.shynixn.mccoroutine.asyncDispatcher
 import kotlinx.coroutines.CoroutineScope

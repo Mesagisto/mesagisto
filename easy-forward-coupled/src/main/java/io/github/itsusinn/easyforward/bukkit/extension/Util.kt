@@ -1,6 +1,6 @@
 @file:Suppress("EXPERIMENTAL_API_USAGE")
 
-package i.g.i.easyforward.bukkit.extension
+package io.github.itsusinn.easyforward.bukkit.extension
 
 import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.DeserializationStrategy

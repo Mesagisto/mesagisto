@@ -1,13 +1,13 @@
-package i.g.i.easyforward.bukkit
+package io.github.itsusinn.easyforward.bukkit
 
 import com.github.shynixn.mccoroutine.minecraftDispatcher
 import com.github.shynixn.mccoroutine.registerSuspendingEvents
 import com.github.shynixn.mccoroutine.setSuspendingExecutor
-import i.g.i.easyforward.bukkit.extension.KotlinPlugin
-import i.g.i.easyforward.bukkit.extension.broadcastMessage
-import i.g.i.easyforward.bukkit.extension.makeHoverClickUrl
-import i.g.i.easyforward.bukkit.extension.CaptchaSolver
-import i.g.i.easyforward.bukkit.service.*
+import io.github.itsusinn.easyforward.bukkit.extension.KotlinPlugin
+import io.github.itsusinn.easyforward.bukkit.extension.broadcastMessage
+import io.github.itsusinn.easyforward.bukkit.extension.makeHoverClickUrl
+import io.github.itsusinn.easyforward.bukkit.extension.CaptchaSolver
+import io.github.itsusinn.easyforward.bukkit.service.*
 import io.vertx.core.Vertx
 import io.vertx.core.eventbus.EventBus
 import kotlinx.coroutines.GlobalScope

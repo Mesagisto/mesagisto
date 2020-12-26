@@ -1,6 +1,6 @@
 name: EasyForward
 version: 0.0.2
-main: i.g.i.easyforward.bukkit.EasyForward
+main: io.github.itsusinn.easyforward.bukkit.EasyForward
 author: Itsusinn
 commands:
   forward:

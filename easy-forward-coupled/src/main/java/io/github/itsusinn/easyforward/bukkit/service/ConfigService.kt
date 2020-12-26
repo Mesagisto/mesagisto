@@ -1,9 +1,9 @@
-package i.g.i.easyforward.bukkit.service
+package io.github.itsusinn.easyforward.bukkit.service
 
-import i.g.i.easyforward.bukkit.data.Config
-import i.g.i.easyforward.bukkit.data.defaultConfig
-import i.g.i.easyforward.bukkit.extension.decodeFromString
-import i.g.i.easyforward.bukkit.extension.encodeToString
+import io.github.itsusinn.easyforward.bukkit.data.Config
+import io.github.itsusinn.easyforward.bukkit.data.defaultConfig
+import io.github.itsusinn.easyforward.bukkit.extension.decodeFromString
+import io.github.itsusinn.easyforward.bukkit.extension.encodeToString
 import kotlinx.coroutines.*
 import org.kodein.di.DI
 import org.kodein.di.instance

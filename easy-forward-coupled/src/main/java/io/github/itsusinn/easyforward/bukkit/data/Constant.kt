@@ -1,4 +1,4 @@
-package i.g.i.easyforward.bukkit.data
+package io.github.itsusinn.easyforward.bukkit.data
 
 const val defaultConfig =
 """

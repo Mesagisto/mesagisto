@@ -1,9 +1,9 @@
-package i.g.i.easyforward.bukkit.service
+package io.github.itsusinn.easyforward.bukkit.service
 
-import i.g.i.easyforward.bukkit.data.Agent
-import i.g.i.easyforward.bukkit.extension.chunkedHexToBytes
-import i.g.i.easyforward.bukkit.extension.CaptchaSolver
-import i.g.i.easyforward.bukkit.extension.MiraiLogger
+import io.github.itsusinn.easyforward.bukkit.data.Agent
+import io.github.itsusinn.easyforward.bukkit.extension.chunkedHexToBytes
+import io.github.itsusinn.easyforward.bukkit.extension.CaptchaSolver
+import io.github.itsusinn.easyforward.bukkit.extension.MiraiLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package i.g.i.easyforward.bukkit.service
+package io.github.itsusinn.easyforward.bukkit.service
 
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.containsGroup

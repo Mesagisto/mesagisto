@@ -1,6 +1,6 @@
-package i.g.i.easyforward.bukkit
+package io.github.itsusinn.easyforward.bukkit
 
-import i.g.i.easyforward.bukkit.service.BotDispatcher
+import io.github.itsusinn.easyforward.bukkit.service.BotDispatcher
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerChatEvent
