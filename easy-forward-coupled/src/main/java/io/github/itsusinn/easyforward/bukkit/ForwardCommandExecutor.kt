@@ -105,6 +105,9 @@ class ForwardCommandExecutor(di:DI,) :SuspendingCommandExecutor,CoroutineScope{
                logger.info("${it.nick} ${it.id} ${it.isOnline}")
             }
          }
+         "delete" -> {
+            //TODO
+         }
          "smms" -> {
             if (args.size!=2)return false
             config.smms = args[1]
