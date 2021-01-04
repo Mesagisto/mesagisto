@@ -1,32 +1,28 @@
 plugins {
    java
    application
-   kotlin("jvm") version "1.4.20"
+   kotlin("jvm") version "1.4.21"
    id("com.github.johnrengelman.shadow") version "5.2.0"
 }
-val mainClass = "i.g.i.easyforward.dispatcher.Main"
 
-group = "io.github.itsusinn.easyforward"
+group = "io.github.itsusinn.forward"
 version = "0.0.3-rc1"
 
 repositories {
    mavenCentral()
    jcenter()
 }
-val kotlinVersion = "1.4.20"
+val kotlinVersion = "1.4.21"
 val vertxVersion = "3.9.4"
 val junitJupiterVersion = "5.6.0"
 val coroutineVersion = "1.4.1"
 val jacksonVersion = "2.11.3"
 
-val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
-compileKotlin.kotlinOptions.jvmTarget = "1.8"
-
 application {
-   mainClassName = mainClass
+   mainClassName = "io.github.itsusinn.forward.dispatcher.Main"
 }
-dependencies {
 
+dependencies {
    //vertx
    implementation("io.vertx:vertx-core:$vertxVersion")
    implementation("io.vertx:vertx-web:$vertxVersion")

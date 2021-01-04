@@ -97,11 +97,13 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
+*.len
+
 # Windows shortcuts
 *.lnk
 
-.gradle
-build/
+./.gradle/
+./build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
