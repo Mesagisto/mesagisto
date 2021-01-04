@@ -1,4 +1,4 @@
-package io.github.itsusinn.forward.dispatcher.extension
+package io.github.itsusinn.extension
 
 import io.vertx.core.http.HttpServerRequest
 

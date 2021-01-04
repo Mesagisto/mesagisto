@@ -1,6 +1,6 @@
 package io.github.itsusinn.forward.dispatcher
 
-import io.github.itsusinn.forward.dispatcher.extension.logger
+import io.github.itsusinn.extension.logger
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.DeploymentOptions
 import io.vertx.core.Promise

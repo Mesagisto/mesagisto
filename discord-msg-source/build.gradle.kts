@@ -1,17 +1,13 @@
 plugins {
    java
-   application
-   kotlin("jvm") version "1.4.21"
-   id("com.github.johnrengelman.shadow") version "5.2.0"
+   id ("org.jetbrains.kotlin.jvm") version ("1.4.20")
+   id ("com.github.johnrengelman.shadow") version ("5.2.0")
 }
-
-group = "io.github.itsusinn.forward"
-version = "0.0.1"
-
 repositories {
-   jcenter()
    mavenCentral()
+   jcenter()
 }
+
 
 group = "io.github.itsusinn.forward"
 version = "0.0.1"
@@ -22,19 +18,21 @@ val junitJupiterVersion = "5.6.0"
 val coroutineVersion = "1.4.1"
 val jacksonVersion = "2.11.3"
 
-application {
-   mainClassName = "io.github.itsusinn.forward.discord.App"
-}
+val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
+compileKotlin.kotlinOptions.jvmTarget = "1.8"
 
 dependencies {
-   implementation("net.dv8tion:JDA:4.2.0_225")
+   implementation ("net.dv8tion:JDA:4.2.0_225")
+
    //vertx
    implementation("io.vertx:vertx-core:$vertxVersion")
    implementation("io.vertx:vertx-web:$vertxVersion")
    implementation("io.vertx:vertx-lang-kotlin-coroutines:$vertxVersion")
    implementation("io.vertx:vertx-lang-kotlin:$vertxVersion")
    //kotlin
-   implementation(kotlin("stdlib-jdk8"))
+   implementation ("org.jetbrains.kotlin:kotlin-stdlib")
+   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")
+   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
    //test
    testImplementation("io.vertx:vertx-junit5:$vertxVersion")
@@ -49,4 +47,3 @@ dependencies {
    implementation ("org.slf4j:slf4j-log4j12:1.7.30")
    implementation ("org.slf4j:slf4j-api:1.7.30")
 }
-

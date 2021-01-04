@@ -1,6 +1,6 @@
 package io.github.itsusinn.forward.dispatcher
 
-import io.github.itsusinn.forward.dispatcher.extension.logger
+import io.github.itsusinn.extension.logger
 import io.vertx.core.http.HttpServer
 import io.vertx.core.http.HttpServerOptions
 import io.vertx.core.http.ServerWebSocket
@@ -26,7 +26,7 @@ class DispatcherVerticle: CoroutineVerticle() {
    private fun initWebsocket(server:HttpServer):HttpServer = server.webSocketHandler{ ws ->
       // 获取每一个链接的ID
       val id: String = ws.binaryHandlerID()
-      // 判断当前连接的ID是否存在于map集合中，如果不存在则添加进map集合中
+      // 判断当前连接的ID是否存在于map集合中，如果不存在则添加进map集合中wdi
       if (!isExists(id)) connMapper[id] = ws
       if (ws.path() != "/source") ws.reject()
       ws.frameHandler { frame ->
