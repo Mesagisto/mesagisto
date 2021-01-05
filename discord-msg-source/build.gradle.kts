@@ -8,7 +8,6 @@ repositories {
    jcenter()
 }
 
-
 group = "io.github.itsusinn.forward"
 version = "0.0.1"
 
