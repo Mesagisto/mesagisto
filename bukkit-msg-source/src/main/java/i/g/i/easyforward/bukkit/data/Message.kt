@@ -12,6 +12,7 @@ data class MessageFrame(
    val sender: String,
    val chain:List<Message>
    )
+
 fun MessageFrame(sender: String,msg:Message): MessageFrame {
    return MessageFrame(sender, listOf(msg))
 }
