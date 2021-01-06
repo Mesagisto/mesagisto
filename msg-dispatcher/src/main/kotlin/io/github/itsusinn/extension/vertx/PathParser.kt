@@ -11,5 +11,5 @@ import java.util.*
  * @param path json url path
  */
 inline fun <reified T> parsePath(path:String):T = readValue<T>(
-   (if (path.startsWith("/")) path.drop(0) else path).debase64
+   (if (path.startsWith("/")) path.drop(1) else path).debase64
 )
