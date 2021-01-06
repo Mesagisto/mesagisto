@@ -9,4 +9,4 @@ private val loggerCache = HashMap<Any, Logger>()
 
 val Any.logger:Logger
    get() =
-      loggerCache.getOrPut(this){ LoggerFactory.getLogger(this.javaClass) }
+      loggerCache.getOrPut(this.javaClass){ LoggerFactory.getLogger(this.javaClass) }

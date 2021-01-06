@@ -1,4 +1,4 @@
-package io.github.itsusinn.forward.extension.jda
+package io.github.itsusinn.extension.jda
 
 import net.dv8tion.jda.api.JDABuilder
 
