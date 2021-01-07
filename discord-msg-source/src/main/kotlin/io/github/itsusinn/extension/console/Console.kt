@@ -6,16 +6,19 @@ import kotlinx.coroutines.async
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.coroutines.CoroutineContext
 
-typealias Handler = suspend (Iterator<String>) -> String?
+typealias Handler = suspend Iterator<String>.() -> String?
 
 object Console:CoroutineScope {
    private val thread = SingleThread.create("console-readline")
    val handlers = ConcurrentHashMap<String, Handler>()
    var helpInfo = "help"
+
+   /**
+    * Non Blocking
+    */
    fun startListen() = async {
       while (true){
          readLine()?.split(" ")?.iterator()?.let {
-
             println(handleLine(it) )
          }
       }
@@ -31,11 +34,14 @@ object Console:CoroutineScope {
    private suspend fun doHandleLine(line: Iterator<String>) :String?{
       if (!line.hasNext()) return null
       val handler = handlers[line.next()]
-      if (handler != null) return handler.invoke(line)
-      else return null
+
+      if (handler != null)
+         return handler.invoke(line)
+      else
+         return null
    }
 
-   fun registerHandler(prefix:String,info:String = "No help info",handler:Handler){
+   fun handle(prefix:String, info:String = "No help info", handler:Handler){
       handlers[prefix] = handler
    }
 

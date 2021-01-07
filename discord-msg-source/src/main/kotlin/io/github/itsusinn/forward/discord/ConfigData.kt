@@ -1,6 +1,7 @@
 package io.github.itsusinn.forward.discord
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import io.github.itsusinn.extension.jackson.writeValueAsString
 
 data class ConfigData(
    /**
@@ -26,3 +27,14 @@ data class ConfigData(
    @JsonProperty(value = "channel_id")
    var channelID:String
 )
+val defaultConfig:String
+   get() = ConfigData(
+      2,
+      "null",
+      "null",
+      "null",
+      1431,
+      "null",
+      "test_app_id",
+      "test_channel_id"
+   ).writeValueAsString()

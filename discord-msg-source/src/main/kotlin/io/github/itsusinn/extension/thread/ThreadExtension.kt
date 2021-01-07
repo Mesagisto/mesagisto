@@ -6,9 +6,11 @@ import java.util.concurrent.*
 
 fun Thread(name:String,runnable: Runnable) = Thread(runnable,name)
 
-class SingleThread private constructor(
+open class SingleThread private constructor(
    val name: String
 ):CoroutineScope {
+
+   constructor() : this("default")
 
    val executor: ExecutorService = Executors.newSingleThreadExecutor()
    override val coroutineContext = executor.asCoroutineDispatcher()

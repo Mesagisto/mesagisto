@@ -9,7 +9,7 @@ class ConfigKeeper<T> (
 ){
 
    companion object Factory{
-      inline fun <reified T> create(defaultConfig:String,file:File):ConfigKeeper<T>?{
+      inline fun <reified T> create(defaultConfig:String,file:File):ConfigKeeper<T>{
          val config = readConfigFromFile<T>(defaultConfig, file)
          return ConfigKeeper<T>(config)
       }
@@ -21,5 +21,8 @@ inline fun <reified T> readConfigFromFile(defaultConfig:String,file:File):T{
       file.createNewFile()
       file.writeText(defaultConfig)
    }
-   return readValue<T>(file.readBytes()) ?: readValue<T>(defaultConfig)!!
+   return readValue<T>(file.readBytes()) ?: run {
+      file.writeText(defaultConfig)
+      readValue<T>(defaultConfig)!!
+   }
 }
