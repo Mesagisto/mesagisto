@@ -8,7 +8,7 @@ val writer = mapper.writerWithDefaultPrettyPrinter()
 /**
  * Method to serialize instance into JSON content
  */
-inline fun <reified T> T.writeValueAsString(): String = writer.writeValueAsString(this)
+fun Any?.writeValueAsString(): String = writer.writeValueAsString(this)
 
 /**
  * Method to deserialize JSON content from given JSON content String.

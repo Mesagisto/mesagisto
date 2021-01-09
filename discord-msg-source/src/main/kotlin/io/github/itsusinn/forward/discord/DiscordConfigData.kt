@@ -3,15 +3,15 @@ package io.github.itsusinn.forward.discord
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.github.itsusinn.extension.jackson.writeValueAsString
 
-data class ConfigData(
+data class DiscordConfigData(
    /**
     * a signal value
-    * when autoStart > 1 autoStart disable and autoStart--
-    * when autoStart = 1 autoStart enable
-    * when autoStart < 1 autoStart disable
+    * when [startSignal] > 1 forward will exit directly and [startSignal] --
+    * when [startSignal] = 1 forward will start
+    * when [startSignal] < 1 forward will exit directly
     */
-   @JsonProperty(value = "auto_start")
-   var autoStart:Int = 2,
+   @JsonProperty(value = "start_signal")
+   var startSignal:Int = 2,
 
    @JsonProperty(value = "forward_token")
    var forwardToken:String,
@@ -25,16 +25,19 @@ data class ConfigData(
    @JsonProperty(value = "app_id")
    var appID:String,
    @JsonProperty(value = "channel_id")
-   var channelID:String
+   var channelID:String,
+   var name:String
 )
-val defaultConfig:String
-   get() = ConfigData(
+val defaultConfig:String by lazy {
+   DiscordConfigData(
       2,
+      "test_token",
       "null",
-      "null",
-      "null",
+      "127.0.0.1",
       1431,
-      "null",
+      "/ws",
       "test_app_id",
-      "test_channel_id"
+      "test_channel_id",
+      "test_name"
    ).writeValueAsString()
+}

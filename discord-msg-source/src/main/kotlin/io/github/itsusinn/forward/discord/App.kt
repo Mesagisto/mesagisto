@@ -1,62 +1,50 @@
 package io.github.itsusinn.forward.discord
 
 import io.github.itsusinn.extension.config.ConfigKeeper
-import io.github.itsusinn.extension.console.Console
-import io.github.itsusinn.extension.forward.ForwardClient
+import io.github.itsusinn.extension.forward.WebForwardClient
+import io.github.itsusinn.extension.log.logger
+import io.github.itsusinn.extension.runtime.addShutdownHook
 import io.github.itsusinn.extension.thread.SingleThread
+import io.github.itsusinn.extension.vertx.eventloop.eventBus
+import kotlinx.coroutines.runBlocking
 import java.io.File
 
 object App : SingleThread() {
-   val forwardClient = ForwardClient.create()
-
-   val configKeeper = ConfigKeeper.create<ConfigData>(
+   val forwardClient = WebForwardClient.create()
+   val dir = File("forward").apply { mkdir() }
+   val configKeeper = ConfigKeeper.create<DiscordConfigData>(
       defaultConfig,
-      File("config.json")
+      File("forward/discord.json")
    )
    val config = configKeeper.config
+   init { addShutdownHook { configKeeper.save() } }
    @JvmStatic fun main(args:Array<String>){
-      Console.startListen()
-      Console.registerHandlers()
-   }
-}
-
-fun Console.registerHandlers(){
-
-   handle(
-      "start",
-      info = "start server"
-   ){
-      //start forward client
-      //start discord listen
-      return@handle null
-   }
-
-   handle(
-      "set",
-      info = "set a series of arguments"
-   ){
-      if (!hasNext()) return@handle null
-      val second = next()
-      if (!hasNext()) return@handle null
-      when(second){
-         "appID" -> {
-            App.config.appID = next()
-            return@handle "set appID successfully"
-         }
-         "channelID" -> {
-            App.config.channelID = next()
-            return@handle "set channelID successfully"
-         }
-         "forwardToken" -> {
-            App.config.forwardToken = next()
-            return@handle "set forwardToken successfully"
-         }
-         "discordToken" -> {
-            App.config.discordToken = next()
-            return@handle "set discordToken successfully"
-         }
+      if (config.startSignal >1){
+         config.startSignal--
+         logger.warn { "Config dont exist,write default config into forward/discord.json" }
+         logger.error { "app will exit,please modify config" }
+      } else if (config.startSignal == 1){
+         start()
+      } else {
+         logger.warn { "app has been prohibited to start" }
       }
-      return@handle null
+      configKeeper.save()
    }
-
+   fun start() = runBlocking<Unit>{
+      val forwardClient = WebForwardClient
+         .createFully(
+            port = config.port,
+            host = config.host,
+            uri = config.uri,
+            appID = config.appID,
+            channelID = config.channelID,
+            token = config.forwardToken,
+            name = config.name
+         )
+      forwardClient.link()
+      eventBus.consumer<String>("forward.source"){
+         logger.info { "Received:${it.body()}" }
+      }
+   }
 }
+
