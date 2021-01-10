@@ -2,7 +2,7 @@ package io.github.itsusinn.forward.discord
 
 import io.github.itsusinn.extension.config.ConfigKeeper
 import io.github.itsusinn.extension.forward.WebForwardClient
-import io.github.itsusinn.extension.log.logger
+import io.github.itsusinn.extension.log.staticInlineLogger
 import io.github.itsusinn.extension.runtime.addShutdownHook
 import io.github.itsusinn.extension.runtime.exit
 import io.github.itsusinn.extension.thread.SingleThreadLoop
@@ -12,16 +12,25 @@ import java.io.File
 
 object App : SingleThreadLoop() {
    val forwardClient = WebForwardClient.create()
-   val dir = File("forward").apply { mkdir() }
+
+   private val dir = File("forward").apply { mkdir() }
+
    val configKeeper = ConfigKeeper.create<DiscordConfigData>(
       defaultConfig,
       File("forward/discord.json")
    )
    val config = configKeeper.config
-   init { addShutdownHook { configKeeper.save() } }
+   val logger = staticInlineLogger()
+
+   init {
+      addShutdownHook { configKeeper.save() }
+   }
+
    @JvmStatic fun main(args:Array<String>){
+
       if (config.startSignal >1){
          config.startSignal--
+
          logger.warn { "Config dont exist,write default config into forward/discord.json" }
          logger.error { "app will exit,please modify config" }
       } else if (config.startSignal == 1){
@@ -31,6 +40,7 @@ object App : SingleThreadLoop() {
       }
       configKeeper.save()
    }
+
    fun start() = runBlocking<Unit>{
       val forwardClient = WebForwardClient
          .createFully(
@@ -44,6 +54,7 @@ object App : SingleThreadLoop() {
          )
       try {
          forwardClient.link()
+         //test
          eventBus.consumer<String>("forward.source"){
             logger.info { "Received:${it.body()}" }
          }

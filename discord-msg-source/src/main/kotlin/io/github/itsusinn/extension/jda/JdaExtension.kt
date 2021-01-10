@@ -1,29 +1,23 @@
 package io.github.itsusinn.extension.jda
 
-import io.github.itsusinn.extension.log.logger
 import io.github.itsusinn.extension.okhttp.proxy
 import io.github.itsusinn.extension.okhttp.proxyAuth
 import io.github.itsusinn.extension.thread.SingleThreadLoop
-import kotlinx.coroutines.launch
+import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 
-import net.dv8tion.jda.api.events.GenericEvent
 import net.dv8tion.jda.api.events.ReadyEvent
-import net.dv8tion.jda.api.hooks.EventListener
-import okhttp3.Credentials
 import okhttp3.OkHttpClient
-import java.net.InetSocketAddress
-import java.net.Proxy
-import java.util.concurrent.ConcurrentHashMap
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class DiscordBotClient private constructor(
-   val jda: JDABuilder
+   val jda: JDA
 ){
 
    companion object Manager: SingleThreadLoop() {
+
       suspend fun create(
          token:String,
          hostname:String? = null,
@@ -43,13 +37,16 @@ class DiscordBotClient private constructor(
             jdaBuilder.setHttpClientBuilder(builder)
 
             //async
-            listenEventOnce<ReadyEvent>("ready"){
-               continuation.resume(DiscordBotClient(jdaBuilder))
+            listenEventOnce<ReadyEvent>("ready-$token"){
+               if (it.jda.token==token){
+                  continuation.resume(DiscordBotClient(it.jda))
+                  return@listenEventOnce true
+               }
+               return@listenEventOnce false
             }
 
             jdaBuilder.build()
          }catch (e:Throwable){
-            Listener.unregister("ready")
             continuation.resumeWithException(e)
          }
       }

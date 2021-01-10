@@ -30,13 +30,13 @@ data class DiscordConfigData(
 
    var proxy:Boolean,
    @JsonProperty(value = "proxy_host")
-   var proxyHost:String,
+   var proxyHost:String? = null,
    @JsonProperty(value = "proxy_port")
-   var proxyPort:Int,
+   var proxyPort:Int? = null,
    @JsonProperty(value = "proxy_username")
-   var proxyUsername:String,
+   var proxyUsername:String? = null,
    @JsonProperty(value = "proxy_password")
-   var proxyPassword:String,
+   var proxyPassword:String? = null,
 )
 val defaultConfig:String by lazy {
    DiscordConfigData(

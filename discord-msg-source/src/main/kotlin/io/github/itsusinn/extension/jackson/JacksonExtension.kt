@@ -1,12 +1,24 @@
 package io.github.itsusinn.extension.jackson
 
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 
-val mapper: ObjectMapper = ObjectMapper().registerModule(KotlinModule())
+/**
+ * mapper instance
+ * Feature:
+ * accept empty string as null
+ */
+val mapper: ObjectMapper = ObjectMapper().apply {
+   registerModule(KotlinModule())
+   configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT,true)
+}
 val writer = mapper.writerWithDefaultPrettyPrinter()
+
 /**
  * Method to serialize instance into JSON content
+ * Note that the nullable [Any] is only for compatibility with generics
+ * if the return value is null,it will throw [NullPointerException]
  */
 fun Any?.writeValueAsString(): String = writer.writeValueAsString(this)
 

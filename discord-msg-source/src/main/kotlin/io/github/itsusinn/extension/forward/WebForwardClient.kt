@@ -1,7 +1,7 @@
 package io.github.itsusinn.extension.forward
 
 import io.github.itsusinn.extension.base64.base64
-import io.github.itsusinn.extension.log.logger
+import io.github.itsusinn.extension.log.staticInlineLogger
 import io.github.itsusinn.extension.vertx.eventloop.eventBus
 import io.github.itsusinn.extension.vertx.httpclient.createWebSocket
 import io.github.itsusinn.extension.vertx.httpclient.httpClient
@@ -17,6 +17,7 @@ class WebForwardClient private constructor(
    val token: String,
    val name: String,
 ) {
+   val logger = staticInlineLogger()
 
    private lateinit var wsClient:WebSocket
 
@@ -53,7 +54,12 @@ class WebForwardClient private constructor(
          .put("channel_id",channelID)
          .put("token",token)
       try {
-         wsClient = httpClient.createWebSocket(port,host,"$uri/${para.encode().base64}")
+         wsClient =
+            httpClient.createWebSocket(
+               port,
+               host,
+               "$uri/${para.encode().base64}"
+            )
          initEventBus()
       } catch (t:Throwable){
          logger.error(t) { "Create ws client failed" }
@@ -92,13 +98,24 @@ class WebForwardClient private constructor(
       ): WebForwardClient {
 
          val host  = kotlin.runCatching {
-            address.substring(0,address.indexOf(":")) }.getOrElse { "127.0.0.1" }
+            address.substring(
+               0,
+               address.indexOf(":")
+            )
+         }.getOrElse { "127.0.0.1" }
 
          val port = kotlin.runCatching {
-            address.substring(address.indexOf(":")+1,address.indexOf("/")).toInt() }.getOrElse { 1431 }
+            address.substring(
+               address.indexOf(":")+1,
+               address.indexOf("/")
+            ).toInt()
+         }.getOrElse { 1431 }
 
          val uri = kotlin.runCatching {
-            address.substring(address.indexOf("/")) }.getOrElse { "/ws" }
+            address.substring(
+               address.indexOf("/")
+            )
+         }.getOrElse { "/ws" }
 
          return createFully(port, host, uri, appID, channelID, token,name)
       }
