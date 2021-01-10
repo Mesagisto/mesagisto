@@ -1,5 +1,11 @@
 package io.github.itsusinn.extension.runtime
 
+val runtime = Runtime.getRuntime()
+
 fun addShutdownHook(hook:Runnable){
-   Runtime.getRuntime().addShutdownHook(Thread(hook))
+   runtime.addShutdownHook(Thread(hook))
+}
+
+fun exit(status:Int){
+   runtime.exit(status)
 }

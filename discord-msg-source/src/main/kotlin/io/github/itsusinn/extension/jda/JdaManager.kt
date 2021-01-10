@@ -9,9 +9,6 @@ import net.dv8tion.jda.api.events.channel.text.TextChannelCreateEvent
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 
-
-const val token = "Nzk1Mjk0NzY0NTcyMDgyMjQ2.X_HR9w.atpzjtYzmQV7f_oHT7VayXRZD0A"
-
 object JdaManager {
    fun init(){
       val jda = JDABuilder

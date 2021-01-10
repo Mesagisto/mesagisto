@@ -4,6 +4,7 @@ import io.github.itsusinn.extension.config.ConfigKeeper
 import io.github.itsusinn.extension.forward.WebForwardClient
 import io.github.itsusinn.extension.log.logger
 import io.github.itsusinn.extension.runtime.addShutdownHook
+import io.github.itsusinn.extension.runtime.exit
 import io.github.itsusinn.extension.thread.SingleThread
 import io.github.itsusinn.extension.vertx.eventloop.eventBus
 import kotlinx.coroutines.runBlocking
@@ -41,9 +42,14 @@ object App : SingleThread() {
             token = config.forwardToken,
             name = config.name
          )
-      forwardClient.link()
-      eventBus.consumer<String>("forward.source"){
-         logger.info { "Received:${it.body()}" }
+      try {
+         forwardClient.link()
+         eventBus.consumer<String>("forward.source"){
+            logger.info { "Received:${it.body()}" }
+         }
+      }catch (e:Throwable){
+         logger.error { "please modify config" }
+         exit(1)
       }
    }
 }

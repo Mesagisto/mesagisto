@@ -21,11 +21,11 @@ class WebForwardClient private constructor(
    private lateinit var wsClient:WebSocket
 
    private val consumer by lazy {
-      logger.info { "consumer added at forward.$name" }
+      logger.debug { "consumer added at forward.$name" }
       eventBus.localConsumer<String>("forward.$name")
    }
    private val publisher by lazy {
-      logger.info { "publisher added at forward.source" }
+      logger.debug { "publisher added at forward.source" }
       eventBus.publisher<String>("forward.source")
    }
 
@@ -41,6 +41,11 @@ class WebForwardClient private constructor(
          publisher.write(it.textData())
       }
    }
+
+   /**
+    * @throws Throwable if ws cannot link
+    * when failed,auto close resource
+    */
    suspend fun link() {
       val para = JsonObject()
       para
@@ -67,6 +72,7 @@ class WebForwardClient private constructor(
       wsClient.pause()
       consumer.pause()
    }
+
    fun stop(){
       wsClient.close()
       consumer.unregister()
