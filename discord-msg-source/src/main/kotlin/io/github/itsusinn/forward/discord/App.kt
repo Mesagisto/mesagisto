@@ -5,12 +5,12 @@ import io.github.itsusinn.extension.forward.WebForwardClient
 import io.github.itsusinn.extension.log.logger
 import io.github.itsusinn.extension.runtime.addShutdownHook
 import io.github.itsusinn.extension.runtime.exit
-import io.github.itsusinn.extension.thread.SingleThread
+import io.github.itsusinn.extension.thread.SingleThreadLoop
 import io.github.itsusinn.extension.vertx.eventloop.eventBus
 import kotlinx.coroutines.runBlocking
 import java.io.File
 
-object App : SingleThread() {
+object App : SingleThreadLoop() {
    val forwardClient = WebForwardClient.create()
    val dir = File("forward").apply { mkdir() }
    val configKeeper = ConfigKeeper.create<DiscordConfigData>(

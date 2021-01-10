@@ -26,7 +26,17 @@ data class DiscordConfigData(
    var appID:String,
    @JsonProperty(value = "channel_id")
    var channelID:String,
-   var name:String
+   var name:String,
+
+   var proxy:Boolean,
+   @JsonProperty(value = "proxy_host")
+   var proxyHost:String,
+   @JsonProperty(value = "proxy_port")
+   var proxyPort:Int,
+   @JsonProperty(value = "proxy_username")
+   var proxyUsername:String,
+   @JsonProperty(value = "proxy_password")
+   var proxyPassword:String,
 )
 val defaultConfig:String by lazy {
    DiscordConfigData(
@@ -38,6 +48,11 @@ val defaultConfig:String by lazy {
       "/ws",
       "test_app_id",
       "test_channel_id",
-      "test_name"
+      "test_name",
+      false,
+      "127.0.0.1",
+      2340,
+      "",
+      ""
    ).writeValueAsString()
 }
