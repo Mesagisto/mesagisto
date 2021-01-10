@@ -1,6 +1,8 @@
 package io.github.itsusinn.extension.jda
 
 import io.github.itsusinn.extension.log.logger
+import io.github.itsusinn.extension.okhttp.proxy
+import io.github.itsusinn.extension.okhttp.proxyAuth
 import io.github.itsusinn.extension.thread.SingleThreadLoop
 import kotlinx.coroutines.launch
 import net.dv8tion.jda.api.JDABuilder
@@ -30,29 +32,21 @@ class DiscordBotClient private constructor(
          password:String? = null,
       ):DiscordBotClient = suspendCoroutine { continuation ->
          try {
-
-            val jdaBuilder = JDABuilder.createDefault(token).addEventListeners(Listener)
+            val jdaBuilder = JDABuilder
+               .createDefault(token)
+               .addEventListeners(Listener)
 
             //proxy configuration
-            if (hostname != null && port != null) {
-               val builder = OkHttpClient.Builder()
-               builder.proxy(Proxy(Proxy.Type.HTTP, InetSocketAddress(hostname, port)))
-               if (username != null && password != null) {
-                  //proxy authenticate
-                  val credential = Credentials.basic(username, password)
-                  builder.proxyAuthenticator { _, response ->
-                     response.request().newBuilder()
-                        .header("Proxy-Authorization", credential)
-                        .build()
-                  }
-               }
-               jdaBuilder.setHttpClientBuilder(builder)
-            }
+            val builder = OkHttpClient.Builder()
+               .proxy(hostname, port)
+               .proxyAuth(username, password)
+            jdaBuilder.setHttpClientBuilder(builder)
 
             //async
             listenEventOnce<ReadyEvent>("ready"){
                continuation.resume(DiscordBotClient(jdaBuilder))
             }
+
             jdaBuilder.build()
          }catch (e:Throwable){
             Listener.unregister("ready")
