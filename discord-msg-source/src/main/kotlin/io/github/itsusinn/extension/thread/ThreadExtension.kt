@@ -20,16 +20,16 @@ open class SingleThreadCoroutineScope private constructor(
 
    constructor(parent:SingleThreadCoroutineScope) : this(parent.executor)
 
-   fun shutdown() {
+   fun shutdownThread() {
       executor.shutdown()
    }
 
-   fun shutdownNow(){
+   fun shutdownThreadNow(){
       executor.shutdownNow()
    }
 
    protected fun finalize() {
-      shutdownNow()
+      shutdownThreadNow()
    }
 }
 

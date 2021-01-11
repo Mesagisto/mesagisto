@@ -55,11 +55,7 @@ class WebForwardClient private constructor(
          .put("token",token)
       try {
          wsClient =
-            httpClient.createWebSocket(
-               port,
-               host,
-               "$uri/${para.encode().base64}"
-            )
+            httpClient.createWebSocket(port, host, "$uri/${para.encode().base64}")
          initEventBus()
          return this
       } catch (t:Throwable){
