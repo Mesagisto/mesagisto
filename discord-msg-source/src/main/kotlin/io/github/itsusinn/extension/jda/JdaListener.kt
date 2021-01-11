@@ -1,17 +1,18 @@
 package io.github.itsusinn.extension.jda
 
-import io.github.itsusinn.extension.log.staticInlineLogger
-import io.github.itsusinn.extension.thread.SingleThreadLoop
+import io.github.itsusinn.extension.thread.SingleThreadCoroutineScope
 import kotlinx.coroutines.launch
+import mu.KotlinLogging
 import net.dv8tion.jda.api.events.GenericEvent
 import net.dv8tion.jda.api.hooks.EventListener
 import java.util.concurrent.ConcurrentHashMap
 
-object Listener: EventListener, SingleThreadLoop(DiscordBotClient) {
+object Listener: EventListener, SingleThreadCoroutineScope(DiscordBotClient) {
 
-   val logger = staticInlineLogger()
+   private val logger = KotlinLogging.logger(javaClass.name)
 
-   private val handlers = ConcurrentHashMap<String,suspend (GenericEvent) -> Unit>()
+   private val handlers =
+      ConcurrentHashMap<String,suspend (GenericEvent) -> Unit>()
 
    override fun onEvent(event: GenericEvent) {
       handlers.forEach { doHandleEvent(event,it.value) }

@@ -5,6 +5,10 @@ import okhttp3.OkHttpClient.Builder
 import java.net.InetSocketAddress
 import java.net.Proxy
 
+/**
+ * The proxy will not be set if one of the parameters is empty
+ */
+
 fun Builder.proxy(hostname:String?,port:Int?):Builder{
    if (hostname == null || port == null) return this
    proxy(
@@ -12,7 +16,9 @@ fun Builder.proxy(hostname:String?,port:Int?):Builder{
    )
    return this
 }
-
+/**
+ * The proxy auth will not be set if one of the parameters is empty
+ */
 fun Builder.proxyAuth(username:String?,password:String?):Builder{
    if (username != null && password != null) {
       //proxy authenticate

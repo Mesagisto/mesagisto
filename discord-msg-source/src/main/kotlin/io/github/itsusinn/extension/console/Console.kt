@@ -1,14 +1,12 @@
 package io.github.itsusinn.extension.console
 
-import io.github.itsusinn.extension.thread.SingleThreadLoop
-import kotlinx.coroutines.CoroutineScope
+import io.github.itsusinn.extension.thread.SingleThreadCoroutineScope
 import kotlinx.coroutines.async
 import java.util.concurrent.ConcurrentHashMap
-import kotlin.coroutines.CoroutineContext
 
 typealias Handler = suspend Iterator<String>.() -> String?
 
-object Console:SingleThreadLoop() {
+object Console:SingleThreadCoroutineScope() {
    val handlers = ConcurrentHashMap<String, Handler>()
    var helpInfo = "help"
 

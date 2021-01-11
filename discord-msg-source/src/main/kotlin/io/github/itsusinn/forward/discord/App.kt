@@ -2,46 +2,60 @@ package io.github.itsusinn.forward.discord
 
 import io.github.itsusinn.extension.config.ConfigKeeper
 import io.github.itsusinn.extension.forward.WebForwardClient
-import io.github.itsusinn.extension.log.staticInlineLogger
+import io.github.itsusinn.extension.jda.DiscordBotClient
 import io.github.itsusinn.extension.runtime.addShutdownHook
 import io.github.itsusinn.extension.runtime.exit
-import io.github.itsusinn.extension.thread.SingleThreadLoop
+import io.github.itsusinn.extension.thread.SingleThreadCoroutineScope
 import io.github.itsusinn.extension.vertx.eventloop.eventBus
-import kotlinx.coroutines.runBlocking
+import io.vertx.core.Vertx
+import kotlinx.coroutines.launch
+import mu.KotlinLogging
 import java.io.File
 
-object App : SingleThreadLoop() {
-   val forwardClient = WebForwardClient.create()
+object App : SingleThreadCoroutineScope("forward") {
+   //Make sure the forward folder exists
+   init { File("forward").apply { mkdir() } }
 
-   private val dir = File("forward").apply { mkdir() }
+   val configKeeper = ConfigKeeper
+      .create<DiscordConfigData>(
+         defaultConfig, File("forward/discord.json")
+      )
+   //add a shutdown hook to save config into file
+   init { addShutdownHook { configKeeper.save() } }
 
-   val configKeeper = ConfigKeeper.create<DiscordConfigData>(
-      defaultConfig,
-      File("forward/discord.json")
-   )
    val config = configKeeper.config
-   val logger = staticInlineLogger()
+   private val logger = KotlinLogging.logger(javaClass.name)
 
-   init {
-      addShutdownHook { configKeeper.save() }
-   }
-
+   /**
+    * about start signal,
+    * see [DiscordConfigData]
+    */
    @JvmStatic fun main(args:Array<String>){
 
       if (config.startSignal >1){
          config.startSignal--
-
          logger.warn { "Config dont exist,write default config into forward/discord.json" }
          logger.error { "app will exit,please modify config" }
       } else if (config.startSignal == 1){
-         start()
+         launch {
+            try {
+               start()
+            }catch (e:Throwable){
+               logger.error(e) { "start up failed \n" + e.stackTrace  }
+               exit(1)
+            }
+         }
       } else {
          logger.warn { "app has been prohibited to start" }
       }
       configKeeper.save()
    }
 
-   fun start() = runBlocking<Unit>{
+   suspend fun start() {
+      val discordClient = DiscordBotClient
+         .create(
+            token = config.discordToken
+         )
       val forwardClient = WebForwardClient
          .createFully(
             port = config.port,
@@ -52,15 +66,9 @@ object App : SingleThreadLoop() {
             token = config.forwardToken,
             name = config.name
          )
-      try {
-         forwardClient.link()
-         //test
-         eventBus.consumer<String>("forward.source"){
-            logger.info { "Received:${it.body()}" }
-         }
-      }catch (e:Throwable){
-         logger.error { "please modify config" }
-         exit(1)
+      //test
+      eventBus.consumer<String>("forward.source"){
+         logger.info { "Received:${it.body()}" }
       }
    }
 }

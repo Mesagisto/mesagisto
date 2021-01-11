@@ -16,7 +16,7 @@ val mapper: ObjectMapper = ObjectMapper().apply {
 val writer = mapper.writerWithDefaultPrettyPrinter()
 
 /**
- * Method to serialize instance into JSON content
+ * Method to serialize instance into JSON content.
  * Note that the nullable [Any] is only for compatibility with generics
  * if the return value is null,it will throw [NullPointerException]
  */

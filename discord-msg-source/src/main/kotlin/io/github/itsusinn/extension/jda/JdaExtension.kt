@@ -2,7 +2,8 @@ package io.github.itsusinn.extension.jda
 
 import io.github.itsusinn.extension.okhttp.proxy
 import io.github.itsusinn.extension.okhttp.proxyAuth
-import io.github.itsusinn.extension.thread.SingleThreadLoop
+import io.github.itsusinn.extension.thread.SingleThreadCoroutineScope
+import mu.KotlinLogging
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 
@@ -16,8 +17,8 @@ class DiscordBotClient private constructor(
    val jda: JDA
 ){
 
-   companion object Manager: SingleThreadLoop() {
-
+   companion object Manager: SingleThreadCoroutineScope("discord") {
+      private val logger = KotlinLogging.logger {  }
       suspend fun create(
          token:String,
          hostname:String? = null,
@@ -35,16 +36,17 @@ class DiscordBotClient private constructor(
                .proxy(hostname, port)
                .proxyAuth(username, password)
             jdaBuilder.setHttpClientBuilder(builder)
-
-            //async
+            logger.debug { "listen ready event" }
+            //async,directly return
             listenEventOnce<ReadyEvent>("ready-$token"){
                if (it.jda.token==token){
+                  logger.debug { "ready event $token" }
                   continuation.resume(DiscordBotClient(it.jda))
                   return@listenEventOnce true
                }
                return@listenEventOnce false
             }
-
+            logger.debug { "start build jda" }
             jdaBuilder.build()
          }catch (e:Throwable){
             continuation.resumeWithException(e)

@@ -22,5 +22,6 @@
             <AppenderRef ref="File"/>
         </Root>
         <logger name="io.netty" level="info"/>
+        <logger name="net.dv8tion" level="info"/>
     </Loggers>
 </Configuration>

@@ -1,12 +1,12 @@
 package io.github.itsusinn.extension.forward
 
 import io.github.itsusinn.extension.base64.base64
-import io.github.itsusinn.extension.log.staticInlineLogger
 import io.github.itsusinn.extension.vertx.eventloop.eventBus
 import io.github.itsusinn.extension.vertx.httpclient.createWebSocket
 import io.github.itsusinn.extension.vertx.httpclient.httpClient
 import io.vertx.core.http.WebSocket
 import io.vertx.core.json.JsonObject
+import mu.KotlinLogging
 
 class WebForwardClient private constructor(
    val port:Int,
@@ -17,16 +17,16 @@ class WebForwardClient private constructor(
    val token: String,
    val name: String,
 ) {
-   val logger = staticInlineLogger()
+   val logger = KotlinLogging.logger {  }
 
    private lateinit var wsClient:WebSocket
 
    private val consumer by lazy {
-      logger.debug { "consumer added at forward.$name" }
+      logger.info { "consumer added at forward.$name" }
       eventBus.localConsumer<String>("forward.$name")
    }
    private val publisher by lazy {
-      logger.debug { "publisher added at forward.source" }
+      logger.info { "publisher added at forward.source" }
       eventBus.publisher<String>("forward.source")
    }
 
@@ -47,7 +47,7 @@ class WebForwardClient private constructor(
     * @throws Throwable if ws cannot link
     * when failed,auto close resource
     */
-   suspend fun link() {
+   suspend private fun link(): WebForwardClient {
       val para = JsonObject()
       para
          .put("app_id",appID)
@@ -61,6 +61,7 @@ class WebForwardClient private constructor(
                "$uri/${para.encode().base64}"
             )
          initEventBus()
+         return this
       } catch (t:Throwable){
          logger.error(t) { "Create ws client failed" }
          consumer.unregister()
@@ -89,7 +90,7 @@ class WebForwardClient private constructor(
       /**
        * a short way of [createFully]
        */
-      fun create(
+      suspend fun create(
          address:String = "127.0.0.1:1431/ws",
          appID:String = "test_app_id",
          channelID:String = "test_channel_id",
@@ -117,7 +118,7 @@ class WebForwardClient private constructor(
             )
          }.getOrElse { "/ws" }
 
-         return createFully(port, host, uri, appID, channelID, token,name)
+         return createFully(port, host, uri, appID, channelID, token, name)
       }
 
       /**
@@ -129,7 +130,7 @@ class WebForwardClient private constructor(
        * @param[token] Forward client's token
        * @param[name] Forward client's source name
        */
-      fun createFully(
+      suspend fun createFully(
          port:Int = 1431,
          host:String = "127.0.0.1",
          uri:String = "/ws",
@@ -138,7 +139,7 @@ class WebForwardClient private constructor(
          token:String = "test_token_id",
          name:String = "test_name"
       ): WebForwardClient {
-         return WebForwardClient(port, host, uri, appID, channelID, token,name)
+         return WebForwardClient(port, host, uri, appID, channelID, token, name).link()
       }
    }
 }
