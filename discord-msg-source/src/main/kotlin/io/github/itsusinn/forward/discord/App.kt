@@ -30,20 +30,19 @@ object App : SingleThreadCoroutineScope("forward") {
     * about start signal,
     * see [DiscordConfigData]
     */
-   @JvmStatic fun main(args:Array<String>){
+   @JvmStatic
+   suspend fun main(args:Array<String>){
 
       if (config.startSignal >1){
          config.startSignal--
          logger.warn { "Config dont exist,write default config into forward/discord.json" }
          logger.error { "app will exit,please modify config" }
       } else if (config.startSignal == 1){
-         launch {
-            try {
-               start()
-            }catch (e:Throwable){
-               logger.error(e) { "start up failed \n" + e.stackTrace  }
-               exit(1)
-            }
+         try {
+            start()
+         }catch (e:Throwable){
+            logger.error(e) { "start up failed \n" + e.stackTrace  }
+            exit(1)
          }
       } else {
          logger.warn { "app has been prohibited to start" }
