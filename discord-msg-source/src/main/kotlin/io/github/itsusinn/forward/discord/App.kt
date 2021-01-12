@@ -4,13 +4,16 @@ import com.jagrosh.jdautilities.command.CommandClientBuilder
 import io.github.itsusinn.extension.config.ConfigKeeper
 import io.github.itsusinn.extension.forward.WebForwardClient
 import io.github.itsusinn.extension.jda.DiscordBotClient
-import io.github.itsusinn.extension.runtime.addShutdownHook
+import io.github.itsusinn.extension.jda.listenEvent
 import io.github.itsusinn.extension.runtime.exit
 import io.github.itsusinn.extension.thread.SingleThreadCoroutineScope
 import io.github.itsusinn.extension.vertx.eventloop.eventBus
+import io.github.itsusinn.forward.discord.command.addBindCommand
 import io.github.itsusinn.forward.discord.command.addPingCommand
 import kotlinx.coroutines.launch
 import mu.KotlinLogging
+import net.dv8tion.jda.api.entities.ChannelType
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import java.io.File
 
 object App : SingleThreadCoroutineScope("forward") {
@@ -55,7 +58,7 @@ object App : SingleThreadCoroutineScope("forward") {
       val discordClient = DiscordBotClient.create(
          token = config.discord.token)
 
-      val forwardClient = WebForwardClient.createFully(
+      val forwardClient = WebForwardClient.create(
          port = config.forward.port,
          host = config.forward.host,
          uri = config.forward.uri,
@@ -69,9 +72,24 @@ object App : SingleThreadCoroutineScope("forward") {
          .setOwnerId("795231031082876939")
          .setHelpWord("help")
          .addPingCommand()
+         .addBindCommand()
          .build()
 
       discordClient.addEventListener(commands)
+
+      listenEvent<MessageReceivedEvent>("forward-message"){
+         when(channelType){
+            ChannelType.TEXT -> {
+               message.contentDisplay
+            }
+            ChannelType.PRIVATE -> {
+               this.author.id
+            }
+            else -> {
+
+            }
+         }
+      }
 
       //test
       eventBus.consumer<String>("forward.source"){

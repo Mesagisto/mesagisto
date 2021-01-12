@@ -1,5 +1,7 @@
 package io.github.itsusinn.extension.jackson
 
+import io.vertx.core.buffer.Buffer
+
 /**
  * Method to deserialize JSON content from given JSON content String.
  *

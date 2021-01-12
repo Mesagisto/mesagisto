@@ -42,9 +42,9 @@ class DiscordBotClient(
 
          //async,directly return
          listenEventOnce<ReadyEvent>("ready-event-$token"){
-            if (it.jda.token == "Bot $token"){
+            if (jda.token == "Bot $token"){
                logger.debug { "ready event $token" }
-               continuation.resume(DiscordBotClient(it.jda))
+               continuation.resume(DiscordBotClient(jda))
                return@listenEventOnce true
             }
             return@listenEventOnce false

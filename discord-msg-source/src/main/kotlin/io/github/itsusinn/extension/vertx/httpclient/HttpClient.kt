@@ -9,7 +9,10 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
-
+/**
+ * Warning: this is just a short way of local use of vertx.
+ * Never use this in server-side
+ */
 val httpClient = vertx.createHttpClient()
 
 suspend fun HttpClient.createWebSocket(

@@ -6,6 +6,7 @@ import mu.KotlinLogging
 import net.dv8tion.jda.api.events.GenericEvent
 import net.dv8tion.jda.api.hooks.EventListener
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.atomic.AtomicInteger
 
 object Listener: EventListener, SingleThreadCoroutineScope(DiscordBotClient) {
 
@@ -31,8 +32,9 @@ object Listener: EventListener, SingleThreadCoroutineScope(DiscordBotClient) {
       }
    }
 
+   private val counter = AtomicInteger(0)
    fun register(
-      name:String,
+      name:String = counter.getAndIncrement().toString(),
       handler:suspend (GenericEvent) -> Unit
    ) {
       handlers.put(name,handler)
@@ -43,7 +45,7 @@ object Listener: EventListener, SingleThreadCoroutineScope(DiscordBotClient) {
 
 inline fun <reified T> listenEvent(
    name:String,
-   noinline handler:suspend (T) -> Unit
+   noinline handler:suspend T.() -> Unit
 ) where T: GenericEvent {
    Listener.register(name){
       if (it is T){ handler(it) }
@@ -55,7 +57,7 @@ inline fun <reified T> listenEvent(
  */
 inline fun <reified T> listenEventOnce(
    name:String,
-   noinline handler:suspend (T) -> Boolean
+   noinline handler:suspend T.() -> Boolean
 ) where T: GenericEvent {
    Listener.register(name){
 
