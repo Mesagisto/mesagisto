@@ -8,7 +8,7 @@ import io.github.itsusinn.extension.runtime.addShutdownHook
 import io.github.itsusinn.extension.runtime.exit
 import io.github.itsusinn.extension.thread.SingleThreadCoroutineScope
 import io.github.itsusinn.extension.vertx.eventloop.eventBus
-import io.github.itsusinn.forward.discord.command.PingCommand.addPingCommand
+import io.github.itsusinn.forward.discord.command.addPingCommand
 import kotlinx.coroutines.launch
 import mu.KotlinLogging
 import java.io.File
@@ -21,8 +21,6 @@ object App : SingleThreadCoroutineScope("forward") {
       .create<ConfigData>(
          defaultConfig, File("forward/discord.json")
       )
-   //add a shutdown hook to save config into file
-   init { addShutdownHook { configKeeper.save() } }
 
    val config = configKeeper.config
    private val logger = KotlinLogging.logger(javaClass.name)
@@ -37,6 +35,7 @@ object App : SingleThreadCoroutineScope("forward") {
          config.startSignal--
          logger.warn { "Config dont exist,write default config into forward/discord.json" }
          logger.warn { "app will exit,please modify config" }
+         configKeeper.save()
       } else if (config.startSignal == 1){
          try {
             launch {
@@ -49,7 +48,6 @@ object App : SingleThreadCoroutineScope("forward") {
       } else {
          logger.warn { "app has been prohibited to start" }
       }
-      configKeeper.save()
    }
 
    suspend fun start() {

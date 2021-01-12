@@ -1,7 +1,7 @@
 package io.github.itsusinn.forward.discord
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import io.github.itsusinn.extension.jackson.writeValueAsString
+import io.github.itsusinn.extension.jackson.writeAsString
 
 data class DiscordConfigData(
    val token: String,
@@ -62,5 +62,5 @@ val defaultConfig:String by lazy {
          "test_channel_id",
          "test_name",
       )
-   ).writeValueAsString()
+   ).writeAsString()!!
 }

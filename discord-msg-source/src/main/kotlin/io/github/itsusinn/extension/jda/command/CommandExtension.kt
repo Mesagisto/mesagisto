@@ -9,18 +9,16 @@ fun CommandClientBuilder.command(
    name:String = "null",
    help:String = "no help available",
    cooldown:Int = 0,
-   handler:(CommandEvent) -> Unit
+   handler:CommandEvent.() -> Unit
 ){
-   addCommand(
-      Command(name, help, cooldown, handler)
-   )
+   addCommand(Command(name, help, cooldown, handler))
 }
 
 fun Command(
    name:String = "null",
    help:String = "no help available",
    cooldown:Int = 0,
-   handler:(CommandEvent) -> Unit
+   handler:CommandEvent.() -> Unit
 ): JdaCommand {
    return object : JdaCommand(){
       override fun execute(event: CommandEvent) {

@@ -1,8 +1,7 @@
 package io.github.itsusinn.extension.config
 
+import io.github.itsusinn.extension.jackson.asString
 import io.github.itsusinn.extension.jackson.readValue
-import io.github.itsusinn.extension.jackson.writeValueAsString
-import org.apache.logging.log4j.core.net.Facility
 import java.io.File
 
 class ConfigKeeper<T> (
@@ -10,7 +9,7 @@ class ConfigKeeper<T> (
    private val file: File
 ){
    fun save(){
-      file.writeText(config.writeValueAsString())
+      file.writeText(config.asString ?:"error when writing config")
    }
    companion object Factory{
       inline fun <reified T> create(defaultConfig:String,file:File):ConfigKeeper<T>{

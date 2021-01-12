@@ -1,6 +1,5 @@
 package io.github.itsusinn.forward.dispatcher
 
-import io.github.itsusinn.extension.logger
 import io.github.itsusinn.extension.vertx.parsePath
 import io.github.itsusinn.forward.dispatcher.data.PathArgu
 import io.github.itsusinn.forward.dispatcher.repo.ConnectionMapper
@@ -9,6 +8,9 @@ import io.vertx.core.http.HttpServer
 import io.vertx.core.http.HttpServerOptions
 import io.vertx.core.http.ServerWebSocket
 import io.vertx.kotlin.coroutines.CoroutineVerticle
+import mu.KotlinLogging
+
+private val logger = KotlinLogging.logger {  }
 
 class DispatcherVerticle: CoroutineVerticle() {
    override suspend fun start(){
@@ -19,7 +21,7 @@ class DispatcherVerticle: CoroutineVerticle() {
       val server = vertx.createHttpServer(options)
       initWebsocket(server)
       server.listen(1431)
-      logger.info("DispatcherVerticle Start On ws://127.0.0.1:1431")
+      logger.info{"DispatcherVerticle Start On ws://127.0.0.1:1431"}
    }
 }
 
@@ -56,14 +58,15 @@ fun CoroutineVerticle.initWebsocket(server:HttpServer):HttpServer = server.webSo
  * register the handler of frame
  */
 fun ServerWebSocket.registerFrameHandler(address: String) = frameHandler{ frame ->
-   val textData = frame.textData()
-   logger.debug("Receive from $address content: $textData")
+   val data = frame.binaryData()
+   logger.debug("Receive from $address")
    val currID = binaryHandlerID()
    //Forward a message to every ws connection
-   // that is not currently sending messages to the server
+   //that is not currently sending messages to the server
    for (wsID in connMapper.findIdListByAddress(address)) {
       if (currID == wsID) continue
-      connMapper.findInstanceById(wsID)?.writeFinalTextFrame(textData)
+      //non-blocking
+      connMapper.findInstanceById(wsID)?.writeFinalBinaryFrame(data)
    }
 }
 /**

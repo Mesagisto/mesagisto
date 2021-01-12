@@ -2,46 +2,32 @@ package io.github.itsusinn.extension.jackson
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import mu.KotlinLogging
+import java.text.SimpleDateFormat
+import java.util.*
+
+val jacksonLogger = KotlinLogging.logger {  }
 
 /**
- * mapper instance
- * Feature:
- * accept empty string as null
+ * add functional support for jackson
  */
+object JacksonExtension
+
 val mapper: ObjectMapper = ObjectMapper().apply {
    registerModule(KotlinModule())
+
+   //Beijing China Std Time: GMT+8
+   setTimeZone(TimeZone.getTimeZone("GMT+8"))
+   setDateFormat(SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
+
    configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT,true)
-}
-val writer = mapper.writerWithDefaultPrettyPrinter()
+   configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false)
 
-/**
- * Method to serialize instance into JSON content.
- * Note that the nullable [Any] is only for compatibility with generics
- * if the return value is null,it will throw [NullPointerException]
- */
-fun Any?.writeValueAsString(): String = writer.writeValueAsString(this)
+   configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+}
 
-/**
- * Method to deserialize JSON content from given JSON content String.
- *
- * @throws JsonParseException if underlying input contains invalid content
- *    of type {@link JsonParser} supports (JSON for default case)
- * @throws JsonMappingException if the input JSON structure does not match structure
- *   expected for result type (or has other mismatch issues)
- */
-inline fun <reified T> readValue(src:String): T? {
-   try {
-      return mapper.readValue(src,T::class.java)
-   }catch (e:Exception){
-      return null
-   }
-}
-inline fun <reified T> readValue(src:ByteArray): T? {
-   try {
-      return mapper.readValue(src,T::class.java)
-   }catch (e:Exception){
-      e.printStackTrace()
-      return null
-   }
-}
+val prettyWriter = mapper.writerWithDefaultPrettyPrinter()
+val writer = mapper.writer()
+val reader = mapper.reader()
