@@ -54,6 +54,5 @@ dependencies {
    implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
    implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
-   implementation("com.michael-bull.kotlin-inline-logger:kotlin-inline-logger:1.0.2")
    implementation ("io.github.microutils:kotlin-logging-jvm:2.0.2")
 }
