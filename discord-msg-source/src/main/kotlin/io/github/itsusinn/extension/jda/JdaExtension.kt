@@ -13,8 +13,8 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class DiscordBotClient(
-   val jda: JDA
+class DiscordBotClient private constructor(
+   private val jda: JDA
 ): SingleThreadCoroutineScope(Manager),
    JDA by jda {
 

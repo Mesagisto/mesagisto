@@ -4,4 +4,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 
 abstract class Message: Frame
 
-data class TestMessage(val content:String):Message()
+data class TextMessage(
+   val senderID:Long,
+   val content:String,
+   ):Message()

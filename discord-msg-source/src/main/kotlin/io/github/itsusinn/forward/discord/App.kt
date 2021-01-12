@@ -1,8 +1,13 @@
 package io.github.itsusinn.forward.discord
 
 import com.jagrosh.jdautilities.command.CommandClientBuilder
+import com.jagrosh.jdautilities.command.CommandEvent
 import io.github.itsusinn.extension.config.ConfigKeeper
 import io.github.itsusinn.extension.forward.WebForwardClient
+import io.github.itsusinn.extension.forward.data.FrameData
+import io.github.itsusinn.extension.forward.data.TextMessage
+import io.github.itsusinn.extension.jackson.asBuffer
+import io.github.itsusinn.extension.jackson.asBytes
 import io.github.itsusinn.extension.jda.DiscordBotClient
 import io.github.itsusinn.extension.jda.listenEvent
 import io.github.itsusinn.extension.runtime.exit
@@ -10,9 +15,13 @@ import io.github.itsusinn.extension.thread.SingleThreadCoroutineScope
 import io.github.itsusinn.extension.vertx.eventloop.eventBus
 import io.github.itsusinn.forward.discord.command.addBindCommand
 import io.github.itsusinn.forward.discord.command.addPingCommand
+import io.vertx.core.buffer.Buffer
 import kotlinx.coroutines.launch
 import mu.KotlinLogging
+import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.ChannelType
+import net.dv8tion.jda.api.entities.Message
+import net.dv8tion.jda.api.entities.MessageChannel
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import java.io.File
 
@@ -80,20 +89,28 @@ object App : SingleThreadCoroutineScope("forward") {
       listenEvent<MessageReceivedEvent>("forward-message"){
          when(channelType){
             ChannelType.TEXT -> {
-               message.contentDisplay
+               logger.debug { "dc received ${message.contentDisplay}" }
+               if (channel.idLong != 795234861081952256) return@listenEvent
+               if (this.author.isBot) return@listenEvent
+               val textMessage = TextMessage(member!!.idLong,message.contentDisplay)
+               val forwardFrame = FrameData(200,textMessage)
+               val messageBuffer = forwardFrame.asBuffer
+                  ?: return@listenEvent
+               logger.debug { "de write data" }
+               forwardClient.writeFinalBinaryFrame(messageBuffer)
             }
             ChannelType.PRIVATE -> {
-               this.author.id
+               logger.info {
+                  "Received Private Message ${message.contentDisplay}"
+               }
             }
-            else -> {
-
-            }
+            else -> { }
          }
       }
-
-      //test
-      eventBus.consumer<String>("forward.source"){
-         logger.info { "Received:${it.body()}" }
+      val myChannel = discordClient.textChannels.find { it.idLong == 795234861081952256 }
+      forwardClient.frameHandler {
+         logger.debug { "Received:${it.textData()}" }
+         myChannel?.sendMessage(it.textData())?.queue()
       }
    }
 }

@@ -4,6 +4,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
 import java.util.*
 import java.util.concurrent.*
+import kotlin.coroutines.CoroutineContext
+
+open class CoroutineScopeWithDispatcher(
+   override val coroutineContext: CoroutineContext
+):CoroutineScope{
+   constructor(parent:CoroutineScopeWithDispatcher):this(parent.coroutineContext)
+}
 
 /**
  * should keep the reference of its instance,

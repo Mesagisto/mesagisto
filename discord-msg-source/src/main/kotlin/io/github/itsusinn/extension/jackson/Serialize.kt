@@ -31,13 +31,17 @@ fun Any?.writeAsBytes(): ByteArray? = kotlin.runCatching {
  * a short way of [writeAsBytes]
  */
 inline val Any?.asBuffer: Buffer?
-   get() = kotlin.runCatching {
-      Buffer.buffer(writer.writeValueAsBytes(this))
-   }.getOrNull()
+   get() {
+      val bytes = this.asBytes
+         ?: return null
+      return Buffer.buffer(bytes)
+   }
 
-fun Any?.writeAsBuffer(): Buffer? = kotlin.runCatching {
-   Buffer.buffer(writer.writeValueAsBytes(this))
-}.getOrNull()
+fun Any?.writeAsBuffer(): Buffer? {
+   val bytes = this.asBytes
+      ?: return null
+   return Buffer.buffer(bytes)
+}
 /**
  * a short way of [writeAsBytes]
  */

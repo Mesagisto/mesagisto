@@ -1,11 +1,18 @@
 package io.github.itsusinn.extension.forward
 
 import io.github.itsusinn.extension.base64.base64
+import io.github.itsusinn.extension.thread.CoroutineScopeWithDispatcher
+import io.github.itsusinn.extension.thread.SingleThreadCoroutineScope
 import io.github.itsusinn.extension.vertx.eventloop.eventBus
+import io.github.itsusinn.extension.vertx.eventloop.vertx
 import io.github.itsusinn.extension.vertx.httpclient.createWebSocket
 import io.github.itsusinn.extension.vertx.httpclient.httpClient
+import io.vertx.core.Handler
 import io.vertx.core.http.WebSocket
+import io.vertx.core.http.WebSocketFrame
 import io.vertx.core.json.JsonObject
+import io.vertx.kotlin.coroutines.dispatcher
+import kotlinx.coroutines.CoroutineScope
 import mu.KotlinLogging
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.coroutines.resumeWithException
@@ -21,10 +28,21 @@ class WebForwardClient private constructor(
    val channelID:String,
    val token: String,
    val name: String,
-   val wsClient:WebSocket
-):WebSocket by wsClient {
+   private val wsClient:WebSocket
+):CoroutineScopeWithDispatcher(vertx.dispatcher()),
+   WebSocket by wsClient {
+   private val frameHandlers = ArrayList<Handler<WebSocketFrame>>()
+   init {
+      wsClient.frameHandler { frame ->
+         frameHandlers.forEach { it.handle(frame) }
+      }
+   }
+   override fun frameHandler(handler:Handler<WebSocketFrame> ): WebSocket {
+      frameHandlers.add(handler)
+      return this
+   }
 
-   companion object Factory{
+   companion object Manager:SingleThreadCoroutineScope("forward-client"){
 
       /**
        * @param[port] WebSocket's port

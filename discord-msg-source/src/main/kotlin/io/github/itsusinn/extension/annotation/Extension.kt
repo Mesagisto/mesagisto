@@ -1,4 +1,4 @@
-package io.github.itsusinn.annotation
+package io.github.itsusinn.extension.annotation
 
 annotation class Fluent
 
