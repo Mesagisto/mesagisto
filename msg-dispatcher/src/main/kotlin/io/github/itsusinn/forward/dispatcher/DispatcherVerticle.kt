@@ -1,14 +1,16 @@
 package io.github.itsusinn.forward.dispatcher
 
 import io.github.itsusinn.extension.vertx.parsePath
+import io.github.itsusinn.extension.vertx.websocket.pingBuffer
 import io.github.itsusinn.forward.dispatcher.data.PathArgu
-import io.github.itsusinn.forward.dispatcher.repo.ConnectionMapper
+import io.github.itsusinn.forward.dispatcher.repo.ConnectionRepo
 import io.github.itsusinn.forward.dispatcher.repo.checkToken
 import io.vertx.core.http.HttpServer
 import io.vertx.core.http.HttpServerOptions
 import io.vertx.core.http.ServerWebSocket
 import io.vertx.kotlin.coroutines.CoroutineVerticle
 import mu.KotlinLogging
+import java.util.concurrent.atomic.AtomicInteger
 
 private val logger = KotlinLogging.logger {  }
 
@@ -25,16 +27,13 @@ class DispatcherVerticle: CoroutineVerticle() {
    }
 }
 
-val connMapper = ConnectionMapper()
+val connMapper = ConnectionRepo()
 
 fun CoroutineVerticle.initWebsocket(server:HttpServer):HttpServer = server.webSocketHandler { ws ->
 
    if (!ws.path().startsWith("/ws")) ws.reject()
 
-   val pathArgu:PathArgu
-   try {
-      pathArgu = parsePath<PathArgu>(ws.path().substring(3))
-   }catch (e:Exception){
+   val pathArgu = parsePath<PathArgu>(ws.path().substring(3)) ?: run {
       ws.reject()
       return@webSocketHandler
    }
@@ -46,31 +45,30 @@ fun CoroutineVerticle.initWebsocket(server:HttpServer):HttpServer = server.webSo
       ws.reject()
       return@webSocketHandler
    }
+
    val address = "${pathArgu.appID}:${pathArgu.channelID}"
    connMapper.save(address,ws,ws.binaryHandlerID())
 
-   ws.registerFrameHandler(address)
-   ws.registerCloseHandler()
-   ws.accept()
+   ws
+      .frameHandler { frame ->
+         val currID = ws.binaryHandlerID()
+         val data = frame.binaryData()
+         if (data.equals(pingBuffer)){
+            logger.debug { "Received a ping frame" }
+            connMapper.reAliveById(currID)
+            return@frameHandler
+         }
+         logger.debug{ "Receive from $address content:${frame.textData()}" }
+         val idList = connMapper.findIdListByAddress(address) ?: return@frameHandler
+
+         //find other subscribers and send message to them
+         idList.dropWhile { equals(currID) }.forEach {
+            connMapper.findInstanceById(it)?.writeFinalBinaryFrame(data)
+         }
+      }
+      .closeHandler { connMapper.closeById(ws.binaryHandlerID()) }
+      .accept()
+
+   connMapper.setAutoClean(vertx)
 }
 
-/**
- * register the handler of frame
- */
-fun ServerWebSocket.registerFrameHandler(address: String) = frameHandler{ frame ->
-   val data = frame.binaryData()
-   logger.debug("Receive from $address")
-   val currID = binaryHandlerID()
-   //Forward a message to every ws connection
-   //that is not currently sending messages to the server
-   for (wsID in connMapper.findIdListByAddress(address)) {
-      if (currID == wsID) continue
-      //non-blocking
-      connMapper.findInstanceById(wsID)?.writeFinalBinaryFrame(data)
-   }
-}
-/**
- * register the handler of ws close
- */
-fun ServerWebSocket.registerCloseHandler()
-= closeHandler { connMapper.closeByInstance(this) }
