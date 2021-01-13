@@ -1,12 +1,23 @@
 package io.github.itsusinn.extension.forward
 
 import io.github.itsusinn.extension.base64.base64
-import io.github.itsusinn.extension.vertx.eventloop.eventBus
+import io.github.itsusinn.extension.thread.CoroutineScopeWithDispatcher
+import io.github.itsusinn.extension.thread.SingleThreadCoroutineScope
+import io.github.itsusinn.extension.vertx.eventloop.vertx
 import io.github.itsusinn.extension.vertx.httpclient.createWebSocket
 import io.github.itsusinn.extension.vertx.httpclient.httpClient
+import io.github.itsusinn.extension.vertx.websocket.pingBuffer
+import io.vertx.core.Handler
 import io.vertx.core.http.WebSocket
+import io.vertx.core.http.WebSocketFrame
 import io.vertx.core.json.JsonObject
+import io.vertx.kotlin.coroutines.dispatcher
+import kotlinx.coroutines.CoroutineScope
 import mu.KotlinLogging
+
+private val logger = KotlinLogging.logger {  }
+
+private fun now() = System.currentTimeMillis()
 
 class WebForwardClient private constructor(
    val port:Int,
@@ -16,110 +27,40 @@ class WebForwardClient private constructor(
    val channelID:String,
    val token: String,
    val name: String,
-) {
-   val logger = KotlinLogging.logger {  }
+   private val wsClient:WebSocket
+):CoroutineScope by CoroutineScopeWithDispatcher(vertx.dispatcher()),
+   WebSocket by wsClient {
 
-   private lateinit var wsClient:WebSocket
+   private var alive:Long = now()
 
-   private val consumer by lazy {
-      logger.info { "consumer added at forward.$name" }
-      eventBus.localConsumer<String>("forward.$name")
-   }
-   private val publisher by lazy {
-      logger.info { "publisher added at forward.source" }
-      eventBus.publisher<String>("forward.source")
-   }
+   fun isAlive():Boolean = if (now() - alive > 60*1000*1.5) false else true
 
-   /**
-    * must invoke after start()
-    * or ws client frame handle cannot be registered
-    */
-   private fun initEventBus(){
-      consumer.handler{
-         wsClient.writeFinalTextFrame(it.body())
+   private var proxyFrameHandler:Handler<WebSocketFrame>? = null
+   init {
+      wsClient.frameHandler { frame ->
+         if (frame.binaryData().equals(pingBuffer)) return@frameHandler
+         logger.debug { "Received: ${frame.textData()}" }
+         proxyFrameHandler?.handle(frame)
       }
-      wsClient.frameHandler {
-         publisher.write(it.textData())
+      vertx.setPeriodic(60*1000){
+         wsClient.writePing(pingBuffer)
+         logger.debug { "writing ping" }
       }
-   }
+      wsClient.pongHandler {
+         alive = now()
+         logger.debug { "pongHandler received pong" }
+      }
 
-   /**
-    * @throws Throwable if ws cannot link
-    * when failed,auto close resource
-    */
-   suspend private fun link(): WebForwardClient {
-      val para = JsonObject()
-      para
-         .put("app_id",appID)
-         .put("channel_id",channelID)
-         .put("token",token)
-      try {
-         wsClient =
-            httpClient.createWebSocket(
-               port,
-               host,
-               "$uri/${para.encode().base64}"
-            )
-         initEventBus()
-         return this
-      } catch (t:Throwable){
-         logger.error(t) { "Create ws client failed" }
-         consumer.unregister()
-         publisher.close()
-         throw t
+      vertx.setPeriodic(30*1000){
+         logger.debug { "alive? ${isAlive()}" }
       }
    }
-
-   fun resume(){
-      wsClient.resume()
-      consumer.resume()
+   override fun frameHandler(handler : Handler<WebSocketFrame>): WebSocket {
+      proxyFrameHandler = handler
+      return this
    }
 
-   fun close(){
-      wsClient.pause()
-      consumer.pause()
-   }
-
-   fun stop(){
-      wsClient.close()
-      consumer.unregister()
-      publisher.close()
-   }
-
-   companion object Factory{
-      /**
-       * a short way of [createFully]
-       */
-      suspend fun create(
-         address:String = "127.0.0.1:1431/ws",
-         appID:String = "test_app_id",
-         channelID:String = "test_channel_id",
-         token:String = "test_token",
-         name:String = "test_name"
-      ): WebForwardClient {
-
-         val host  = kotlin.runCatching {
-            address.substring(
-               0,
-               address.indexOf(":")
-            )
-         }.getOrElse { "127.0.0.1" }
-
-         val port = kotlin.runCatching {
-            address.substring(
-               address.indexOf(":")+1,
-               address.indexOf("/")
-            ).toInt()
-         }.getOrElse { 1431 }
-
-         val uri = kotlin.runCatching {
-            address.substring(
-               address.indexOf("/")
-            )
-         }.getOrElse { "/ws" }
-
-         return createFully(port, host, uri, appID, channelID, token, name)
-      }
+   companion object Manager:SingleThreadCoroutineScope("forward-client"){
 
       /**
        * @param[port] WebSocket's port
@@ -130,7 +71,7 @@ class WebForwardClient private constructor(
        * @param[token] Forward client's token
        * @param[name] Forward client's source name
        */
-      suspend fun createFully(
+      suspend fun create(
          port:Int = 1431,
          host:String = "127.0.0.1",
          uri:String = "/ws",
@@ -139,7 +80,36 @@ class WebForwardClient private constructor(
          token:String = "test_token_id",
          name:String = "test_name"
       ): WebForwardClient {
-         return WebForwardClient(port, host, uri, appID, channelID, token, name).link()
+         val para = JsonObject()
+         para
+            .put("app_id",appID)
+            .put("channel_id",channelID)
+            .put("token",token)
+         val wsClient:WebSocket
+         try {
+            wsClient = httpClient.createWebSocket(port, host, "$uri/${para.encode().base64}")
+         } catch (e:Throwable){
+            logger.error(e) { "Create ws client failed" }
+            throw e
+         }
+         return WebForwardClient(port, host, uri, appID, channelID, token, name,wsClient)
       }
+      /**
+       * a short way of [create]
+       */
+      suspend fun create(
+         address:String = "127.0.0.1:1431/ws",
+         appID:String = "test_app_id",
+         channelID:String = "test_channel_id",
+         token:String = "test_token",
+         name:String = "test_name"
+      ): WebForwardClient {
+         //parse exact argus from address
+         val host  = kotlin.runCatching { address.substring(0, address.indexOf(":")) }.getOrElse { "127.0.0.1" }
+         val port = kotlin.runCatching { address.substring(address.indexOf(":")+1, address.indexOf("/")).toInt() }.getOrElse { 1431 }
+         val uri = kotlin.runCatching { address.substring(address.indexOf("/")) }.getOrElse { "/ws" }
+         return create(port, host, uri, appID, channelID, token, name)
+      }
+
    }
 }

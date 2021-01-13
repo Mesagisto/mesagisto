@@ -4,6 +4,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
 import java.util.*
 import java.util.concurrent.*
+import kotlin.coroutines.CoroutineContext
+
+open class CoroutineScopeWithDispatcher(
+   override val coroutineContext: CoroutineContext
+):CoroutineScope{
+   constructor(parent:CoroutineScopeWithDispatcher):this(parent.coroutineContext)
+}
 
 /**
  * should keep the reference of its instance,
@@ -20,16 +27,16 @@ open class SingleThreadCoroutineScope private constructor(
 
    constructor(parent:SingleThreadCoroutineScope) : this(parent.executor)
 
-   fun shutdown() {
+   fun shutdownThread() {
       executor.shutdown()
    }
 
-   fun shutdownNow(){
+   fun shutdownThreadNow(){
       executor.shutdownNow()
    }
 
    protected fun finalize() {
-      shutdownNow()
+      shutdownThreadNow()
    }
 }
 

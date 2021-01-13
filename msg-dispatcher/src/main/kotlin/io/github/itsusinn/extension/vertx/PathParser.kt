@@ -10,6 +10,6 @@ import java.util.*
  * @param T pojo class
  * @param path json url path
  */
-inline fun <reified T> parsePath(path:String):T = readValue<T>(
+inline fun <reified T> parsePath(path:String):T? = readValue<T>(
    (if (path.startsWith("/")) path.drop(1) else path).debase64
 )

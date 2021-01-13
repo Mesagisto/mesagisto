@@ -9,21 +9,14 @@ import io.vertx.core.buffer.Buffer
  */
 fun Any?.writeAsString(): String? = kotlin.runCatching {
    writer.writeValueAsString(this)
-}.getOrElse {
-   jacksonLogger.error(it) { it.stackTrace }
-   null
-}
-
+}.getOrNull()
 /**
  * a short way of [writeAsString]
  */
 inline val Any?.asString:String?
    get() = kotlin.runCatching {
       writer.writeValueAsString(this)
-   }.getOrElse {
-      jacksonLogger.error(it) { it.stackTrace }
-      null
-   }
+   }.getOrNull()
 
 
 /**
@@ -33,11 +26,7 @@ inline val Any?.asString:String?
  */
 fun Any?.writeAsBytes(): ByteArray? = kotlin.runCatching {
    writer.writeValueAsBytes(this)
-}.getOrElse {
-   jacksonLogger.error(it) { it.stackTrace }
-   null
-}
-
+}.getOrNull()
 /**
  * a short way of [writeAsBytes]
  */
@@ -59,10 +48,8 @@ fun Any?.writeAsBuffer(): Buffer? {
 inline val Any?.asBytes: ByteArray?
    get() = kotlin.runCatching {
       writer.writeValueAsBytes(this)
-   }.getOrElse {
-      jacksonLogger.error(it) { it.stackTrace }
-      null
-   }
+   }.getOrNull()
+
 
 /**
  * Method to serialize instance into JSON content.
@@ -71,18 +58,11 @@ inline val Any?.asBytes: ByteArray?
  */
 fun Any?.writeAsPrettyString(): String? = kotlin.runCatching {
    prettyWriter.writeValueAsString(this)
-}.getOrElse {
-   jacksonLogger.error(it) { it.stackTrace }
-   null
-}
-
+}.getOrNull()
 /**
  * a short way of [writeAsString]
  */
 inline val Any?.asPrettyString:String?
    get() = kotlin.runCatching {
       prettyWriter.writeValueAsString(this)
-   }.getOrElse {
-      jacksonLogger.error(it) { it.stackTrace }
-      null
-   }
+   }.getOrNull()

@@ -13,7 +13,6 @@ fun Any?.writeAsString(): String? = kotlin.runCatching {
    jacksonLogger.error(it) { it.stackTrace }
    null
 }
-
 /**
  * a short way of [writeAsString]
  */
@@ -37,7 +36,6 @@ fun Any?.writeAsBytes(): ByteArray? = kotlin.runCatching {
    jacksonLogger.error(it) { it.stackTrace }
    null
 }
-
 /**
  * a short way of [writeAsBytes]
  */
@@ -64,6 +62,7 @@ inline val Any?.asBytes: ByteArray?
       null
    }
 
+
 /**
  * Method to serialize instance into JSON content.
  * Note that the nullable [Any] is only for compatibility with generics
@@ -75,7 +74,6 @@ fun Any?.writeAsPrettyString(): String? = kotlin.runCatching {
    jacksonLogger.error(it) { it.stackTrace }
    null
 }
-
 /**
  * a short way of [writeAsString]
  */
