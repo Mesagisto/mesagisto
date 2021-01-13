@@ -28,9 +28,6 @@ object App: SingleThreadCoroutineScope("forward-test") {
 
    private val config = configKeeper.config
 
-   //add a shutdown hook to save config into file
-   init { addShutdownHook { configKeeper.save() } }
-
    private val logger = KotlinLogging.logger {  }
 
    @JvmStatic fun main(args:Array<String>) = runBlocking<Unit> {
@@ -38,6 +35,7 @@ object App: SingleThreadCoroutineScope("forward-test") {
          config.startSignal--
          logger.warn { "Config dont exist,write default config into forward/discord.json" }
          logger.error { "app will exit,please modify config" }
+         configKeeper.save()
       } else if (config.startSignal == 1){
          try {
             start()
@@ -52,7 +50,7 @@ object App: SingleThreadCoroutineScope("forward-test") {
 
    suspend fun start() = launch {
       val forwardClient = WebForwardClient
-         .createFully(
+         .create(
             port = config.port,
             host = config.host,
             uri = config.uri,
@@ -61,21 +59,21 @@ object App: SingleThreadCoroutineScope("forward-test") {
             token = config.forwardToken,
             name = config.name
          )
-      eventBus.consumer<String>("forward.source"){
-         logger.info { "Received:${it.body()}" }
+      forwardClient.frameHandler {
+//         logger.info { "Received:${it.textData()}" }
       }
       while (true){
          val line = readLine()!!
          when(line){
             "/exit" -> {
                forwardClient.close()
-               shutdown()
+               shutdownThread()
             }
-            "/pause" -> { forwardClient.stop() }
+            "/pause" -> { forwardClient.pause() }
             "/resume"  -> { forwardClient.resume() }
             else -> {
                logger.info { "Send:$line" }
-               eventBus.publish("forward.${config.name}",line)
+               forwardClient.writeFinalTextFrame(line)
             }
          }
       }
