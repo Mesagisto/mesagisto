@@ -1,7 +1,8 @@
 package io.github.itsusinn.forward.test
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import io.github.itsusinn.extension.jackson.writeValueAsString
+import io.github.itsusinn.extension.jackson.asPrettyString
+import io.github.itsusinn.extension.jackson.asString
 
 data class TestConfigData(
    /**
@@ -14,20 +15,20 @@ data class TestConfigData(
    var startSignal:Int = 2,
 
    @JsonProperty(value = "forward_token")
-   var forwardToken:String,
+   val forwardToken:String,
 
-   var host:String,
-   var port:Int,
-   var uri:String,
+   val host:String,
+   val port:Int,
+   val uri:String,
 
    @JsonProperty(value = "app_id")
-   var appID:String,
+   val appID:String,
    @JsonProperty(value = "channel_id")
-   var channelID:String,
-   var name:String,
+   val channelID:String,
+   val name:String,
 )
 
-val defaultConfig by lazy {
+val defaultConfig:String by lazy {
    TestConfigData(
       2,
       "test_token",
@@ -37,5 +38,5 @@ val defaultConfig by lazy {
       "test_app_id",
       "test_channel_id",
       "test_name",
-   ).writeValueAsString()
+   ).asPrettyString!!
 }
