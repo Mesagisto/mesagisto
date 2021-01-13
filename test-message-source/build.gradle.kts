@@ -15,7 +15,7 @@ group = "io.github.itsusinn.forward"
 version = "0.0.1"
 
 val kotlinVersion = "1.4.21"
-val vertxVersion = "3.9.4"
+val vertxVersion = "4.0.0"
 val junitJupiterVersion = "5.6.0"
 val coroutineVersion = "1.4.1"
 val jacksonVersion = "2.11.3"
@@ -47,5 +47,5 @@ dependencies {
    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.14.0")
    implementation("org.apache.logging.log4j:log4j-core:2.14.0")
    implementation("org.apache.logging.log4j:log4j-api:2.14.0")
-   implementation ("io.github.microutils:kotlin-logging-jvm:2.0.2")
+   implementation("io.github.microutils:kotlin-logging-jvm:2.0.2")
 }

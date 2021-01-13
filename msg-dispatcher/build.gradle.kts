@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
    java
    application
@@ -16,14 +18,17 @@ application{
    mainClassName = "io.github.itsusinn.forward.dispatcher.Main"
 }
 
-val kotlinVersion = "1.4.21"
-val vertxVersion = "3.9.4"
+val kotlinVersion = "1.4.20"
+val vertxVersion = "4.0.0"
 val junitJupiterVersion = "5.6.0"
-val coroutineVersion = "1.4.1"
+val coroutineVersion = "1.4.2"
 val jacksonVersion = "2.11.3"
 
 val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
-compileKotlin.kotlinOptions.jvmTarget = "1.8"
+compileKotlin.kotlinOptions {
+   freeCompilerArgs = listOf("-Xinline-classes")
+   jvmTarget = "1.8"
+}
 
 dependencies {
    //vertx
