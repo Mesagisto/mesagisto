@@ -59,12 +59,14 @@ fun CoroutineVerticle.initWebsocket(server:HttpServer):HttpServer = server.webSo
             return@frameHandler
          }
          logger.debug{ "Receive from $address content:${frame.textData()}" }
-         val idList = connMapper.findIdListByAddress(address) ?: return@frameHandler
+         val idList = connMapper.findIdListByAddressWithNoCopy(address) ?: return@frameHandler
 
          //find other subscribers and send message to them
-         idList.dropWhile { equals(currID) }.forEach {
-            connMapper.findInstanceById(it)?.writeFinalBinaryFrame(data)
+         for (id in idList){
+            if (id == currID) continue
+            connMapper.findInstanceById(id)?.writeFinalBinaryFrame(data)
          }
+
       }
       .closeHandler { connMapper.closeById(ws.binaryHandlerID()) }
       .accept()

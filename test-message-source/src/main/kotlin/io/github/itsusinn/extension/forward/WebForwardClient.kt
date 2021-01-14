@@ -43,16 +43,17 @@ class WebForwardClient private constructor(
          proxyFrameHandler?.handle(frame)
       }
       vertx.setPeriodic(60*1000){
+         if(!isAlive()){
+            logger.warn { "Ws connection is no longer alive" }
+            close()
+         }
          wsClient.writePing(pingBuffer)
          logger.debug { "writing ping" }
+
       }
       wsClient.pongHandler {
          alive = now()
          logger.debug { "pongHandler received pong" }
-      }
-
-      vertx.setPeriodic(30*1000){
-         logger.debug { "alive? ${isAlive()}" }
       }
    }
    override fun frameHandler(handler : Handler<WebSocketFrame>): WebSocket {

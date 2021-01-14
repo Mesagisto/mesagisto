@@ -1,2 +1,2 @@
-# mirai-console-example-plugin
-Example plugin for mirai-console
+# mirai-console-plugin-template
+Template for Mirai Console plugins

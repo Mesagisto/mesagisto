@@ -64,6 +64,7 @@ object App: SingleThreadCoroutineScope("forward-test") {
       }
       while (true){
          val line = readLine()!!
+         if (forwardClient.isClosed) break
          when(line){
             "/exit" -> {
                forwardClient.close()

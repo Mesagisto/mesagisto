@@ -33,7 +33,7 @@ class ConnectionRepo(){
       s.put("idReferMapper",idReferMapper)
       s.put("referIdMapper",referIdMapper)
       s.put("posIdMapper",posIdMapper)
-      s.put("idAliveMapper",idReferMapper)
+      s.put("idAliveMapper",idAliveMapper)
       return s.asPrettyString ?: "error inquiring status"
    }
 
@@ -46,7 +46,7 @@ class ConnectionRepo(){
       idPosMapper[id] = pos
       idReferMapper[id] = refer
       referIdMapper[refer] = id
-      posIdMapper.getOrPut(pos){ ArrayList<String>() }.add(id)
+      posIdMapper.getOrPut(pos){ArrayList<String>()}.add(id)
       idAliveMapper[id] = now()
    }
    private var iterator = idAliveMapper.iterator()
@@ -106,13 +106,13 @@ class ConnectionRepo(){
          null
       }
 
-   fun findIdListByAddress(address:String): ArrayList<String>?{
+   fun findIdListByAddress(address:String): List<String>?{
       val list = findIdListByAddressWithNoCopy(address)?: return null
       val copy = ArrayList<String>()
-      list.addAll(list)
+      copy.addAll(list)
       return copy
    }
-   private fun findIdListByAddressWithNoCopy(address:String): ArrayList<String>?{
+   fun findIdListByAddressWithNoCopy(address:String): ArrayList<String>?{
       val list = posIdMapper[address] ?: run {
          logger.warn { "Cannot find address:$address's wsIDList from addressIdentifierMapper" }
          return null
