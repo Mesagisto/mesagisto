@@ -49,16 +49,14 @@ object App: SingleThreadCoroutineScope("forward-test") {
    }
 
    suspend fun start() = launch {
-      val forwardClient = WebForwardClient
-         .create(
-            port = config.port,
-            host = config.host,
-            uri = config.uri,
-            appID = config.appID,
-            channelID = config.channelID,
-            token = config.forwardToken,
-            name = config.name
-         )
+      val forwardClient = WebForwardClient(
+         port = config.port,
+         host = config.host,
+         uri = config.uri,
+         appID = config.appID,
+         channelID = config.channelID,
+         token = config.forwardToken,
+      )
       forwardClient.frameHandler {
 //         logger.info { "Received:${it.textData()}" }
       }

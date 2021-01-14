@@ -1,12 +1,19 @@
-package io.github.itsusinn.extension.vertx.websocket
+package io.github.itsusinn.extension.vertx.httpclient
 
-import io.vertx.core.buffer.Buffer
+import io.github.itsusinn.extension.vertx.eventloop.vertx
 import io.vertx.core.http.HttpClient
 import io.vertx.core.http.WebSocket
-import io.vertx.core.http.WebSocketFrame
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
+/**
+ * Warning: this is just a short way of local use of vertx.
+ * Never use this in server-side
+ */
+val httpClient = vertx.createHttpClient()
 
 suspend fun HttpClient.createWebSocket(
    port:Int,
