@@ -1,9 +1,13 @@
 package io.github.itsusinn.forward.mirai
 
+import io.github.itsusinn.extension.forward.data.FrameData
+import io.github.itsusinn.extension.forward.data.TextMessage
 import io.github.itsusinn.extension.forward.data.textMessage
 import io.github.itsusinn.extension.forward.data.warp
 import io.github.itsusinn.extension.jackson.asString
 import io.github.itsusinn.extension.jackson.asStringOrFail
+import io.github.itsusinn.extension.jackson.readValue
+import io.github.itsusinn.extension.jackson.readValueOrFail
 import io.ktor.client.*
 import io.ktor.client.features.websocket.*
 import io.ktor.http.*
@@ -30,6 +34,8 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 import okhttp3.*
 import okio.ByteString
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
 
 object ForwardPluginMain : KotlinPlugin(
    JvmPluginDescription(
@@ -38,10 +44,15 @@ object ForwardPluginMain : KotlinPlugin(
       version = "0.1.0-rc1"
    )
 ){
-   val client = HttpClient { install(WebSockets) }
+   val client = HttpClient {
+      install(WebSockets) {
+         pingInterval = -1
+         maxFrameSize = Long.MAX_VALUE
+      }
+   }
 
    val eventChannel = globalEventChannel()
-   val cacheBot = HashMap<Long,ArrayList<Bot>>()
+   val cacheBot = HashMap<Long,HashSet<Bot>>()
 
    override fun onEnable() {
       ForwardConfig.reload()
@@ -53,17 +64,17 @@ object ForwardPluginMain : KotlinPlugin(
          }
 
          val ws = client.webSocketSession(
-            host = ForwardConfig.uri,
+            host = ForwardConfig.host,
             port = ForwardConfig.port,
             path = path
          ).warp()
 
          eventChannel.subscribeAlways<GroupMessageEvent> {
             if (group.id != ForwardConfig.target) return@subscribeAlways
-            val botList = cacheBot.getOrPut(group.id){ ArrayList<Bot>() }
+            val botList = cacheBot.getOrPut(group.id){ HashSet<Bot>() }
             botList.add(bot)
             if (botList.size == 1){
-               ws.send(textMessage(sender.id,message.contentToString()).asStringOrFail)
+               ws.send("$senderName:${message.contentToString()}")
             }
          }
 

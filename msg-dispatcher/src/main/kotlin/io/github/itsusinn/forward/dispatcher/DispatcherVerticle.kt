@@ -59,7 +59,11 @@ class DispatcherVerticle: CoroutineVerticle() {
             val address = "${appID}.${channelID}"
             ctx.request().toWebSocket {
                if (it.succeeded()){
-                  val ws = it.result().warp(vertx,EndpointKeeper,address)
+                  val ws = it.result().warp(
+                     vertx = vertx,
+                     keeper = EndpointKeeper,
+                     address = address,
+                  )
                }
             }
 

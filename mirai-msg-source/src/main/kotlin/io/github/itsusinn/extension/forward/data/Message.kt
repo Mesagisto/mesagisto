@@ -7,10 +7,10 @@ abstract class Message: Pack
 
 data class TextMessage(
    @JsonProperty(value = "sender_id")
-   val senderID:Long,
+   val senderID:String,
    val content:String,
 ):Message()
 
-fun textMessage(senderID: Long,content: String):FrameData{
+fun textMessage(senderID: String,content: String):FrameData{
    return FrameData(200,TextMessage(senderID, content))
 }

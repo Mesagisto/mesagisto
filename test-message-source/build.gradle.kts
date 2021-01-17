@@ -15,7 +15,6 @@ group = "io.github.itsusinn.forward"
 version = "0.0.1"
 
 val kotlinVersion = "1.4.21"
-val vertxVersion = "4.0.0"
 val junitJupiterVersion = "5.6.0"
 val coroutineVersion = "1.4.1"
 val jacksonVersion = "2.11.3"
@@ -24,19 +23,13 @@ val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
 compileKotlin.kotlinOptions.jvmTarget = "1.8"
 
 dependencies {
-   //vertx
-   implementation("io.vertx:vertx-core:$vertxVersion")
-   implementation("io.vertx:vertx-web:$vertxVersion")
-   implementation("io.vertx:vertx-lang-kotlin-coroutines:$vertxVersion")
-   implementation("io.vertx:vertx-lang-kotlin:$vertxVersion")
+
    //kotlin
    implementation ("org.jetbrains.kotlin:kotlin-stdlib")
    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")
    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
-   //test
-   testImplementation("io.vertx:vertx-junit5:$vertxVersion")
-   testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
+
    //jackson
    implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
    implementation("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
@@ -48,4 +41,10 @@ dependencies {
    implementation("org.apache.logging.log4j:log4j-core:2.14.0")
    implementation("org.apache.logging.log4j:log4j-api:2.14.0")
    implementation("io.github.microutils:kotlin-logging-jvm:2.0.2")
+
+   implementation("io.ktor:ktor-client-websockets:1.5.0")
+   implementation ("com.squareup.okhttp3:okhttp:4.9.0")
+   implementation("io.ktor:ktor-client-cio:1.5.0")
+
+
 }

@@ -8,15 +8,19 @@ import io.vertx.core.Vertx
 import io.vertx.core.http.ServerWebSocket
 import io.vertx.core.http.WebSocketFrame
 import io.vertx.core.json.JsonObject
+import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicInteger
+
+private val logger = KotlinLogging.logger {  }
 
 fun ServerWebSocket.warp(
    vertx: Vertx,
    keeper:EndpointKeeper,
    address: String,
-   identifier: String = textHandlerID().base64,
-):ServerWebSocket =
-   WarpedWebSocket(vertx,this,keeper,address, identifier)
+):ServerWebSocket{
+   logger.debug { "connect ws ${binaryHandlerID().base64}" }
+   return WarpedWebSocket(vertx,this,keeper,address,binaryHandlerID().base64)
+}
 
 class WarpedWebSocket(
    private val vertx: Vertx,
@@ -33,6 +37,8 @@ class WarpedWebSocket(
 
       keeper.sharedConsumer.getOrPut(address){
          eventBus.consumer<String>(address).handler {
+            logger.debug { "received at shared consumer content:${it.body()}" }
+            logger.debug { "pushing to local consumer" }
             eventBus.publish("local.$address",it.body())
          }
       }
@@ -43,7 +49,7 @@ class WarpedWebSocket(
          val senderID = pack.getString("sender") ?: return@handler
          if (senderID == identifier) return@handler
          val data = pack.getString("data") ?: return@handler
-
+         logger.debug { "writing to $identifier content:$data" }
          instance.writeFinalTextFrame(data)
       }
       instance.frameHandler {
@@ -52,6 +58,7 @@ class WarpedWebSocket(
          pack.put("sender",identifier)
          pack.put("data",it.textData())
          eventBus.publish(address,pack.encode())
+         logger.debug { "receive from ws $identifier content:${it.textData()}" }
          proxyFrameHandler?.handle(it)
       }
    }

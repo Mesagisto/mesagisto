@@ -16,6 +16,8 @@ inline fun <reified T> readValue(src:String): T? {
       return null
    }
 }
+inline fun <reified T> readValueOrFail(src:String): T = reader.readValue(src,T::class.java)
+
 inline fun <reified T> readValue(src:ByteArray): T? {
    try {
       return reader.readValue(src,T::class.java)
@@ -24,3 +26,4 @@ inline fun <reified T> readValue(src:ByteArray): T? {
       return null
    }
 }
+inline fun <reified T> readValueOrFail(src:ByteArray): T = reader.readValue(src,T::class.java)

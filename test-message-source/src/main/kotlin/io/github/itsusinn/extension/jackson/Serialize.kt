@@ -1,6 +1,5 @@
 package io.github.itsusinn.extension.jackson
 
-import io.vertx.core.buffer.Buffer
 
 /**
  * Method to serialize instance into JSON content.
@@ -36,21 +35,7 @@ fun Any?.writeAsBytes(): ByteArray? = kotlin.runCatching {
    jacksonLogger.error(it) { it.stackTrace }
    null
 }
-/**
- * a short way of [writeAsBytes]
- */
-inline val Any?.asBuffer: Buffer?
-   get() {
-      val bytes = this.asBytes
-         ?: return null
-      return Buffer.buffer(bytes)
-   }
 
-fun Any?.writeAsBuffer(): Buffer? {
-   val bytes = this.asBytes
-      ?: return null
-   return Buffer.buffer(bytes)
-}
 /**
  * a short way of [writeAsBytes]
  */
