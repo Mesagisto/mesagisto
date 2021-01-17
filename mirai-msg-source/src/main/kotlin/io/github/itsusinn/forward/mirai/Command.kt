@@ -22,8 +22,4 @@ object ForwardCommand : CompositeCommand(
       }
    }
 
-   @SubCommand("status","状态")
-   suspend fun CommandSender.handleStatus() {
-      sendMessage(ForwardConfig.toString()?: "error")
-   }
 }

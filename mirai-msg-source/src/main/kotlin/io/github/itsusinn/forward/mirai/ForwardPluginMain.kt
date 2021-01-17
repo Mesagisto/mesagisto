@@ -1,8 +1,16 @@
 package io.github.itsusinn.forward.mirai
 
-import io.github.itsusinn.extension.forward.WebForwardClient
-import io.vertx.core.http.WebSocket
+import io.github.itsusinn.extension.forward.data.textMessage
+import io.github.itsusinn.extension.forward.data.warp
+import io.github.itsusinn.extension.jackson.asString
+import io.github.itsusinn.extension.jackson.asStringOrFail
+import io.ktor.client.*
+import io.ktor.client.features.websocket.*
+import io.ktor.http.*
+import io.ktor.http.cio.websocket.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.async
+import kotlinx.coroutines.channels.ClosedReceiveChannelException
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.BotFactory
@@ -17,7 +25,11 @@ import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.event.globalEventChannel
 import net.mamoe.mirai.message.data.content
 import net.mamoe.mirai.utils.info
+import java.lang.StringBuilder
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.TimeUnit
+import okhttp3.*
+import okio.ByteString
 
 object ForwardPluginMain : KotlinPlugin(
    JvmPluginDescription(
@@ -26,7 +38,7 @@ object ForwardPluginMain : KotlinPlugin(
       version = "0.1.0-rc1"
    )
 ){
-   //target
+   val client = HttpClient { install(WebSockets) }
 
    val eventChannel = globalEventChannel()
    val cacheBot = HashMap<Long,ArrayList<Bot>>()
@@ -35,28 +47,30 @@ object ForwardPluginMain : KotlinPlugin(
       ForwardConfig.reload()
       if (ForwardConfig.startSignal != 0) return
       launch {
-         val wsClient = WebForwardClient(
-            ForwardConfig.port,
-            ForwardConfig.host,
-            ForwardConfig.uri,
-            ForwardConfig.appID,
-            ForwardConfig.channelID,
-            ForwardConfig.token
-         )
-         wsClient.frameHandler { frame ->
-            val botList = cacheBot[ForwardConfig.target] ?: return@frameHandler
-            val group = botList.random().getGroup(ForwardConfig.target) ?: return@frameHandler
-            launch {
-               group.sendMessage(frame.textData())
-            }
+         val path:String
+         ForwardConfig.apply {
+            path = "$uri?app_id=$appID&channel_id=$channelID&token=$token"
          }
+
+         val ws = client.webSocketSession(
+            host = ForwardConfig.uri,
+            port = ForwardConfig.port,
+            path = path
+         ).warp()
+
          eventChannel.subscribeAlways<GroupMessageEvent> {
             if (group.id != ForwardConfig.target) return@subscribeAlways
             val botList = cacheBot.getOrPut(group.id){ ArrayList<Bot>() }
             botList.add(bot)
             if (botList.size == 1){
-               wsClient.writeFinalTextFrame("$senderName : ${message.contentToString()}")
+               ws.send(textMessage(sender.id,message.contentToString()).asStringOrFail)
             }
+         }
+
+         ws.textFrameHandler {
+            val botList = cacheBot[ForwardConfig.target] ?: return@textFrameHandler
+            val group = botList.random().getGroup(ForwardConfig.target) ?: return@textFrameHandler
+            group.sendMessage(it.readText())
          }
       }
       registerCommand(ForwardCommand)

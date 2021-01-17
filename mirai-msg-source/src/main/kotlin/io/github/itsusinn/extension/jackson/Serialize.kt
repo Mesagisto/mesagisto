@@ -1,6 +1,5 @@
 package io.github.itsusinn.extension.jackson
 
-import io.vertx.core.buffer.Buffer
 
 /**
  * Method to serialize instance into JSON content.
@@ -13,17 +12,23 @@ fun Any?.writeAsString(): String? = kotlin.runCatching {
    jacksonLogger.error(it) { it.stackTrace }
    null
 }
+fun Any?.writeAsStringOrFail(): String = writer.writeValueAsString(this)
 
 /**
  * a short way of [writeAsString]
  */
 inline val Any?.asString:String?
-   get() = kotlin.runCatching {
+   get() = runCatching {
       writer.writeValueAsString(this)
    }.getOrElse {
       jacksonLogger.error(it) { it.stackTrace }
       null
    }
+inline val Any?.asStringOrFail:String
+   get() = writer.writeValueAsString(this)
+
+
+
 
 
 /**
@@ -31,28 +36,14 @@ inline val Any?.asString:String?
  * Note that the nullable [Any] is only for compatibility with generics
  * if the return value is null,it will throw [NullPointerException]
  */
-fun Any?.writeAsBytes(): ByteArray? = kotlin.runCatching {
+fun Any?.writeAsBytes(): ByteArray? = runCatching {
    writer.writeValueAsBytes(this)
 }.getOrElse {
    jacksonLogger.error(it) { it.stackTrace }
    null
 }
+fun Any?.writeAsBytesOrFail(): ByteArray = writer.writeValueAsBytes(this)
 
-/**
- * a short way of [writeAsBytes]
- */
-inline val Any?.asBuffer: Buffer?
-   get() {
-      val bytes = this.asBytes
-         ?: return null
-      return Buffer.buffer(bytes)
-   }
-
-fun Any?.writeAsBuffer(): Buffer? {
-   val bytes = this.asBytes
-      ?: return null
-   return Buffer.buffer(bytes)
-}
 /**
  * a short way of [writeAsBytes]
  */
@@ -63,6 +54,14 @@ inline val Any?.asBytes: ByteArray?
       jacksonLogger.error(it) { it.stackTrace }
       null
    }
+inline val Any?.asBytesOrFail: ByteArray?
+   get() = writer.writeValueAsBytes(this)
+
+
+
+
+
+
 
 /**
  * Method to serialize instance into JSON content.
@@ -75,7 +74,7 @@ fun Any?.writeAsPrettyString(): String? = kotlin.runCatching {
    jacksonLogger.error(it) { it.stackTrace }
    null
 }
-
+fun Any?.writeAsPrettyStringOrFail(): String = prettyWriter.writeValueAsString(this)
 /**
  * a short way of [writeAsString]
  */
@@ -86,3 +85,5 @@ inline val Any?.asPrettyString:String?
       jacksonLogger.error(it) { it.stackTrace }
       null
    }
+inline val Any?.asPrettyStringOrFail:String
+   get() = prettyWriter.writeValueAsString(this)

@@ -24,5 +24,5 @@ object ForwardConfig : AutoSavePluginConfig("forward") {
 //   val value7: List<List<String>> by value() // 支持嵌套
 //   val value8: Map<String, List<List<String>>> by value() // 支持 Map
 //
-//   var value9: List<String> by value() // List、Set 或 Map 同样支持 var。但请注意这是非引用赋值（详见下文）。
+//   var value9: List<String> by value() // List、Set 或 Map 同样支持 var。但请注意这是非引用赋值
 }

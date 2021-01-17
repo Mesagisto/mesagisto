@@ -6,11 +6,9 @@ import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.databind.JsonNode
 import io.github.itsusinn.extension.jackson.asString
-import io.vertx.core.buffer.Buffer
-import io.vertx.core.json.JsonObject
 import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
-interface Frame
+interface Pack
 
 data class FrameData(
    val code:Int,
@@ -19,5 +17,5 @@ data class FrameData(
       include = JsonTypeInfo.As.PROPERTY,
       property = "_type"
    )
-   val data:Frame,
+   val data:Pack,
 )
