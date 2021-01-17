@@ -1,6 +1,5 @@
 package io.github.itsusinn.extension.vertx.httpclient
 
-import io.github.itsusinn.extension.vertx.eventloop.vertx
 import io.vertx.core.http.HttpClient
 import io.vertx.core.http.WebSocket
 import kotlinx.coroutines.Dispatchers
@@ -9,8 +8,6 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
-
-val httpClient = vertx.createHttpClient()
 
 suspend fun HttpClient.createWebSocket(
    port:Int,

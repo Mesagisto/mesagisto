@@ -1,6 +1,6 @@
 plugins {
     java
-    kotlin("jvm") version "1.4.21"
+    kotlin("jvm") version "1.4.20"
 }
 
 group = "io.github.itsusinn"
@@ -11,6 +11,6 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
-    testCompile("junit", "junit", "4.12")
+   implementation(kotlin("stdlib"))
+   implementation ("io.vertx:vertx-hazelcast:4.0.0")
 }

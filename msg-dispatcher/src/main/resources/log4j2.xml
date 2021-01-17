@@ -22,5 +22,7 @@
             <AppenderRef ref="File"/>
         </Root>
         <logger name="io.netty" level="info"/>
+        <logger name="com.hazelcast" level="info"/>
+        <logger name="org.apache.ignite" level="warn"/>
     </Loggers>
 </Configuration>

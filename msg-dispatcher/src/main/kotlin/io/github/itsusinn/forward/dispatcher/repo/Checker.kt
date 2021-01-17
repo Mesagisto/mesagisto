@@ -5,23 +5,9 @@ import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger {  }
 
-
-/**
- * TODO check token's legality
- */
-fun checkToken(pathArgu: PathArgu):Boolean{
-   try {
-      return doCheckToken(pathArgu)
-   } catch (e:Exception){
-      return false
-   }
-}
-
-fun doCheckToken(pathArgu: PathArgu):Boolean{
-   //do some thing without caring exception
+fun checkToken(appID:String,channelID:String,token:String):Boolean{
    logger.warn { "New ws connect connecting " }
-   logger.warn { "AppId:${pathArgu.appID}" }
-   logger.warn { "ChannelID:${pathArgu.channelID}" }
+   logger.warn { "AppId:${appID}" }
+   logger.warn { "ChannelID:${channelID}" }
    return true
 }
-private object Logger

@@ -24,7 +24,8 @@ val junitJupiterVersion = "5.6.0"
 val coroutineVersion = "1.4.2"
 val jacksonVersion = "2.11.3"
 
-val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
+val compileKotlin: KotlinCompile by tasks
+
 compileKotlin.kotlinOptions {
    freeCompilerArgs = listOf("-Xinline-classes")
    jvmTarget = "1.8"
@@ -36,6 +37,7 @@ dependencies {
    implementation("io.vertx:vertx-web:$vertxVersion")
    implementation("io.vertx:vertx-lang-kotlin-coroutines:$vertxVersion")
    implementation("io.vertx:vertx-lang-kotlin:$vertxVersion")
+   implementation("io.vertx:vertx-ignite:$vertxVersion")
    //kotlin
    implementation("org.jetbrains.kotlin:kotlin-stdlib")
    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")
@@ -51,8 +53,9 @@ dependencies {
    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
    //logging
    implementation("org.slf4j:slf4j-api:1.7.30")
-   implementation ("io.github.microutils:kotlin-logging-jvm:2.0.2")
+   implementation("io.github.microutils:kotlin-logging-jvm:2.0.2")
    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.14.0")
    implementation("org.apache.logging.log4j:log4j-core:2.14.0")
    implementation("org.apache.logging.log4j:log4j-api:2.14.0")
+
 }

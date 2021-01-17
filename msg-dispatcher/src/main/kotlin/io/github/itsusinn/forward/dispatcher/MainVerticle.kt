@@ -18,10 +18,6 @@ class MainVerticle: AbstractVerticle() {
          RegisterVerticle::class.java.name,
          DeploymentOptions().setInstances(2)
       )
-      vertx.deployVerticle(
-         InquireVerticle::class.java.name,
-         DeploymentOptions().setInstances(2)
-      )
       logger.info{ "Server has started!" }
    }
 }
