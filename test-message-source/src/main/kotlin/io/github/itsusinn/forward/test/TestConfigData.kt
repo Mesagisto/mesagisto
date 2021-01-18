@@ -19,12 +19,8 @@ data class TestConfigData(
 
    val host:String,
    val port:Int,
-   val uri:String,
 
-   @JsonProperty(value = "app_id")
-   val appID:String,
-   @JsonProperty(value = "channel_id")
-   val channelID:String,
+   val address:String,
    val name:String,
 )
 
@@ -34,9 +30,7 @@ val defaultConfig:String by lazy {
       "test_token",
       "127.0.0.1",
       1431,
-      "/ws",
-      "test_app_id",
-      "test_channel_id",
+      "test_app_id.test_channel_id",
       "test_name",
    ).asPrettyString!!
 }

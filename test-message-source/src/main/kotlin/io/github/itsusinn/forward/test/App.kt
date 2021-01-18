@@ -1,8 +1,9 @@
 package io.github.itsusinn.forward.test
 
 import io.github.itsusinn.extension.base64.base64
+import io.github.itsusinn.extension.base64.debase64
 import io.github.itsusinn.extension.config.ConfigKeeper
-import io.github.itsusinn.extension.forward.data.warp
+import io.github.itsusinn.extension.forward.client.warp
 import io.github.itsusinn.extension.runtime.addShutdownHook
 import io.github.itsusinn.extension.runtime.exit
 import io.github.itsusinn.extension.thread.SingleThreadCoroutineScope
@@ -48,15 +49,13 @@ object App: CoroutineScope {
 
    fun start() = runBlocking<Unit> {
       val client = HttpClient() {
-         install(WebSockets) {
-            pingInterval = -1
-            maxFrameSize = Long.MAX_VALUE
-         }
+         install(WebSockets)
       }
 
       val path:String
+      val name = "TestCli"
       config.apply {
-         path = "$uri?app_id=$appID&channel_id=$channelID&token=$forwardToken"
+         path = "/ws?address=${address.base64}&token=${forwardToken.base64}&name=${name.base64}"
       }
       val ws = client.webSocketSession(
          host = config.host,
@@ -65,24 +64,21 @@ object App: CoroutineScope {
       ).warp()
 
       ws.textFrameHandler {
-         logger.info { "Received:${it.readText()}" }
+         logger.info { "Received:${it.readText().debase64}" }
       }
-      val job = launch {
-         while (true){
-            val line = readLine()!!
-            if (ws.isClosed()) break
-            when(line){
-               "/exit" -> {
-                  ws.close()
-               }
-               else -> {
-                  ws.send("TestCli:$line")
-               }
+
+      while (true){
+         val line = readLine()!!
+         if (ws.isClosed()) break
+         when(line){
+            "/exit" -> {
+               ws.close()
+            }
+            else -> {
+               ws.send("TestCli:$line".base64)
             }
          }
       }
-
-      job.join()
    }
 
    override val coroutineContext: CoroutineContext

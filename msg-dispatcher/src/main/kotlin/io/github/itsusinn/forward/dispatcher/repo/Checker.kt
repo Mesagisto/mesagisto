@@ -11,3 +11,11 @@ fun checkToken(appID:String,channelID:String,token:String):Boolean{
    logger.warn { "ChannelID:${channelID}" }
    return true
 }
+fun checkToken(address:String,token:String):Boolean{
+   val para = address.split(".")
+   if (para.size!=2) return false
+   logger.warn { "New ws connect connecting " }
+   logger.warn { "AppId:${para[0]}" }
+   logger.warn { "ChannelID:${para[1]}" }
+   return true
+}

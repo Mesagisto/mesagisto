@@ -4,6 +4,6 @@ import io.github.itsusinn.extension.base64.base64
 import io.vertx.core.buffer.Buffer
 import io.vertx.core.http.ServerWebSocket
 import io.vertx.core.http.WebSocketFrame
-
-val pingBuffer = Buffer.buffer("HeartBeat")
-val pingFrame = WebSocketFrame.pingFrame(pingBuffer)
+val pingText = "[ping]"
+val pingBuffer = Buffer.buffer(pingText)
+val pingFrame = WebSocketFrame.textFrame(pingText,true)

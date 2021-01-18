@@ -1,6 +1,7 @@
 package io.github.itsusinn.forward.dispatcher
 
 import io.vertx.core.AsyncResult
+import io.vertx.core.DeploymentOptions
 import io.vertx.core.Vertx
 import mu.KotlinLogging
 import io.vertx.core.VertxOptions
@@ -22,7 +23,7 @@ object Main {
             vertx.exceptionHandler { e ->
                logger.error(e){ e.stackTrace }
             }
-            vertx.deployVerticle(MainVerticle())
+            vertx.deployVerticle(DispatcherVerticle::class.java.name, DeploymentOptions().setInstances(5))
          } else {
             logger.error { " failed!" }
          }
