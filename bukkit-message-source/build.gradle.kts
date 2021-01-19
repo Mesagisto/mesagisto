@@ -7,7 +7,7 @@ plugins {
 }
 
 val ProjectVersion = "0.1.0-rc1"
-val ProjectName = "bukkit-msg-source"
+val ProjectName = "bukkit-message-forward"
 
 group = "io.github.itsusinn.easyforward.bukkit"
 version = ProjectVersion
@@ -32,6 +32,7 @@ repositories {
    jcenter()
    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
    maven("https://oss.sonatype.org/content/groups/public/")
+   maven("https://maven.aura-dev.team/repository/auradev-releases/")
 
 }
 
@@ -56,6 +57,7 @@ dependencies {
    implementation("com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:$mccoroutine")
    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1")
    implementation("io.github.microutils:kotlin-logging-jvm:2.0.2")
-   implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.14.0")
+   implementation("team.aura_dev.lib.slf4j-plugin.spigot:slf4j-plugin-spigot:1.2.0.39:1.7.25")
+
 
 }

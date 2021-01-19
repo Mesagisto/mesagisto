@@ -1,5 +1,6 @@
 package io.github.itsusinn.forward.bukkit
 
+import com.github.shynixn.mccoroutine.SuspendingCommandExecutor
 import com.github.shynixn.mccoroutine.registerSuspendingEvents
 import com.github.shynixn.mccoroutine.setSuspendingExecutor
 import io.github.itsusinn.extension.base64.base64
@@ -11,21 +12,21 @@ import io.ktor.client.*
 import io.ktor.client.features.websocket.*
 import io.ktor.http.*
 import io.ktor.http.cio.websocket.*
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import mu.KotlinLogging
 import org.bukkit.Bukkit
+import org.bukkit.command.Command
+import org.bukkit.command.CommandExecutor
+import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
 
-
-
 class MessageForwardPlugin : JavaPlugin() {
-   private val client = HttpClient {
-      install(WebSockets)
-   }
+   private val client = HttpClient { install(WebSockets) }
    private val logger = KotlinLogging.logger {  }
+
    override fun onEnable(){
 
-      server.getPluginCommand("forward")?.setSuspendingExecutor(CommandExecutor)
+      server.getPluginCommand("forward")?.setExecutor(this)
       server.pluginManager.registerSuspendingEvents(ChatEventListener,this)
 
       saveDefaultConfig()
@@ -52,7 +53,7 @@ class MessageForwardPlugin : JavaPlugin() {
             return@chatEventHandler
          }
 
-         addressWsMapper.getOrPut(address){
+         val ws = addressWsMapper.getOrPut(address){
             client.webSocketSession(
                HttpMethod.Get,
                host,
@@ -61,21 +62,24 @@ class MessageForwardPlugin : JavaPlugin() {
             ).warp().textFrameHandler {
                Bukkit.broadcastMessage(it.readText().debase64 ?:"err when debasing message")
             }
-         }.send("${it.player.name}:${it.message}".base64)
+         }
+
+         ws.send("${it.player.name}:${it.message}".base64)
 
       }
       logger.info { "Successfully enabled message forward plugin" }
    }
 
    override fun onDisable() {
-      ChatEventListener.chatEventHandler {  }
-      runBlocking {
-         addressWsMapper.forEach{
+      ChatEventListener.chatEventHandler{ }
+      GlobalScope.launch {
+         addressWsMapper.forEach {
+            logger.info { "Closing websocket connection" }
             it.value.close()
+            it.value.cancel()
          }
          addressWsMapper.clear()
       }
-
       logger.info { "Successfully disabled message forward plugin" }
    }
 }

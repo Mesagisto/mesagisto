@@ -16,10 +16,11 @@ internal object ChatEventListener:Listener{
       }catch (e:Throwable){
          logger.error(e) { "Uncaught Exception \n${e.stackTrace}" }
       }
-
    }
    var chatEventHandler:(suspend (AsyncPlayerChatEvent) -> Unit)? = null
-   inline fun chatEventHandler(noinline handler:(suspend (AsyncPlayerChatEvent) -> Unit)?){
+   inline fun chatEventHandler(
+      noinline handler:(suspend (AsyncPlayerChatEvent) -> Unit)
+   ){
       chatEventHandler = handler
    }
 }

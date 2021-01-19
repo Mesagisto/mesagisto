@@ -24,7 +24,7 @@ private val pingBuffer = ByteBuffer.wrap(pingText.toByteArray())
 private val pingFrame = Frame.Text(pingText)
 
 class KtorWebsocket(
-   private val session: DefaultClientWebSocketSession
+   private var session: DefaultClientWebSocketSession
 ):ClientWebSocketSession, DefaultWebSocketSession by session {
    override val call: HttpClientCall = session.call
    private val closeSignal = AtomicBoolean(false)
@@ -44,6 +44,7 @@ class KtorWebsocket(
             }
             send(pingFrame)
             delay(60_000)
+            if (isClosed()) return@launch
          }
       }
       //launch a coroutine listening on receiving frames
@@ -68,6 +69,7 @@ class KtorWebsocket(
                   }
                   else -> { TODO("Maybe it is needed to impl") }
                }
+               if (isClosed()) return@launch
             }
          } catch (e: ClosedReceiveChannelException) {
             close(CloseReason(CloseReason.Codes.GOING_AWAY,"Cannot receive frame"))
@@ -99,7 +101,7 @@ class KtorWebsocket(
    }
 
    suspend fun close(reason: CloseReason = CloseReason(CloseReason.Codes.NORMAL, "")) {
-      if (closeSignal.get()) return
+      if (isClosed()) return
       try {
          closeSignal.set(true)
          _textFrameHandler = null
@@ -108,19 +110,19 @@ class KtorWebsocket(
          _closeHandler = null
          aliveJob.cancel()
          receiveJob.cancel()
-         send(Frame.Close(reason))
-         flush()
          session.cancel()
       } catch (_: Throwable) { }
    }
 
-   var _uncaughtErrorHandler:((Throwable) -> Unit)? = { logger.error(it) { "uncaughtError ${it.message}\n"+it.stackTrace } }
+   var _uncaughtErrorHandler:((Throwable) -> Unit)? = {
+      logger.warn(it) { "uncaughtError \n"+it.stackTrace }
+   }
    inline fun uncaughtErrorHandler(noinline handler:(Throwable) -> Unit){
       _uncaughtErrorHandler = {
          try {
             handler.invoke(it)
          }catch (e:Throwable){
-            logger.error(it) { "uncaughtError ${it.message}\n"+it.stackTrace }
+            logger.warn(it) { "uncaughtError\n"+it.stackTrace }
          }
       }
    }
