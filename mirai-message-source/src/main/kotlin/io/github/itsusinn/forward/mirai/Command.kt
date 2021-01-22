@@ -48,6 +48,16 @@ object ForwardCommand : CompositeCommand(
       sendMessage("Set channel successfully")
    }
 
+   @SubCommand("setHost","st")
+   suspend fun FriendCommandSender.handleSetHost(host: String){
+      Config.host = host
+      sendMessage("Set host successfully")
+   }
+   @SubCommand("setPort","sp")
+   suspend fun FriendCommandSender.handleSetPort(port: Int){
+      Config.port = port
+      sendMessage("Set port successfully")
+   }
 
    @SubCommand("addChannel","ac")
    suspend fun FriendCommandSender.handleAddChannel(address:String,token:String){

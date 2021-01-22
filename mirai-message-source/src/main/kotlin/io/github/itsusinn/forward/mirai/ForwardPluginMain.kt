@@ -50,7 +50,8 @@ object ForwardPluginMain : KotlinPlugin(
             port = Config.port,
             path = path
          ).warp().textFrameHandler{
-            addressEntity.get(address)?.random()?.sendMessage(it.readText().debase64 ?: "error")
+            val msg = it.readText().debase64 ?: return@textFrameHandler
+            addressEntity.get(address)?.random()?.sendMessage(msg)
          }.closeHandler {
             wsKeeper.remove(address)
          }
