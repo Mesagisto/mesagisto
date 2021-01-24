@@ -6,7 +6,7 @@ plugins {
    kotlin ("jvm") version "1.4.20"
 }
 
-val ProjectVersion = "0.1.0-rc1"
+val ProjectVersion = "0.1.0"
 val ProjectName = "bukkit-message-forward"
 
 group = "io.github.itsusinn.easyforward.bukkit"
@@ -23,9 +23,15 @@ val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions.jvmTarget = "1.8"
 
 tasks.withType<ShadowJar>{
+   exclude(
+      "README.md",
+      "module-info.class",
+      "LICENSE",
+      "Empty.class",
+      "DebugProbesKt.bin"
+   )
    archiveBaseName.set(ProjectName)
    archiveVersion.set(ProjectVersion)
-   archiveClassifier.set("trim-kt-slf4j")
 }
 
 repositories {
@@ -47,7 +53,7 @@ dependencies {
    implementation("io.ktor:ktor-client-cio:1.5.0")
 
    //kotlin
-   compileOnly(kotlin("stdlib-jdk8"))
+   implementation(kotlin("stdlib-jdk8"))
    //jackson
    implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
    implementation("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
@@ -58,8 +64,7 @@ dependencies {
    implementation("com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:$mccoroutine")
    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1")
    implementation("io.github.microutils:kotlin-logging-jvm:2.0.2")
-
-   compileOnly("team.aura_dev.lib.slf4j-plugin.spigot:slf4j-plugin-spigot:1.2.0.39:1.7.25")
+   implementation("team.aura_dev.lib.slf4j-plugin.spigot:slf4j-plugin-spigot:1.2.0.39:1.7.25")
 
 
 }
