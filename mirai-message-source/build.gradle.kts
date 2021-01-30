@@ -11,7 +11,7 @@ mirai {
 }
 
 group = "io.github.itsusinn"
-version = "0.1.0-rc1"
+version = "0.1.0"
 
 val jacksonVersion = "2.11.3"
 

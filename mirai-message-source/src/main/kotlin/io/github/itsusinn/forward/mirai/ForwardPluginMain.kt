@@ -13,7 +13,6 @@ import net.mamoe.mirai.console.command.CommandManager.INSTANCE.registerCommand
 import net.mamoe.mirai.console.command.CommandManager.INSTANCE.unregisterAllCommands
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
-import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.event.globalEventChannel
 import net.mamoe.mirai.utils.info
 import okhttp3.*
@@ -21,6 +20,8 @@ import io.github.itsusinn.forward.mirai.Config.startSignal
 import io.github.itsusinn.forward.mirai.Config.targetAddressMapper
 import net.mamoe.mirai.console.extension.PluginComponentStorage
 import net.mamoe.mirai.event.Listener
+import net.mamoe.mirai.event.events.*
+import net.mamoe.mirai.message.data.internalId
 
 object ForwardPluginMain : KotlinPlugin(
    JvmPluginDescription(
@@ -36,27 +37,36 @@ object ForwardPluginMain : KotlinPlugin(
    val eventChannel = globalEventChannel()
    val listener = eventChannel.subscribeAlways<GroupMessageEvent> {
       if (!targetAddressMapper.contains(group.id)) return@subscribeAlways
+      this.message.internalId
 
       val address = targetAddressMapper.get(group.id)!!
       addressEntity.getOrPut(address){ HashSet() }.add(group)
 
       wsKeeper.getOrPut(address){
-         val token = addressTokenRepo.get(address) ?: return@subscribeAlways
-         val name = "mirai-${group.id.toString()}"
-         val path = "/ws?address=${address.base64}&token=${token.base64}&name=${name.base64}"
+            val token = addressTokenRepo.get(address) ?: return@subscribeAlways
+            val name = "mirai-${group.id.toString()}"
+            val path = "/ws?address=${address.base64}&token=${token.base64}&name=${name.base64}"
 
-         client.webSocketSession(
-            host = Config.host,
-            port = Config.port,
-            path = path
-         ).warp().textFrameHandler{
-            val msg = it.readText().debase64 ?: return@textFrameHandler
-            addressEntity.get(address)?.random()?.sendMessage(msg)
-         }.closeHandler {
-            wsKeeper.remove(address)
-         }
+            client.webSocketSession(
+               host = Config.host,
+               port = Config.port,
+               path = path
+            ).warp().textFrameHandler{
+               val msg = it.readText().debase64 ?: return@textFrameHandler
+               addressEntity.get(address)?.random()?.sendMessage(msg)
+            }.closeHandler {
+               wsKeeper.remove(address)
+            }
 
-      }.send("$senderName:${message.contentToString()}".base64)
+         }.send("$senderName:${message.contentToString()}".base64)
+   }
+   init {
+      eventChannel.subscribeAlways<NewFriendRequestEvent> {
+         accept()
+      }
+      eventChannel.subscribeAlways<BotInvitedJoinGroupRequestEvent> {
+         accept()
+      }
    }
 
    override fun onEnable() {

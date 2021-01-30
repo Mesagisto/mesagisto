@@ -2,6 +2,7 @@ package io.github.itsusinn.forward.mirai
 
 import io.github.itsusinn.forward.mirai.Config.addressTokenRepo
 import io.github.itsusinn.forward.mirai.Config.targetAddressMapper
+import net.mamoe.mirai.Bot
 import net.mamoe.mirai.console.command.*
 import net.mamoe.mirai.contact.isOperator
 
@@ -16,9 +17,11 @@ object ForwardCommand : CompositeCommand(
 
       sendMessage("set target to ${subject.id}")
    }
+
    @SubCommand("listChannel","lc")
    suspend fun MemberCommandSender.handleListChannel(){
       if (!user.isOperator()) return
+
       if (Config.addressTokenRepo.size == 0) {
          sendMessage("""
             There is no address stored in storage.

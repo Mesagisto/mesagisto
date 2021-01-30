@@ -37,6 +37,7 @@ class KtorWebsocket(
    init {
       aliveJob = launch {
          while (true){
+            if (isClosed()) return@launch
             if (!isAlive()){
                logger.debug { "Websocket no longer alive" }
                close()
@@ -44,13 +45,13 @@ class KtorWebsocket(
             }
             send(pingFrame)
             delay(60_000)
-            if (isClosed()) return@launch
          }
       }
       //launch a coroutine listening on receiving frames
       receiveJob = launch {
          try {
             for (frame in incoming){
+               if (isClosed()) return@launch
                aliveSignal = now()
                when(frame){
                   is Frame.Text -> {
@@ -69,7 +70,6 @@ class KtorWebsocket(
                   }
                   else -> { TODO("Maybe it is needed to impl") }
                }
-               if (isClosed()) return@launch
             }
          } catch (e: ClosedReceiveChannelException) {
             close(CloseReason(CloseReason.Codes.GOING_AWAY,"Cannot receive frame"))
@@ -81,6 +81,7 @@ class KtorWebsocket(
       }
    }
    override suspend fun send(frame: Frame) {
+      if (isClosed()) return
       try {
          outgoing.send(frame)
       }catch (e:Throwable){
