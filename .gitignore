@@ -17,6 +17,7 @@
 *.ear
 *.zip
 *.tar.gz
+*.log.gz
 *.rar
 
 *.iml
@@ -30,6 +31,8 @@ hs_err_pid*
 *.json
 */.gradle/
 /build/
+/logs/
+*/logs/
 */build/
 .idea
 .gradle
@@ -38,6 +41,5 @@ hs_err_pid*
 */.idea/.gitignore
 /test/
 /out/
-/logs/
 */config/
 *.gz
