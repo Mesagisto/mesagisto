@@ -27,6 +27,8 @@ compileKotlin.kotlinOptions.jvmTarget = "1.8"
 compileKotlin.targetCompatibility = "1.8"
 
 dependencies {
+
+   implementation("io.vertx:vertx-core:4.0.0")
    implementation("com.jagrosh:jda-utilities:$jdaUtilitiesVersion")
    implementation("net.dv8tion:JDA:$jdaVersion")
    //kotlin
@@ -46,4 +48,6 @@ dependencies {
    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
    implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
    implementation ("io.github.microutils:kotlin-logging-jvm:2.0.2")
+
+
 }
