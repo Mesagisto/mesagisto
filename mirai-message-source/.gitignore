@@ -1,8 +1,0 @@
-# Project exclude paths
-/.gradle/
-/build/
-/.idea/
-/test/
-/out/
-/run/
-/src/test/kotlin/RunMirai.kt
