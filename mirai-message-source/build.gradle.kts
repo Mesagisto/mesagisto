@@ -29,4 +29,5 @@ dependencies {
    implementation("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
    implementation("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
+   implementation ("net.mamoe:mirai-slf4j-bridge:1.1.0")
 }

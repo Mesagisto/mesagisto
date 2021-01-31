@@ -29,7 +29,10 @@ hs_err_pid*
 */.gradle/
 /build/
 */.idea/
+*/.idea/*
+*/.idea/.gitignore
 /test/
 /out/
 /logs/
+*/config/
 *.gz
