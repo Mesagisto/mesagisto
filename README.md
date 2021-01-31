@@ -1,10 +1,19 @@
-Project Easy-Forward
+Project Message-Forward
 
-I believe you are bored with so many IMs, right?
+本项目致力于通过消息转发连接不同的IM(Instant Message即时通讯)平台
 
-This project intends to link IMs on different platforms together.
+现已支持: Ｍinecraft我的世界, TencentQQ腾讯QQ,Discord等IM平台的互相转发
 
-This project uses gateway message dispatch,
-forwarding Tencent QQ, Minecraft, Discord, Telegram messages to each other.
+```
+message-source　消息源-IM的抽象概念
+---bukkit-source　Minecraft聊天公屏
+---mirai-source　QQ聊天
+---discord-source　Discord文字频道
 
-And pay attention to scalability. In the future, more IM will be added to forward support
+forward-client 转发客户端，封装心跳机制等
+---vertx-client vertx实现
+---okhttp-client okhttp实现
+
+message-dispatcher　消息派发中心
+```
+
