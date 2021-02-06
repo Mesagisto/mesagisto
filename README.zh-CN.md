@@ -22,4 +22,3 @@
 
 LGPL v2.1 © Itsusinn
 特例 [mirai-source AGPL v3](./message-source/mirai-source)
-
