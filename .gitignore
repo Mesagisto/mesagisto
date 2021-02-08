@@ -45,3 +45,4 @@ hs_err_pid*
 */config/
 *.gz
 /mirai-message-source/src/test/kotlin/RunMirai.kt
+local.properties

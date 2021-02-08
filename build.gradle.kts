@@ -7,7 +7,7 @@ buildscript {
       maven(url = "https://kotlin.bintray.com/kotlinx")
    }
    dependencies {
-      classpath("com.android.tools.build:gradle:4.1.2")
+      classpath("com.android.tools.build:gradle:4.0.2")
       classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.Kotlin}")
    }
 }
@@ -18,8 +18,6 @@ plugins {
    id("org.jetbrains.kotlin.jvm") version Versions.Kotlin
    id("com.github.johnrengelman.shadow") version Versions.ShadowJar
    id("net.mamoe.mirai-console") version Versions.Mirai
-   // id("com.android.application")
-   // id("kotlin-android")
 }
 
 allprojects {

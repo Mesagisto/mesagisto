@@ -1,8 +1,8 @@
-package io.itsuinn.forward
+package io.itsusinn.forward
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.multidex.MultiDex
+import android.support.v7.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
    override fun onCreate(savedInstanceState: Bundle?) {
