@@ -1,5 +1,7 @@
 # Message Forward
 
+![Github Action](https://github.com/itsusinn/message-forward/workflows/CI/badge.svg)
+
 ENGLISH|**[简体中文](./README.zh-CN.md)**
 
 ## Install
