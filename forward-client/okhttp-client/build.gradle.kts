@@ -1,15 +1,20 @@
 plugins {
-    java
-    kotlin("jvm") version "1.4.21"
+   java
+   kotlin("jvm")
 }
-
-version = "unspecified"
+group = Project.Group
+version = Project.Version
 
 repositories {
-    mavenCentral()
+   mavenCentral()
 }
+val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
+compileKotlin.kotlinOptions.jvmTarget = "1.8"
 
 dependencies {
-    implementation(kotlin("stdlib"))
-    testCompile("junit", "junit", "4.12")
+   compileOnly(Dependency.Ktor.Client.WebSocket)
+   compileOnly(Dependency.Ktor.Client.CIO)
+   compileOnly(Dependency.Okhttp)
+   compileOnly(Dependency.KotlinX.Coroutine)
+   compileOnly("io.github.microutils:kotlin-logging-jvm:2.0.2")
 }

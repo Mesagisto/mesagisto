@@ -1,8 +1,22 @@
+pluginManagement {
+   repositories {
+      gradlePluginPortal()
+      mavenCentral()
+      jcenter()
+      google()
+      maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
+      maven(url = "https://dl.bintray.com/kotlin/kotlin-dev")
+      maven(url = "https://dl.bintray.com/jetbrains/kotlin-native-dependencies")
+      maven(url = "https://kotlin.bintray.com/kotlinx")
+   }
+}
+
 rootProject.name = "message-forward"
 include("message-dispatcher")
 
 include("forward-client:okhttp-client")
 findProject(":forward-client:okhttp-client")?.name = "okhttp-client"
+
 include("forward-client:vertx-client")
 findProject(":forward-client:vertx-client")?.name = "vertx-client"
 

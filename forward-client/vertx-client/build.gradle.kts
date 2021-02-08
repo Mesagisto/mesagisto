@@ -1,18 +1,13 @@
 
 plugins {
-   id ("com.github.johnrengelman.shadow") version ("5.2.0")
+   id("com.github.johnrengelman.shadow")
    java
-   kotlin ("jvm") version "1.4.20"
-   id("org.jetbrains.kotlin.plugin.serialization") version("1.4.20")
+   kotlin("jvm")
+   id("org.jetbrains.kotlin.plugin.serialization")
 }
 
-group = "io.github.itsusinn.easyforward.bukkit"
-version = "0.0.2-rc5"
-
-val kotlinVersion = "1.4.20"
-val vertxVersion = "3.8.0"
-val coroutineVersion = "1.4.1"
-val jacksonVersion = "2.11.3"
+group = Project.Group
+version = Project.Version
 
 val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
 compileKotlin.kotlinOptions.jvmTarget = "1.8"
@@ -23,6 +18,4 @@ repositories {
 }
 
 dependencies {
-
-
 }
