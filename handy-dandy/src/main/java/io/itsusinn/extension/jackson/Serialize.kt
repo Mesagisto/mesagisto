@@ -1,6 +1,5 @@
 package io.itsusinn.extension.jackson
 
-
 /**
  * Method to serialize instance into JSON content.
  * Note that the nullable [Any] is only for compatibility with generics
@@ -17,14 +16,14 @@ fun Any?.writeAsStringOrFail(): String = writer.writeValueAsString(this)
 /**
  * a short way of [writeAsString]
  */
-inline val Any?.asString:String?
+inline val Any?.asString: String?
    get() = runCatching {
       writer.writeValueAsString(this)
    }.getOrElse {
       jacksonLogger.error(it) { it.stackTrace }
       null
    }
-inline val Any?.asStringOrFail:String
+inline val Any?.asStringOrFail: String
    get() = writer.writeValueAsString(this)
 
 /**
@@ -53,12 +52,6 @@ inline val Any?.asBytes: ByteArray?
 inline val Any?.asBytesOrFail: ByteArray?
    get() = writer.writeValueAsBytes(this)
 
-
-
-
-
-
-
 /**
  * Method to serialize instance into JSON content.
  * Note that the nullable [Any] is only for compatibility with generics
@@ -74,12 +67,12 @@ fun Any?.writeAsPrettyStringOrFail(): String = prettyWriter.writeValueAsString(t
 /**
  * a short way of [writeAsString]
  */
-inline val Any?.asPrettyString:String?
+inline val Any?.asPrettyString: String?
    get() = kotlin.runCatching {
       prettyWriter.writeValueAsString(this)
    }.getOrElse {
       jacksonLogger.error(it) { it.stackTrace }
       null
    }
-inline val Any?.asPrettyStringOrFail:String
+inline val Any?.asPrettyStringOrFail: String
    get() = prettyWriter.writeValueAsString(this)
