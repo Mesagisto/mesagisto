@@ -51,6 +51,7 @@ dependencies {
 
    // websocket
    implementation(project(Project.ForwardClient.Okhttp))
+   implementation(project(Project.HandyDandy))
 
    implementation(Dependency.Ktor.Client.WebSocket)
    implementation(Dependency.Ktor.Client.CIO)

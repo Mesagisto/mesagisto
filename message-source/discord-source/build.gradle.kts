@@ -29,6 +29,10 @@ dependencies {
    implementation("io.vertx:vertx-core:4.0.0")
    implementation("com.jagrosh:jda-utilities:$jdaUtilitiesVersion")
    implementation("net.dv8tion:JDA:$jdaVersion")
+
+   implementation(project(Project.ForwardClient.Okhttp))
+   implementation(project(Project.HandyDandy))
+
    // kotlin
    implementation(Dependency.Kotlin.StdLib)
    implementation(Dependency.Kotlin.StbLib7)

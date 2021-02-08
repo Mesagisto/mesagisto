@@ -43,6 +43,8 @@ dependencies {
    implementation(Dependency.Kotlin.StbLib7)
    implementation(Dependency.Kotlin.StbLib8)
 
+   implementation(project(Project.HandyDandy))
+
    // test
    testImplementation("io.vertx:vertx-junit5:$vertxVersion")
    testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")

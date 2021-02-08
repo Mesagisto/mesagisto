@@ -4,4 +4,5 @@ object Project {
    object ForwardClient {
       const val Okhttp = ":forward-client:okhttp-client"
    }
+   const val HandyDandy = ":handy-dandy"
 }

@@ -14,6 +14,8 @@ dependencies {
    runtimeOnly(Dependency.Kotlin.StdLib)
    runtimeOnly(Dependency.KotlinX.Coroutine)
 
+   implementation(project(Project.HandyDandy))
+
    // websocket
    implementation(project(Project.ForwardClient.Okhttp))
    implementation(Dependency.Ktor.Client.WebSocket)
