@@ -3,7 +3,6 @@ package io.itsusinn.forward.bukkit
 import com.github.shynixn.mccoroutine.registerSuspendingEvents
 import io.itsusinn.extension.base64.base64
 import io.itsusinn.extension.base64.debase64
-import io.itsusinn.forward.bukkit.extension.launch
 import io.itsusinn.forward.client.warp
 import io.ktor.client.* // ktlint-disable no-wildcard-imports
 import io.ktor.client.features.websocket.* // ktlint-disable no-wildcard-imports
@@ -35,7 +34,8 @@ class MessageForwardPlugin : JavaPlugin() {
 
       ChatEventListener.chatEventHandler {
          if (startSignal != 0) {
-            logger.warn { "Configuration value:[startSignal] isn't zero,plugin won't be enabled" }
+            logger.warn { "Configuration value:[startSignal] isn't zero,plugin won't be enabled!" }
+            logger.warn { "配置中:[startSignal]值不为零,插件将不会被启用！" }
             return@chatEventHandler
          }
          if (host == null ||
@@ -44,6 +44,7 @@ class MessageForwardPlugin : JavaPlugin() {
             token == null
          ) {
             logger.error { "Incomplete configuration file parameters" }
+            logger.error { "不完整的配置文件" }
             return@chatEventHandler
          }
 
@@ -62,12 +63,11 @@ class MessageForwardPlugin : JavaPlugin() {
 
          ws.send("${it.player.name}:${it.message}".base64)
       }
-      logger.info { "Successfully enabled message forward plugin" }
    }
 
    override fun onDisable() {
       ChatEventListener.chatEventHandler { }
-      GlobalScope.launch {
+      runBlocking {
          addressWsMapper.forEach {
             logger.info { "Closing websocket connection" }
             it.value.close()
@@ -75,6 +75,5 @@ class MessageForwardPlugin : JavaPlugin() {
          }
          addressWsMapper.clear()
       }
-      logger.info { "Successfully disabled message forward plugin" }
    }
 }

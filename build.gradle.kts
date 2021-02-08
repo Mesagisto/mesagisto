@@ -19,7 +19,7 @@ plugins {
    id("com.github.johnrengelman.shadow") version Versions.ShadowJar
    id("net.mamoe.mirai-console") version Versions.Mirai
    // id("com.android.application")
-   // id("kotlin-android") version "1.4.20"
+   // id("kotlin-android")
 }
 
 allprojects {
