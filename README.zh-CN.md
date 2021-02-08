@@ -1,6 +1,6 @@
 # 消息转发
 
-![Github Action](https://github.com/itsusinn/message-forward/workflows/CI/badge.svg)
+![Github Action](https://github.com/itsusinn/message-forward/workflows/Build/badge.svg)
 
 **[ENGLISH](./README.md)**|简体中文
 
