@@ -1,4 +1,4 @@
-package itsusinn.extension.vertx.websocket
+package io.itsusinn.forward.dispatcher.extension.websocket
 
 import io.itsusinn.extension.base64.base64
 import io.itsusinn.extension.base64.debase64
@@ -9,7 +9,7 @@ import io.vertx.core.Vertx
 import io.vertx.core.http.ServerWebSocket
 import io.vertx.core.http.WebSocketFrame
 import io.vertx.core.json.JsonObject
-import itsusinn.forward.dispatcher.repo.EndpointKeeper
+import io.itsusinn.forward.dispatcher.repo.EndpointKeeper
 import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicInteger
 

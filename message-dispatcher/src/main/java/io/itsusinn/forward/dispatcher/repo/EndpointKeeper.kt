@@ -1,4 +1,4 @@
-package itsusinn.forward.dispatcher.repo
+package io.itsusinn.forward.dispatcher.repo
 
 import io.vertx.core.eventbus.MessageConsumer
 import java.util.concurrent.ConcurrentHashMap

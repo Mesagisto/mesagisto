@@ -1,4 +1,4 @@
-package itsusinn.extension.vertx.websocket
+package io.itsusinn.forward.dispatcher.extension.websocket
 
 import io.vertx.core.buffer.Buffer
 import io.vertx.core.http.WebSocketFrame

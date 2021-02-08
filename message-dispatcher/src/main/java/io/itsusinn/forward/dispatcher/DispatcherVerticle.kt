@@ -1,15 +1,15 @@
-package itsusinn.forward.dispatcher
+package io.itsusinn.forward.dispatcher
 
-import io.github.itsusinn.extension.json
 import io.vertx.core.http.HttpMethod
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.RoutingContext
 import io.vertx.kotlin.coroutines.CoroutineVerticle
-import itsusinn.extension.base64.debase64
-import itsusinn.extension.jackson.writeAsPrettyString
-import itsusinn.extension.vertx.websocket.warp
-import itsusinn.forward.dispatcher.repo.EndpointKeeper
-import itsusinn.forward.dispatcher.repo.checkToken
+import io.itsusinn.extension.base64.debase64
+import io.itsusinn.extension.jackson.writeAsPrettyString
+import io.itsusinn.forward.dispatcher.extension.vertx.json
+import io.itsusinn.forward.dispatcher.extension.websocket.warp
+import io.itsusinn.forward.dispatcher.repo.EndpointKeeper
+import io.itsusinn.forward.dispatcher.repo.checkToken
 import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger { }

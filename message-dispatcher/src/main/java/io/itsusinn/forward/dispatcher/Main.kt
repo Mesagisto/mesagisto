@@ -1,5 +1,6 @@
 package itsusinn.forward.dispatcher
 
+import io.itsusinn.forward.dispatcher.DispatcherVerticle
 import io.vertx.core.DeploymentOptions
 import io.vertx.core.Vertx
 import io.vertx.core.VertxOptions

@@ -1,4 +1,4 @@
-package io.github.itsusinn.extension
+package io.itsusinn.forward.dispatcher.extension.vertx
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule

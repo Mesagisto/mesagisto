@@ -1,4 +1,4 @@
-package itsusinn.forward.dispatcher.repo
+package io.itsusinn.forward.dispatcher.repo
 
 import mu.KotlinLogging
 
