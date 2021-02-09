@@ -4,6 +4,7 @@ object Dependency {
       const val StdLib = "$group:kotlin-stdlib:${Versions.Kotlin}"
       const val StbLib7 = "$group:kotlin-stdlib-jdk7:${Versions.Kotlin}"
       const val StbLib8 = "$group:kotlin-stdlib-jdk8:${Versions.Kotlin}"
+      const val Reflect = "$group:kotlin-reflect:${Versions.Kotlin}"
    }
    object KotlinX {
       private const val group = "org.jetbrains.kotlinx"

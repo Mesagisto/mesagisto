@@ -5,6 +5,7 @@ buildscript {
       google()
       maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
       maven(url = "https://kotlin.bintray.com/kotlinx")
+      maven(url = "https://jitpack.io")
    }
    dependencies {
       classpath("com.android.tools.build:gradle:4.0.2")
@@ -31,5 +32,6 @@ allprojects {
       google()
       mavenCentral()
       maven(url = "https://dl.bintray.com/karlatemp/misc")
+      maven(url = "https://jitpack.io")
    }
 }

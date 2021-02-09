@@ -23,6 +23,7 @@
    
 
 **在QQ(mirai)端部署**
+
 - 部署在安卓8.0+上(推荐)
   1. 安装[MiraiAndroid](https://github.com/mzdluo123/MiraiAndroid)
   2. 在[Releases页面](releases)下载mirai-android-source.apk。

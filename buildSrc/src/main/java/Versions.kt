@@ -7,7 +7,7 @@ object Versions {
    const val Jackson = "2.12.1"
    const val Slf4j = "1.7.30"
    const val Mirai = "2.3.2"
-   const val ShadowJar = "5.2.0"
+   const val ShadowJar = "6.1.0"
    const val Vertx = "4.0.0"
 }
 

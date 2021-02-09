@@ -34,7 +34,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":message-source:mirai-source"))
+    implementation project(path: ":message-source:mirai-source",configuration: 'shadow')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${Versions.Kotlin}"
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
