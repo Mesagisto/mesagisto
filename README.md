@@ -1,20 +1,16 @@
-# Message Forward
+# Message Forward ![Icon](img/mail-send-line.svg)
 
-![Github Action](https://github.com/itsusinn/message-forward/workflows/Build/badge.svg)
+![Github Action](https://github.com/itsusinn/message-forward/workflows/build/badge.svg)
 
-ENGLISH|**[简体中文](./README.zh-CN.md)**
+ENGLISH|**[简体中文](README.zh-CN.md)**
 
 ## Install
 
-```
-
-```
+TODO
 
 ## Usage
 
-```
-
-```
+TODO
 
 ## Contributing
 
