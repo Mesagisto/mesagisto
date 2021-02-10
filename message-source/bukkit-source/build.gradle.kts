@@ -6,8 +6,6 @@ plugins {
    kotlin("jvm")
 }
 
-val ProjectName = "bukkit-message-forward"
-
 group = Project.Group
 version = Project.Version
 
