@@ -1,9 +1,12 @@
 name: release
 on:
+  push:
+    branches: [ release ]
   pull_request:
-    branches: [ main ]
+    branches: [ release ]
 jobs:
-  build:
+  process:
+    name: Build and release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -11,18 +14,33 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-
-      - name: Gradle Build
-        run: ./gradlew clean build shadowJar
-
-      - name: Create Github Release
-        id: create_release
-        uses: actions/create-release@v1
+      - name: Generate ketstore file
+        run: echo $ENCODED_KEYSTORE | base64 -di > message-source/mirai-android-source/keystore.jks
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ENCODED_KEYSTORE: ${{ secrets.ENCODED_KEYSTORE }}
+      - name: Gradle build
+        run: ./gradlew clean build
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD}}
+      - name: Rename package
+        run: |
+          mkdir packages
+          mv message-dispatcher/build/libs/*all.jar packages/
+          mv message-source/discord-source/build/libs/*all.jar packages/
+          mv message-source/bukkit-source/build/libs/*all.jar packages/
+          mv message-source/mirai-source/build/libs/*all.jar packages/
+          mv message-source/test-source/build/libs/*all.jar packages/
+          mv message-source/mirai-android-source/build/outputs/apk/release/*all.jar packages/
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          body: "Test release"
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            packages/*.jar
+            packages/*.apk
+
