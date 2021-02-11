@@ -1,0 +1,7 @@
+# [start signal] ,if this value isn't zero,forward plugin won't be enabled
+startSignal: 1
+host: itsusinn.site
+port: 1431
+address: test_app_id.test_channel_id
+token: test_token
+name: bukkit
