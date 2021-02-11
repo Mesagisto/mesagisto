@@ -2,6 +2,7 @@
 
 ![Github Action](https://github.com/itsusinn/message-forward/workflows/build/badge.svg)
 [![QQ Group](https://img.shields.io/badge/QQ%20Group-667352043-12B7F5?logo=tencent-qq)](https://jq.qq.com/?_wv=1027&k=6eDIHSYt)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FItsusinn%2Fmessage-forward.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FItsusinn%2Fmessage-forward?ref=badge_shield)
 
 **[ENGLISH](README.en-US.md)**|简体中文
 
@@ -80,3 +81,7 @@ message-dispatcher　消息派发中心
 
 LGPL v2.1 © Itsusinn
 特例 [mirai-source AGPL v3](./message-source/mirai-source)
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FItsusinn%2Fmessage-forward.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FItsusinn%2Fmessage-forward?ref=badge_large)
