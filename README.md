@@ -1,6 +1,8 @@
-# 消息转发 ![Icon](img/mail-send-line.svg)
+# 消息转发 ![Icon](img/mail-send-line.svg)    
 
 ![Github Action](https://github.com/itsusinn/message-forward/workflows/build/badge.svg)
+[![QQ Group](https://img.shields.io/badge/QQ%20Group-667352043-12B7F5?logo=tencent-qq)](https://jq.qq.com/?_wv=1027&k=6eDIHSYt)
+
 **[ENGLISH](README.en-US.md)**|简体中文
 
 本项目致力于通过消息转发连接不同的IM(Instant Messageing即时通讯)平台。

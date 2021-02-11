@@ -22,7 +22,7 @@ android {
         release {
             storeFile file(System.getenv("KEYSTORE") ?:"keystore.jks")
             storePassword System.getenv("KEYSTORE_PASSWORD")
-            keyAlias System.getenv("KEY_ALIAS")
+            keyAlias System.getenv("KEY_ALIAS") ?: "message-forward"
             keyPassword System.getenv("KEY_PASSWORD")
         }
     }
