@@ -1,0 +1,3 @@
+name: Mesagisto
+version: '${version}'
+main: org.mesagisto.mcproxy.platforms.BungeeAdapter

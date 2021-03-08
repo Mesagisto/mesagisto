@@ -1,0 +1,143 @@
+name: pre-release
+
+on:
+  push:
+    branches: [ master ]
+    paths-ignore: [ '*.md' ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  SHORT_NAME: dc
+  CRATE_NAME: msgist-dc
+
+jobs:
+  compile:
+    name: Compile
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          # Linux
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-musl
+            release_name: x86_64-linux
+            postfix: ""
+            extra_args: ""
+            cross: true
+
+          - os: ubuntu-latest
+            target: i686-unknown-linux-musl
+            release_name: i686-linux
+            postfix: ""
+            extra_args: ""
+            cross: true
+
+          - os: ubuntu-latest
+            target: aarch64-unknown-linux-musl
+            release_name: aarch64-linux
+            postfix: ""
+            extra_args: ""
+            cross: true
+          # Windows GNU
+          - os: ubuntu-latest
+            target: x86_64-pc-windows-gnu
+            release_name: x86_64-windows.exe
+            postfix: ".exe"
+            extra_args: --no-default-features --features no-color
+            cross: true
+
+          - os: ubuntu-latest
+            target: i686-pc-windows-gnu
+            release_name: i686-windows.exe
+            postfix: ".exe"
+            extra_args: --no-default-features --features no-color
+            cross: true
+
+          - os: ubuntu-latest
+            target: x86_64-pc-windows-gnu
+            release_name: x86_64-windows-colored.exe
+            postfix: ".exe"
+            extra_args: ""
+            cross: true
+
+          - os: ubuntu-latest
+            target: i686-pc-windows-gnu
+            release_name: i686-windows-colored.exe
+            postfix: ".exe"
+            extra_args: ""
+            cross: true
+          # Mac OSX
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            release_name: x86_64-mac
+            postfix: ""
+            extra_args: ""
+            cross: false
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Resume cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ matrix.target }}-release-${{ hashFiles('**/Cargo.toml') }}
+          restore-keys: |
+            ${{ matrix.target }}-release
+
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly-2024-01-01
+          target: ${{ matrix.target }}
+
+      - uses: actions-rs/cargo@v1
+        with:
+          use-cross: ${{ matrix.cross }}
+          command: build
+          args: --release --target ${{ matrix.target }} ${{ matrix.extra_args }}
+
+      - name: Rename binary
+        run: mv target/${{ matrix.target }}/release/${{ env.CRATE_NAME }}${{ matrix.postfix }} ${{ env.SHORT_NAME }}-${{ matrix.release_name }}
+
+      - name: Upload binaries
+        uses: actions/upload-artifact@v2
+        with:
+          name: compile
+          path: ${{ env.SHORT_NAME }}-${{ matrix.release_name }}
+
+  release:
+    name: Release
+    permissions: write-all
+    needs: [compile]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Download binaries
+        uses: actions/download-artifact@v2
+        with:
+          name: compile
+          path: ./packages
+
+      - name: Compress
+        run: bash ./.github/compress.sh
+
+      - name: Github release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: latest
+          prerelease: true
+          title: "Bleeding edge/前沿发行版"
+          files: |
+            packages/*
+            LICENSE

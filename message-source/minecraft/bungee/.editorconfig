@@ -1,0 +1,4 @@
+# Install Intellij Plugin first! 
+# https://plugins.jetbrains.com/plugin/index?xmlId=com.nbadal.ktlint
+[*{kt,kts}]
+indent_size=2

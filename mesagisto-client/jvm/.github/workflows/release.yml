@@ -1,0 +1,39 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: set up JDK 8
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'zulu'
+          cache: 'gradle'
+
+      - name: Gradle build & release
+        env:
+          PUBLICATION_CREDENTIALS: ${{ secrets.PUBLICATION_CREDENTIALS }}
+        run: |
+          chmod +x gradlew
+          ./gradlew clean checkMavenCentralPublication
+          ./gradlew build publish
+          ./gradlew closeAndReleaseRepository
+
+      - name: Get the version tag
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/v}
+
+      - name: Make sure Maven
+        run: |
+          wget --tries=100 --retry-on-http-error=404 --wait=30 https://repo1.maven.org/maven2/org/mesagisto/mesagisto-client/${{ steps.get_version.outputs.VERSION }}/mesagisto-client-${{ steps.get_version.outputs.VERSION }}.jar
+          wget --tries=100 --retry-on-http-error=404 --wait=30 https://repo1.maven.org/maven2/org/mesagisto/mesagisto-client/${{ steps.get_version.outputs.VERSION }}/mesagisto-client-${{ steps.get_version.outputs.VERSION }}.pom
+          wget --tries=100 --retry-on-http-error=404 --wait=30 https://maven.aliyun.com/repository/public/org/mesagisto/mesagisto-client/${{ steps.get_version.outputs.VERSION }}/mesagisto-client-${{ steps.get_version.outputs.VERSION }}.jar
+          wget --tries=100 --retry-on-http-error=404 --wait=30 https://maven.aliyun.com/repository/public/org/mesagisto/mesagisto-client/${{ steps.get_version.outputs.VERSION }}/mesagisto-client-${{ steps.get_version.outputs.VERSION }}.pom

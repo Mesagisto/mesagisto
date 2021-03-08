@@ -1,0 +1,14 @@
+/.gradle
+/.idea
+*.class
+/build
+/*/build/
+*.apk
+/config
+/plugins
+/bots
+/logs
+/debug-sandbox
+/.history
+/db
+packages

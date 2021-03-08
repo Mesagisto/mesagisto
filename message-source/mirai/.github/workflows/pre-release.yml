@@ -1,0 +1,51 @@
+name: pre-release
+on:
+  push:
+    branches: [ master ]
+    paths-ignore: [ '*.md' ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: zulu
+          cache: gradle
+
+      - name: Build
+        run: |
+          bash build.sh
+          mv packages/mirai-message-source.mirai2.jar packages/mirai-message-source-latest.mirai2.jar 
+          sha1sum packages/mirai-message-source-latest.mirai2.jar  | awk '{print $1}' > packages/mirai-message-source-latest.mirai2.jar.sha1
+
+      - name: Get Current Time
+        id: time
+        uses: nanzm/get-time-action@v1.1
+        with:
+          timeZone: 0
+          format: 'YYYYMMDDHHmmss'
+
+      - name: Render maven-metadata.xml
+        uses: cuchi/jinja2-action@v1.2.0
+        with:
+          template: .github/mirai.metadata.j2
+          output_file: packages/mirai-message-source-latest.mirai.metadata
+        env:
+          TIME: ${{ steps.time.outputs.time }}
+
+      - name: Auto release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: latest
+          prerelease: true
+          title: "Bleeding edge/前沿发行版"
+          files: |
+            packages/*
+            LICENSE

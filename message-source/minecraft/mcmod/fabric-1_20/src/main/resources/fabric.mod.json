@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "mesagisto",
+  "version": "${version}",
+
+  "name": "Mesagisto Mod",
+  "description": "Mesagisto: A message forwarding program connecting different instant-message platforms. 信使: 一款连接不同即时通讯平台的消息转发程序.",
+  "authors": [
+    "Itsusinn"
+  ],
+  "contact": {
+    "homepage": "https://github.com/MeowCat-Studio/mesagisto",
+    "sources": "https://github.com/MeowCat-Studio/fabric-message-source"
+  },
+  "environment": "*",
+  "license": "LGPLv3",
+  "entrypoints": {
+    "main": [
+      "org.mesagisto.fabric.ModAdapter"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.12.2",
+    "fabric": "*",
+    "minecraft": "1.20.*"
+  }
+}

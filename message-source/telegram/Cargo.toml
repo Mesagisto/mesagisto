@@ -1,0 +1,91 @@
+[package]
+name = "msgist-tg"
+version = "1.7.2"
+authors = ["Itsusinn <itsusinn@foxmail.com>"]
+edition = "2021"
+
+[features]
+default = ["color"]
+no-color = ["colored/no-color"]
+color = ["tracing-subscriber/ansi"]
+
+[dependencies]
+# bot
+teloxide = { version = "0.12", default-features = false, features = ["macros", "auto-send","ctrlc_handler","rustls","nightly", "webhooks-axum"] }
+teloxide-core = { version = "0.9", default-features = false, features = ["rustls", "cache_me"] }
+teloxide-macros = "0.7"
+
+# mesagisto
+#mesagisto-client = { branch = "master", git = "https://github.com/MeowCat-Studio/mesagisto-client-rs.git" }
+mesagisto-client = { path = "../mesagisto-client-rs" }
+
+lateinit = { branch = "master", git = "https://github.com/Itsusinn/lateinit-rs.git" }
+singleton = { branch= "master", git = "https://github.com/Itsusinn/singleton-rs.git" }
+# singleton = { path = "/code/singleton-rs" }
+
+# logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", default-features = false, features = ["tracing-log", "std", "local-time","fmt"] }
+colored = "2.0"
+time = { version = "0.3", features = ["macros", "local-offset"] }
+chrono = "0.4"
+
+# serialization
+serde = { version = "1.0", default-features = false, features = ["derive","rc"] }
+serde_json = "1.0"
+serde_yaml = "0.9"
+
+# asynchronous
+tokio = { version = "1.36", default-features = false, features = ["macros","signal","rt-multi-thread"] }
+tokio-stream = "0.1"
+futures-util = "0.3"
+async-trait = "0.1"
+reqwest = { version = "0.11", default-features = false, features = ["rustls","rustls-tls-native-roots","stream","multipart", "blocking"] }
+
+# error handling
+thiserror = "1.0"
+color-eyre = "0.6"
+tracing-error = "0.2"
+color-spantrace = "0.2"
+
+# encoding and decoding
+base64-url = "2.0"
+image = { version = "0.24", features = ["webp-encoder"] }
+# hex = "0.4"
+
+# crypto
+aes-gcm = { version = "0.10", features = ["std"] }
+
+# tools
+dashmap = { version = "5.5", features = ["serde"] }
+once_cell = "1.19"
+educe = { version = "0.5", default-features = false, features = ["Default"] }
+arcstr = { version = "1.1", features = ["serde"] }
+
+either = "1.9"
+mime = "0.3"
+infer = "0.15"
+uuid = "1.7"
+self_update = { version = "0.39", default-features = false, features = ["rustls"] }
+
+# database
+sled = "0.34"
+
+# i18n
+i18n-embed = { version = "0.14", features = ["fluent-system", "desktop-requester"]}
+i18n-embed-fl = "0.8"
+rust-embed = "8"
+locale_config = "0.3"
+
+figment-wrapper = { branch = "master", git = "https://github.com/Itsusinn/figment-wrapper.git" }
+figment = { version = "0.10", features = ["toml"] }
+toml = "0.8"
+
+[profile.release]
+opt-level = 'z'
+debug = 1
+lto = true
+incremental = false
+codegen-units = 1
+strip = "debuginfo"
+

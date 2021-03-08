@@ -1,0 +1,5 @@
+# Install Intellij Plugin first! 
+# https://plugins.jetbrains.com/plugin/index?xmlId=com.nbadal.ktlint
+[*{kt,kts}]
+disabled_rules = no-wildcard-imports
+indent_size=2

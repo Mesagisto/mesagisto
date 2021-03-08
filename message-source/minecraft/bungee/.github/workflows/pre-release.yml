@@ -1,0 +1,32 @@
+name: pre-release
+on:
+  push:
+    branches: [ master ]
+    paths-ignore: [ '*.md' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: zulu
+          cache: gradle
+
+      - name: Build
+        run: bash build.sh
+
+      - name: Auto release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: latest
+          prerelease: true
+          title: "Development Build/不稳定发行版"
+          files: |
+            packages/*.jar
+            LICENSE

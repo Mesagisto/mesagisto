@@ -1,0 +1,61 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: zulu
+          cache: gradle
+
+      - name: Build
+        run: bash build.sh
+
+      - name: Auto release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            packages/*.jar
+            LICENSE
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: zulu
+          cache: gradle
+
+      - name: Publish to MavenCentral
+        env:
+          PUBLICATION_CREDENTIALS: ${{ secrets.PUBLICATION_CREDENTIALS }}
+        run: |
+          chmod +x gradlew
+          ./gradlew clean checkMavenCentralPublication
+          ./gradlew build publish
+          ./gradlew closeAndReleaseRepository
+
+      - name: Get the version tag
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/v}
+
+      - name: Make sure Maven
+        run: |
+          wget --tries=100 --retry-on-http-error=404 --wait=30 https://repo1.maven.org/maven2/org/mesagisto/mirai-message-source/${{ steps.get_version.outputs.VERSION }}/mirai-message-source-${{ steps.get_version.outputs.VERSION }}.jar
+          wget --tries=100 --retry-on-http-error=404 --wait=30 https://repo1.maven.org/maven2/org/mesagisto/mirai-message-source/${{ steps.get_version.outputs.VERSION }}/mirai-message-source-${{ steps.get_version.outputs.VERSION }}.pom
+          wget --tries=100 --retry-on-http-error=404 --wait=30 https://maven.aliyun.com/repository/public/org/mesagisto/mirai-message-source/${{ steps.get_version.outputs.VERSION }}/mirai-message-source-${{ steps.get_version.outputs.VERSION }}.mirai2.jar
+          wget --tries=100 --retry-on-http-error=404 --wait=30 https://maven.aliyun.com/repository/public/org/mesagisto/mirai-message-source/${{ steps.get_version.outputs.VERSION }}/mirai-message-source-${{ steps.get_version.outputs.VERSION }}.pom

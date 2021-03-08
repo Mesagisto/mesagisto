@@ -1,0 +1,6 @@
+/.gradle
+/.idea
+*.class
+/build
+/extract
+/packages

@@ -1,0 +1,43 @@
+site_name: Mesagisto 信使
+docs_dir: zh-CN
+site_url: https://docs.mesagisto.org/zh-CN
+repo_url: https://github.com/MeowCat-Studio/mesagisto
+repo_name: mesagisto
+nav:
+    - 消息源:
+      - Mirai 消息源: mirai-message-source.md
+      - Minecraft 消息源:
+        - Bukkit ALL: minecraft-message-source/bukkit.md
+        - Bungee ALL: minecraft-message-source/bungee.md
+        - Fabric 1.16-1.19/Forge 1.18: minecraft-message-source/mcmod.md
+      - Telegram 消息源: telegram-message-source.md
+      - Discord 消息源: discord-message-source.md
+    - 诊断工具: diagnose.md
+    - English: https://docs.mesagisto.org/en-US
+theme:
+  name: material
+  features:
+    - navigation.instant
+    # - navigation.sections
+    - navigation.tabs
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.critic
+  - admonition
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.snippets
+plugins:
+  - search
+  - minify:
+      minify_html: true
+  - redirects:
+      redirect_maps:
+        index.md: mirai-message-source.md
+extra:
+  analytics:
+    provider: google
+    property: !ENV GOOGLE_ANALYTICS_KEY

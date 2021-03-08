@@ -1,0 +1,4 @@
+name: "bukkit-message-source"
+main: "org.meowcat.mesagisto.kato.platform.Bukkit"
+version: "${version}"
+api-version: 1.13

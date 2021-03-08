@@ -1,0 +1,43 @@
+site_name: Mesagisto
+docs_dir: en-US
+site_url: https://docs.mesagisto.org/en-US
+repo_url: https://github.com/MeowCat-Studio/mesagisto
+repo_name: mesagisto
+nav:
+    - Message Source:
+      - Mirai: mirai-message-source.md
+      - Minecraft:
+        - Bukkit ALL: minecraft-message-source/bukkit.md
+        - Bungee ALL: minecraft-message-source/bungee.md
+        - Fabric 1.16-1.19/Forge 1.18: minecraft-message-source/mcmod.md
+      - Telegram: telegram-message-source.md
+      - Discord: discord-message-source.md
+    - Diagnose: diagnose.md
+    - 中文: https://docs.mesagisto.org/zh-CN/
+theme:
+  name: material
+  features:
+    - navigation.instant
+    # - navigation.sections
+    - navigation.tabs
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.critic
+  - admonition
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.snippets
+plugins:
+  - search
+  - minify:
+      minify_html: true
+  - redirects:
+      redirect_maps:
+        index.md: mirai-message-source.md
+extra:
+  analytics:
+    provider: google
+    property: !ENV GOOGLE_ANALYTICS_KEY

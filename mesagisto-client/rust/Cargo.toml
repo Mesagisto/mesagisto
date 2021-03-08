@@ -1,0 +1,54 @@
+[package]
+name = "mesagisto-client"
+authors = ["Itsusinn奕䜣 <itsusinn@foxmail.com>"]
+version = "0.2.0"
+edition = "2021"
+
+[dependencies]
+
+# i18n
+i18n-embed = { version = "0.14", features = ["fluent-system", "desktop-requester"]}
+i18n-embed-fl = "0.8.0"
+rust-embed = "8"
+
+once_cell = "1"
+lateinit = { branch = "master", git = "https://github.com/Itsusinn/lateinit-rs.git" }
+#smol = "1.2.5"
+tracing = "0.1"
+
+aes = "0.8"
+aes-gcm-siv = { version = "0.11", features = ["std"] }
+
+dashmap = { version = "5", features = ["serde"] }
+rand = "0.8"
+uuid = { version = "1", features = ["v4", "v5","serde"] }
+async-recursion = "1"
+hex = "0.4.3"
+
+base64-url = "2"
+url = "2"
+
+derive_builder = "0.13"
+
+# serde
+serde = { version = "1.0", features = ["rc"] }
+ciborium = "0.2"
+serde_bytes = "0.11"
+
+arcstr = { version = "1", features = ["serde"] }
+bytes = { version = "1", features = ["serde"] }
+
+sha2 = "0.10"
+generic-array = "1"
+typenum = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros","signal","sync","fs","io-util"] }
+color-eyre = "0.6"
+
+nats = { version = "0.33", package = "async-nats" }
+
+# async
+futures-util = "0.3"
+singleton = { branch = "master", git = "https://github.com/Itsusinn/singleton-rs.git" }
+reqwest = { version = "0.11", default-features = false, features = ["rustls","rustls-tls","gzip"] }
+educe = { version = "0.5", default-features = false, features = ["Default","Debug"] }
+sled = "0.34"

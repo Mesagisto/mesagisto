@@ -1,0 +1,135 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+env:
+  SHORT_NAME: mesagisto-diagnose
+
+jobs:
+  compile:
+    name: Compile
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            file: ./target/x86_64-unknown-linux-musl/release/${{ github.event.repository.name }}
+            target: x86_64-unknown-linux-musl
+            extra_args:
+            release_name: linux-x86_64
+            cross: true
+
+          - os: ubuntu-latest
+            file: ./target/i686-unknown-linux-musl/release/${{ github.event.repository.name }}
+            target: i686-unknown-linux-musl
+            extra_args:
+            release_name: linux-i686
+            cross: true
+
+          - os: ubuntu-latest
+            file: ./target/aarch64-unknown-linux-gnu/release/${{ github.event.repository.name }}
+            target: aarch64-unknown-linux-gnu
+            extra_args:
+            release_name: linux-aarch64
+            cross: true
+
+          - os: windows-latest
+            file: ./target/x86_64-pc-windows-msvc/release/${{ github.event.repository.name }}.exe
+            target: x86_64-pc-windows-msvc
+            extra_args: --no-default-features --features no-color
+            release_name: windows-x86_64.exe
+            cross: false
+
+          - os: windows-latest
+            file: ./target/i686-pc-windows-msvc/release/${{ github.event.repository.name }}.exe
+            target: i686-pc-windows-msvc
+            extra_args: --no-default-features --features no-color
+            release_name: windows-i686.exe
+            cross: false
+
+          - os: windows-latest
+            file: ./target/x86_64-pc-windows-msvc/release/${{ github.event.repository.name }}.exe
+            target: x86_64-pc-windows-msvc
+            extra_args:
+            release_name: windows-x86_64-colored.exe
+            cross: false
+
+          - os: windows-latest
+            file: ./target/i686-pc-windows-msvc/release/${{ github.event.repository.name }}.exe
+            target: i686-pc-windows-msvc
+            extra_args:
+            release_name: windows-i686-colored.exe
+            cross: false
+
+          - os: macos-latest
+            file: ./target/x86_64-apple-darwin/release/${{ github.event.repository.name }}
+            target: x86_64-apple-darwin
+            extra_args:
+            release_name: mac-x86_64
+            cross: false
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Resume cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ matrix.target }}-release-${{ hashFiles('**/Cargo.toml') }}
+          restore-keys: |
+            ${{ matrix.target }}-release
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          target: ${{ matrix.target }}
+          override: true
+
+      - uses: actions-rs/cargo@v1
+        with:
+          use-cross: ${{ matrix.cross }}
+          command: build
+          args: --release --target ${{ matrix.target }} ${{ matrix.extra_args }}
+
+      - name: Rename binary
+        run: mv ${{ matrix.file }} ${{ env.SHORT_NAME }}-${{ matrix.release_name }}
+
+      - name: Upload binaries
+        uses: actions/upload-artifact@v2
+        with:
+          name: compile
+          path: ${{ env.SHORT_NAME }}-${{ matrix.release_name }}
+
+  release:
+    name: Release
+    needs: [compile]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Download binaries
+        uses: actions/download-artifact@v2
+        with:
+          name: compile
+          path: ./packages
+
+      - name: Compress
+        run: bash ./.github/compress.sh
+
+      - name: Github release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            packages/*
+            LICENSE

@@ -1,0 +1,9 @@
+/target/
+**/*.rs.bk
+/.idea
+/db/
+/.history
+/config/*
+*.mp3
+*.jpg
+/.vscode

@@ -1,0 +1,10 @@
+/target/
+**/*.rs.bk
+/.idea
+config.yml
+config.yml.old
+*.mp3
+*.jpg
+.history
+/db
+/config

@@ -1,0 +1,41 @@
+name: deploy
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+    - run: |
+        pip install mkdocs-material mkdocs-redirects mkdocs-minify-plugin
+        mkdir static
+
+    - name: Mkdocs build zh-CN
+      run: |
+        mkdocs build -f mkdocs.zh-CN.yml
+        mv site static/zh-CN
+      env:
+        GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}
+
+    - name: Mkdocs build en-US
+      run: |
+        mkdocs build -f mkdocs.en-US.yml
+        mv site static/en-US
+      env:
+        GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: static
+        force_orphan: true
+        user_name: github-actions[bot]
+        user_email: github-actions[bot]@users.noreply.github.com

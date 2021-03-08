@@ -1,0 +1,12 @@
+modLoader="javafml"
+loaderVersion="[40,)"
+license='LGPLv3'
+
+[[mods]]
+modId="mesagisto"
+version="$version"
+displayName="MesagistoMod"
+authors="Itsusinn"
+description='''
+Mesagisto: A message forwarding program connecting different instant-message platforms. 信使: 一款连接不同即时通讯平台的消息转发程序.
+'''

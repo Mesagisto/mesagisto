@@ -1,0 +1,9 @@
+log-connecting = Connecting to WS server {$address}
+log-connected = WS server connection successful
+log-create-sub = Create subscription for target {$target} with address:{$address}
+log-handle-lib-msg = Processing packets sent by the library
+log-image-not-found = Unable to find image in local database
+log-callback-err = WS message processing callback error occurred
+log-callback-timeout = WS message processing callback timeout
+log-invoke-handler = Packet received from target {$target}, deliver it to callback
+log-send-request = Sending Request packet to {$address}

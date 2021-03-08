@@ -1,0 +1,3 @@
+[submodule "libs/stevenarella"]
+	path = libs/stevenarella
+	url = git@github.com:Itsusinn/stevenarella.git
