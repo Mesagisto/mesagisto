@@ -1,0 +1,18 @@
+[submodule "message-dispatcher"]
+	path = message-dispatcher
+	url = git@github.com:MeowCat-Studio/message-dispatcher.git
+[submodule "message-forwarding-client"]
+	path = message-forwarding-client
+	url = git@github.com:MeowCat-Studio/message-forwarding-client.git
+[submodule "message-source/bukkit-message-source"]
+	path = message-source/bukkit-message-source
+	url = git@github.com:MeowCat-Studio/bukkit-message-source.git
+[submodule "message-source/mirai-message-source"]
+	path = message-source/mirai-message-source
+	url = git@github.com:MeowCat-Studio/mirai-message-source.git
+[submodule "message-source/forge-message-source"]
+	path = message-source/forge-message-source
+	url = git@github.com:MeowCat-Studio/forge-message-source.git
+[submodule "message-source/telegram-message-source"]
+	path = message-source/telegram-message-source
+	url = git@github.com:MeowCat-Studio/telegram-message-source.git
