@@ -28,23 +28,4 @@ hs_err_pid*
 *.lock
 *.bin
 
-*.json
-*/.gradle/
-/build/
-*/*/build/
-/logs/
-*/logs/
-*/build/
-.idea
-.gradle
-*/.idea/
-*/.idea/*
-*/.idea/.gitignore
-/test/
-/out/
-*/config/
-*.gz
-/mirai-message-source/src/test/kotlin/RunMirai.kt
-local.properties
-
 *.jks

@@ -1,4 +1,4 @@
-# 消息转发 ![Icon](img/mail-send-line.svg)    
+# 消息转发
 ![Github Action](https://github.com/meowcat-studio/message-forward/workflows/build/badge.svg)
 [![QQ Group](https://img.shields.io/badge/QQ%20Group-667352043-12B7F5?logo=tencent-qq)](https://jq.qq.com/?_wv=1027&k=6eDIHSYt)
 [![Telegram](https://img.shields.io/badge/Telegram-Official-blue.svg?logo=telegram)](https://t.me/joinchat/ICd9_OSUPTTT5njY)
@@ -20,7 +20,3 @@
 ## 贡献
 
 欢迎PR
-
-## 许可证
-[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B23047%2Fgithub.com%2FMeowCat-Studio%2Fmessage-forwarding.svg?type=large)](https://app.fossa.com/projects/custom%2B23047%2Fgithub.com%2FMeowCat-Studio%2Fmessage-forwarding?ref=badge_large)
-
