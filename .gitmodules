@@ -1,3 +1,0 @@
-[submodule "message-source/telegram-message-source"]
-	path = message-source/telegram-message-source
-	url = git@github.com:MeowCat-Studio/telegram-message-source.git
