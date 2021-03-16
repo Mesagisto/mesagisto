@@ -1,0 +1,24 @@
+[submodule "mesago-centro"]
+	path = mesago-centro
+	url = git@github.com:MeowCat-Studio/mesago-centro.git
+[submodule "mesagisto-client"]
+	path = mesagisto-client
+	url = git@github.com:MeowCat-Studio/mesagisto-client.git
+[submodule "mesaga-fonto/telegram-mesaga-fonto"]
+	path = mesaga-fonto/telegram-mesaga-fonto
+	url = git@github.com:MeowCat-Studio/telegram-mesaga-fonto.git
+[submodule "mesaga-fonto/bungeecord-mesaga-fonto"]
+	path = mesaga-fonto/bungeecord-mesaga-fonto
+	url = git@github.com:MeowCat-Studio/bungeecord-mesaga-fonto.git
+[submodule "mesaga-fonto/forge-mesaga-fonto"]
+	path = mesaga-fonto/forge-mesaga-fonto
+	url = git@github.com:MeowCat-Studio/forge-mesaga-fonto.git
+[submodule "mesaga-fonto/mirai-mesaga-fonto"]
+	path = mesaga-fonto/mirai-mesaga-fonto
+	url = git@github.com:MeowCat-Studio/mirai-mesaga-fonto.git
+[submodule "mesaga-fonto/bukkit-mesaga-fonto"]
+	path = mesaga-fonto/bukkit-mesaga-fonto
+	url = git@github.com:MeowCat-Studio/bukkit-mesaga-fonto.git
+[submodule "mesaga-fonto/farbic-mesaga-fonto"]
+	path = mesaga-fonto/farbic-mesaga-fonto
+	url = git@github.com:MeowCat-Studio/farbic-mesaga-fonto.git
