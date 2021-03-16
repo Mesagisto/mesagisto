@@ -1,9 +1,6 @@
 [submodule "message-forwarding-client"]
 	path = message-forwarding-client
 	url = git@github.com:MeowCat-Studio/message-forwarding-client.git
-[submodule "message-source/bukkit-message-source"]
-	path = message-source/bukkit-message-source
-	url = git@github.com:MeowCat-Studio/bukkit-message-source.git
 [submodule "message-source/mirai-message-source"]
 	path = message-source/mirai-message-source
 	url = git@github.com:MeowCat-Studio/mirai-message-source.git
