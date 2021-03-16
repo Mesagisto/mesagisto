@@ -1,6 +1,3 @@
-[submodule "message-dispatcher"]
-	path = message-dispatcher
-	url = git@github.com:MeowCat-Studio/message-dispatcher.git
 [submodule "message-forwarding-client"]
 	path = message-forwarding-client
 	url = git@github.com:MeowCat-Studio/message-forwarding-client.git
