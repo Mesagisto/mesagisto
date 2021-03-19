@@ -1,6 +1,6 @@
 # 消息转发
 [![QQ Group](https://img.shields.io/badge/QQ%20Group-667352043-12B7F5?logo=tencent-qq)](https://jq.qq.com/?_wv=1027&k=6eDIHSYt)
-[![Telegram](https://img.shields.io/badge/Telegram-Official-blue.svg?logo=telegram)](https://t.me/message_forwarding)
+[![Telegram](https://img.shields.io/badge/Telegram-Ｍesagisto-blue.svg?logo=telegram)](https://t.me/mesagisto)
 
 **[ENGLISH](README.en-US.md)**|简体中文
 
