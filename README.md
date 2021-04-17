@@ -4,9 +4,6 @@
 
 **[ENGLISH](README.en-US.md)**|简体中文
 
-|**注意: 本项目目前处于极为早期的开发状态，无论是功能稳定性还是可靠性都不成熟。使用前请三思**|
-|----|
-
 本项目致力于通过消息转发连接不同的IM(Instant Messageing即时通讯)平台。
 
 现已支持： Ｍinecraft我的世界， TencentQQ腾讯QQ，Discord等IM平台的互相转发。
