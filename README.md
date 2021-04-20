@@ -1,4 +1,4 @@
-# 消息转发
+# Mesagisto信使
 [![QQ Group](https://img.shields.io/badge/QQ%20Group-667352043-12B7F5?logo=tencent-qq)](https://jq.qq.com/?_wv=1027&k=6eDIHSYt)
 [![Telegram](https://img.shields.io/badge/Telegram-Ｍesagisto-blue.svg?logo=telegram)](https://t.me/mesagisto)
 
@@ -11,7 +11,8 @@
 ## 使用
 
 目前本项目处于迭代期：尚不可用
-请查看[Wiki](https://github.com/MeowCat-Studio/message-forwarding/wiki)
+
+~~请查看Wiki~~
 
 ## 维护者
 
