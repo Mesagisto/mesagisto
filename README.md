@@ -10,6 +10,7 @@
 
 ## 使用
 
+目前本项目处于迭代期：尚不可用
 请查看[Wiki](https://github.com/MeowCat-Studio/message-forwarding/wiki)
 
 ## 维护者
