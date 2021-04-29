@@ -10,7 +10,9 @@
 
 ## 使用
 
-请查看[Wiki](https://github.com/MeowCat-Studio/mesagisto/wiki)
+目前本项目处于迭代期：尚不可用
+
+~~请查看Wiki~~
 
 ## 维护者
 
