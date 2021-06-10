@@ -22,3 +22,6 @@
 [submodule "mesaga-fonto/farbic-mesaga-fonto"]
 	path = mesaga-fonto/farbic-mesaga-fonto
 	url = git@github.com:MeowCat-Studio/farbic-mesaga-fonto.git
+[submodule "mesaga-fonto/sponge-mesaga-fonto"]
+	path = mesaga-fonto/sponge-mesaga-fonto
+	url = git@github.com:MeowCat-Studio/sponge-mesaga-fonto.git
