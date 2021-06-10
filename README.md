@@ -6,7 +6,7 @@
 
 本项目致力于通过消息转发连接不同的IM(Instant Messageing即时通讯)平台。
 
-现已支持： Ｍinecraft我的世界， TencentQQ腾讯QQ，Discord等IM平台的互相转发。
+现已支持： Ｍinecraft我的世界， TencentQQ腾讯QQ，Telegram,Discord等IM平台的互相转发。
 
 ## 使用
 
