@@ -7,21 +7,21 @@
 [submodule "mesaga-fonto/telegram-mesaga-fonto"]
 	path = mesaga-fonto/telegram-mesaga-fonto
 	url = git@github.com:MeowCat-Studio/telegram-mesaga-fonto.git
-[submodule "mesaga-fonto/bungeecord-mesaga-fonto"]
-	path = mesaga-fonto/bungeecord-mesaga-fonto
-	url = git@github.com:MeowCat-Studio/bungeecord-mesaga-fonto.git
-[submodule "mesaga-fonto/forge-mesaga-fonto"]
-	path = mesaga-fonto/forge-mesaga-fonto
-	url = git@github.com:MeowCat-Studio/forge-mesaga-fonto.git
 [submodule "mesaga-fonto/mirai-mesaga-fonto"]
 	path = mesaga-fonto/mirai-mesaga-fonto
 	url = git@github.com:MeowCat-Studio/mirai-mesaga-fonto.git
-[submodule "mesaga-fonto/bukkit-mesaga-fonto"]
-	path = mesaga-fonto/bukkit-mesaga-fonto
+[submodule "mesaga-fonto/minecraft/bukkit"]
+	path = mesaga-fonto/minecraft/bukkit
 	url = git@github.com:MeowCat-Studio/bukkit-mesaga-fonto.git
-[submodule "mesaga-fonto/farbic-mesaga-fonto"]
-	path = mesaga-fonto/farbic-mesaga-fonto
-	url = git@github.com:MeowCat-Studio/farbic-mesaga-fonto.git
-[submodule "mesaga-fonto/sponge-mesaga-fonto"]
-	path = mesaga-fonto/sponge-mesaga-fonto
+[submodule "mesaga-fonto/minecraft/sponge"]
+	path = mesaga-fonto/minecraft/sponge
 	url = git@github.com:MeowCat-Studio/sponge-mesaga-fonto.git
+[submodule "mesaga-fonto/minecraft/forge"]
+	path = mesaga-fonto/minecraft/forge
+	url = git@github.com:MeowCat-Studio/forge-mesaga-fonto.git
+[submodule "mesaga-fonto/minecraft/bungeecord"]
+	path = mesaga-fonto/minecraft/bungeecord
+	url = git@github.com:MeowCat-Studio/bungeecord-mesaga-fonto.git
+[submodule "mesaga-fonto/minecraft/farbic"]
+	path = mesaga-fonto/minecraft/farbic
+	url = git@github.com:MeowCat-Studio/farbic-mesaga-fonto.git
