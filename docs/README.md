@@ -24,8 +24,10 @@ TL,DR:
    > ...
  
 
->How to install a plugin:
+>#### How to install a plugin:
+>
 > In MCL 1.0.5, simply drop the '.jar' file that released into the `~/plugins/` directory, which '~' represents the directory which 'mcl.jar' placed. 
+> 
 > You may also try `./mcl --update-package` method, see also [README](https://hub.fastgit.org/iTXTech/mirai-console-loader/blob/master/scripts/README.md), [UserManual](https://github.com/mamoe/mirai/blob/dev/docs/UserManual.md)
 ___
 ## Contributors
