@@ -45,14 +45,17 @@ address = 'http://127.0.0.1:8889'
   [INFO] telegram-message-fonto started.	
  ```
  If there are no [ERROR], then you can send `/help` to your bot, with reply:
-> 信使Bot支持以下命令
-> /help - 显示命令帮助
-> /enable - 启用消息转发
-> /disable - 禁用消息转发
-> /setaddress - 设置当前Group的转发地址
- 
+```text
+ 信使Bot支持以下命令
+ /help - 显示命令帮助
+ /enable - 启用消息转发
+ /disable - 禁用消息转发
+ /setaddress - 设置当前Group的转发地址
+ ```
  5. Create a Telegram group, add your bot, and type in the group:
-> /setaddress <channel>
- here <channel> denotes your qq number.
+
+ `/setaddress <channel>`
+ 
+ Here <channel> denotes your qq number.
  
  6. Enjoy.
