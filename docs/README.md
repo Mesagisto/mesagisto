@@ -1,4 +1,4 @@
-# [Mesagisto](https://github.com/MeowCat-Studio/mesagisto) 信使 (former known as message-deliver)
+# [Mesagisto](https://github.com/MeowCat-Studio/mesagisto) 信使
 [![QQ Group](https://img.shields.io/badge/QQ%20Group-667352043-12B7F5?logo=tencent-qq)](https://jq.qq.com/?_wv=1027&k=6eDIHSYt)
 [![Telegram](https://img.shields.io/badge/Telegram-Ｍesagisto-blue.svg?logo=telegram)](https://t.me/mesagisto)
 
