@@ -9,14 +9,14 @@ A implementation of message-forwarding-client.
 
 ___
 
-## Usage
+## Simple instruction
 
 __You may take a look at main repo's readme for usage first.__
 
 To install, get .jar from Release page, drop it into MCL's `plugins/`, and execute command below in MCL:
-   > /perm permit * org.meowcat.mesagisto:*
+   `> /perm permit * org.meowcat.mesagisto:*`
 
-Then any OP can execute commands below
+Then any OP (EXCEPT bot itself) can execute commands below
 > /forward setChannel 
 > /forward channel
 > /forward channel <channel>

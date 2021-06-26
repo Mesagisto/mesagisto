@@ -11,18 +11,19 @@ ___
 
 ## Deploy instruction
 
- 1. get binary file at Release page (or check Actions)
- 2. place it in where network access to Telegram server is stable (you may need HTTP proxy).
- 3. use your favorite editor to create `config.yaml` placed with the binary `telegram-mesaga-fonto`.
+ 1. Get binary file at Release page (or check Actions)
+ 2. Place it in where network access to Telegram server is stable (you may need HTTP proxy).
+ 3. Use your favorite editor to create `config.yaml` placed with the binary `telegram-mesaga-fonto`.
  here is an example:
  ```toml
 # before use, set `enabled` to `true`.
-enabled = 
+enabled = true
 
 [forwarding]
 address = 'nats://itsusinn.site:4222'
 
 [telegram]
+# do not forget to fill your bot token before use
 token = 'BOT_TOKEN'
 bot_name = ''
 
@@ -38,9 +39,20 @@ address = 'http://127.0.0.1:8889'
 #
 #-11451419 = '10000'
  ```
- 4. start the server:
+ 4. Start the server:
  ```shell
- $ setsid -f telegram-messaga-fonto 
+ $ ./telegram-messaga-fonto
+  [INFO] telegram-message-fonto started.	
  ```
-
-
+ If there are no [ERROR], then you can send `/help` to your bot, with reply:
+> 信使Bot支持以下命令
+> /help - 显示命令帮助
+> /enable - 启用消息转发
+> /disable - 禁用消息转发
+> /setaddress - 设置当前Group的转发地址
+ 
+ 5. Create a Telegram group, add your bot, and type in the group:
+> /setaddress <channel>
+ here <channel> denotes your qq number.
+ 
+ 6. Enjoy.
