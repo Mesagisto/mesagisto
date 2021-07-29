@@ -2,11 +2,11 @@
 [![QQ Group](https://img.shields.io/badge/QQ%20Group-667352043-12B7F5?logo=tencent-qq)](https://jq.qq.com/?_wv=1027&k=6eDIHSYt)
 [![Telegram](https://img.shields.io/badge/Telegram-Ｍesagisto-blue.svg?logo=telegram)](https://t.me/mesagisto)
 
-ENGLISH|**[简体中文](https://github.com/MeowCat-Studio/mesagisto/tree/master/docs/zh-CN/README.md)**
+ENGLISH | **[简体中文](https://github.com/MeowCat-Studio/mesagisto/tree/master/docs/zh-CN/README.md)**
 
-This project aim to transport messages between different IM platforms.
+This project aims to forward messages between different IM platforms.
 
-Now supporting: Minecraft, QQ, Telegram, Discord
+Now supporting: Minecraft, Tencent QQ, Telegram, Discord
 
 ## How does it works
 
@@ -24,7 +24,10 @@ Now supporting: Minecraft, QQ, Telegram, Discord
 
 ## Contributors
 
-[@Itsusinn](https://github.com/Itsusinn).
+[@Itsusinn](https://github.com/Itsusinn) (Maintainer)
+
+[@nexplorer-3e](https://github.com/nexplorer-3e)
+
 Any PR would be welcomed.
 ___
 
