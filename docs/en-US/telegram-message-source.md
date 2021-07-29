@@ -13,7 +13,7 @@ ___
 
  1. Get binary file at Release page (or check Actions)
  2. Place it in where network access to Telegram server is stable (you may need HTTP proxy).
- 3. Use your favorite editor to create `config.yaml` placed with the binary `telegram-mesaga-fonto`.
+ 3. Use your favorite editor to create `config.toml` placed with the binary `telegram-mesaga-fonto`.
  here is an example:
  ```toml
 # before use, set `enabled` to `true`.
