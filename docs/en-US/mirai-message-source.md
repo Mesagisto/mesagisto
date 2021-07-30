@@ -1,53 +1,44 @@
 # mirai-mesaga-fonto 
-### part of [Mesagisto](https://github.com/MeowCat-Studio/mesagisto)
+** part of [Mesagisto](https://github.com/MeowCat-Studio/mesagisto). A implementation of message-forwarding client.**
 
----
+[TOC]
 
+## Install
 
-A implementation of message-forwarding-client.
-消息转发客户端的mirai(Tencent-QQ)实现
+  - Installation on the server
 
-___
+    1. Download mirai-fonto.mirai.jar from [Releases page](https://github.com/MeowCat-Studio/mirai-mesaga-fonto/releases).
+    2. Move to the plugins folder of mirai-console (or mcl).
 
-Install
-
-TL,DR:
- - deploy Mirai using [mcl](https://github.com/iTXTech/mirai-console-loader),
- - install plugins:
-   - [chat-command](https://github.com/project-mirai/chat-command/releases)
-   - something you like from the subrepositories
- - after install them, grant permissions to plugins by executing commands below in `mcl`:
-   > /perm permit * net.mamoe.mirai.console.chat-command:*
-   > ...
-
-
->#### How to install a plugin:
->
->In MCL 1.0.5, simply drop the '.jar' file that released into the `~/plugins/` directory, which '~' represents the directory which 'mcl.jar' placed. 
->
->You may also try `./mcl --update-package` method, see also [README](https://hub.fastgit.org/iTXTech/mirai-console-loader/blob/master/scripts/README.md), [UserManual](https://github.com/mamoe/mirai/blob/dev/docs/UserManual.md)
-
-___
-
-
+  - Install on Android (8.0+)
+    1. Download mirai-android-fonto.apk from [Releases page](https://github.com/MeowCat-Studio/mirai-mesaga-fonto/releases).
+    2. Install it as an Android application
 
 ## Simple instruction
 
 __You may take a look at main repo's readme for usage first.__
 
-To install, get .jar from Release page, drop it into MCL's `plugins/`, and execute command below in MCL:
+Execute the command below in MCL:
 
    `> /perm permit * org.meowcat.mesagisto:*`
 
 Then any OP (EXCEPT bot itself) can execute commands below
  ```
- /forward setChannel 
- /forward channel
- /forward channel <channel>
+ /forward setChannel
+ or shortly: /f sc
+ /forward setChannel <channel>
+ or shortly: /f sc <channel>
  ```
 by simply send them in a **QQ group chat**(not Mirai Console).
 
-`channel` represents QQ number here.
+If no `channel` parameter is given, the default value will be used,which is the command sender's qq number.
 
 
+## Attention
+
+In order to use commands in the chat environment you need to install the **preceding plugin [chat-command](https://github.com/project-mirai/chat-command)**
+
+> After installing the chat-command, you must enter the command in the mirai console
+>
+> `permission permit * net.mamoe.mirai.console.chat-command:*`
 

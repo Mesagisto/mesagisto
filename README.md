@@ -1,1 +1,1 @@
-./docs/en-US/README.md
+README.en-US.md
