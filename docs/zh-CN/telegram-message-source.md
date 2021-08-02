@@ -2,10 +2,6 @@
 
 **[Mesagisto信使项目](https://github.com/MeowCat-Studio/mesagisto)的一部分，消息转发客户端的[Telegram](https://core.telegram.org) 实现。**
 
-
-[TOC]
-
-
 ## 部署指导
 
  1. 在 [Release页面](https://github.com/MeowCat-Studio/telegram-mesaga-fonto/releases)获取二进制文件(简称tmf)。
@@ -45,7 +41,7 @@ address = 'http://127.0.0.1:1080'
  ```
  4. 启动tmf:
  ```shell
- $ ./telegram-messaga-fonto
+ $ ./tmf
   [INFO] telegram-message-fonto started.	
  ```
  如果没有 [ERROR]输出, 你可以想bot发送 `/help` , 将会得到如下回复:

@@ -1,10 +1,6 @@
 # telegram-mesaga-fonto 
 ** Part of [Mesagisto Project](https://github.com/MeowCat-Studio/mesagisto), the [Telegram](https://core.telegram.org) implementation of the message forwarding client. **
 
-
-[TOC]
-
-
 ## Deploy instruction
 
  1. Get binary file(shortly called tmf) at [Release page](https://github.com/MeowCat-Studio/telegram-mesaga-fonto/releases) 
@@ -40,7 +36,7 @@ address = 'http://127.0.0.1:8889'
  ```
  4. Start the server:
  ```shell
- $ ./telegram-messaga-fonto
+ $ ./tmf
   [INFO] telegram-message-fonto started.	
  ```
  If there are no [ERROR], then you can send `/help` to your bot, with reply:

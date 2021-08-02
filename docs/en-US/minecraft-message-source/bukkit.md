@@ -3,7 +3,7 @@
 
 ## Depoly
 
-1. Download mesagisto.jar from [Releases page](https://github.com/MeowCat-Studio/bukkit-mesaga-fonto/releases).
+1. Download bmf.jar from [Releases page](https://github.com/MeowCat-Studio/bukkit-mesaga-fonto/releases).
 
 2. Move the jar package to the plugins folder of the bukkit server (such as Spigot, Paper, etc.). 
 
@@ -16,6 +16,8 @@
    change channel to **your qq number**
 
    For example `channel: '123456789'`. The qq number here is your personal (meaning user) qq number
+
+   > In fact, whatever the value of the channel is, just make sure the value is the same for different forwarding clients
 
    Just leave the other fields as default
 

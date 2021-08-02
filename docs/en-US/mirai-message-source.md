@@ -1,17 +1,15 @@
 # mirai-mesaga-fonto 
 ** part of [Mesagisto](https://github.com/MeowCat-Studio/mesagisto). A implementation of message-forwarding client.**
 
-[TOC]
-
 ## Install
 
   - Installation on the server
 
-    1. Download mirai-fonto.mirai.jar from [Releases page](https://github.com/MeowCat-Studio/mirai-mesaga-fonto/releases).
+    1. Download mmf.mirai.jar from [Releases page](https://github.com/MeowCat-Studio/mirai-mesaga-fonto/releases).
     2. Move to the plugins folder of mirai-console (or mcl).
 
   - Install on Android (8.0+)
-    1. Download mirai-android-fonto.apk from [Releases page](https://github.com/MeowCat-Studio/mirai-mesaga-fonto/releases).
+    1. Download mamf.apk from [Releases page](https://github.com/MeowCat-Studio/mirai-mesaga-fonto/releases).
     2. Install it as an Android application
 
 ## Simple instruction

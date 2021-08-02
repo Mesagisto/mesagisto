@@ -1,19 +1,15 @@
 # mirai消息源
 **[Mesagisto信使项目](https://github.com/MeowCat-Studio/mesagisto)的一部分，消息转发客户端的mirai(Tencent-QQ)实现。**
 
-
-[TOC]
-
-
 ## 安装
 
   - 安装在服务器上
 
-    1. 在[Releases页面](https://github.com/MeowCat-Studio/mirai-mesaga-fonto/releases) 下载 mirai-fonto.mirai.jar。
+    1. 在[Releases页面](https://github.com/MeowCat-Studio/mirai-mesaga-fonto/releases) 下载 mmf.mirai.jar。
     2. 移动至mirai-console(或是mcl)的plugins文件夹下。
 
   - 安装在安卓(8.0+)上
-    1. 在[Releases页面](https://github.com/MeowCat-Studio/mirai-mesaga-fonto/releases) 下载 mirai-android-fonto.apk。
+    1. 在[Releases页面](https://github.com/MeowCat-Studio/mirai-mesaga-fonto/releases) 下载 mamf.apk。
     2. 将其作为安卓应用安装
 ## 简单入门
 

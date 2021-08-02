@@ -3,7 +3,7 @@
 
 ## Depoly
 
-1. 在[Releases页面](https://github.com/MeowCat-Studio/bukkit-mesaga-fonto/releases) 下载mesagisto.jar。
+1. 在[Releases页面](https://github.com/MeowCat-Studio/bukkit-mesaga-fonto/releases) 下载bmf.jar。
 
 2. 将jar包移动至bukkit系服务端(如Spigot,Paper等)的plugins文件夹下。
 
@@ -17,6 +17,8 @@
 
    例如`channel: '123456789'`。此处的qq号为您个人(指用户)的qq号
 
+   > 实际上无论channel的值如何，只要保证不同转发客户端channel的值相同即可
+
    其他字段保持默认值即可
 
    最终,配置文件将会是这样的
@@ -28,3 +30,4 @@
    ```
 
 5. 保存配置文件，重启bukkit服务端。
+
