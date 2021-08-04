@@ -2,7 +2,7 @@
 [![QQ Group](https://img.shields.io/badge/QQ%20Group-667352043-12B7F5?logo=tencent-qq)](https://jq.qq.com/?_wv=1027&k=6eDIHSYt)
 [![Telegram](https://img.shields.io/badge/Telegram-Ｍesagisto-blue.svg?logo=telegram)](https://t.me/mesagisto)
 
-ENGLISH|**[简体中文](./README.zh-CN.md)**
+ENGLISH | **[简体中文](https://github.com/MeowCat-Studio/mesagisto/blob/master/README.zh-CN.md)**
 
 This project aim to transport messages between different IM platforms.
 
@@ -14,7 +14,7 @@ Now supporting: Minecraft, QQ, Telegram, Discord
 
 ## Install & Usage
 
-See --> **[User Guide](./docs/en-US/intro.md)**
+See --> **[User Guide](https://github.com/MeowCat-Studio/mesagisto/blob/master/docs/en-US/intro.md)**
 
 ## Contributors
 
