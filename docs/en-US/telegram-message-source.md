@@ -5,39 +5,51 @@
 
  1. Get binary file(shortly called tmf) at [Release page](https://github.com/MeowCat-Studio/telegram-mesaga-fonto/releases) 
  2. Place it in where network access to Telegram server is stable (you may need HTTP proxy).
- 3. Run tmf, which automatically generates the default configuration file `config.toml`
- 4. Use your favorite editor to edit `config.toml`.
+ 3. Run tmf, which automatically generates the default configuration file `config.yml`
+ 4. Use your favorite editor to edit `config.yml`.
  here is an example:
- ```toml
+ ```yaml
+---
 # before use, set `enabled` to `true`.
-enabled = true
-
-[forwarding]
-address = 'nats://itsusinn.site:4222'
-
-[telegram]
-# do not forget to fill your bot token before use
-token = 'BOT_TOKEN'
-# the id of your bot
-bot_name = 'BOT_NAME'
-
-[proxy]
-# whether to enable proxy
-enabled = false
-# only http proxy is allowed at this stage (reqwest library restriction)
-address = 'http://127.0.0.1:8889'
-
-[target_address_mapper_storage]
+enabled: true
+forwarding:
+  address: "nats://itsusinn.site:4222"
+telegram:
+  # do not forget to fill your bot token before use
+  token: "114514114:IYokoiYoT4YfU_NA9NzhS5HS5oT-oJTrE"
+  # the id of your bot
+  bot_name: "mesagisto_test_bot"
+  webhook:
+    enable: false
+    heroku: false
+    port: 8889
+    host: heroku-app-name.herokuapp.com
+proxy:
+  # whether to enable proxy
+  enabled: true
+  # only http proxy is allowed at this stage (reqwest library restriction)
+  address: "http://127.0.0.1:7890"
 # default empty, manually add is not recommended.
 # format:
-# <chat_id>= '<channel>' (int= 'int')
+# "<chat_id>"= "<channel>" ("str"= "str")
 # example:
 # -11451419 = '10000'
+target_address_mapper: {}
  ```
- 4. Start the server:
+ 4. Start the tmf:
  ```shell
+ # Giving executable permissions
+ $ chmod +x ./tmf
  $ ./tmf
-  [INFO] telegram-message-fonto started.	
+  INFO  telegram_mesaga_fonto > Mesagisto-Bot is starting up
+  INFO  telegram_mesaga_fonto > Connecting to nats server
+  INFO  telegram_mesaga_fonto > Connected sucessfully,the client id is ***
+ # To close tmf, use Ctrl+C
+ $ ^C
+  INFO  teloxide::dispatching::dispatcher > ^C received, trying to shutdown the dispatcher...
+  INFO  teloxide::dispatching::dispatcher > Dispatching has been shut down.
+  INFO  telegram_mesaga_fonto::config     > Configuration file was saved
+  INFO  telegram_mesaga_fonto             > Mesagisto Bot is going to shut down
  ```
  If there are no [ERROR], then you can send `/help` to your bot, with reply:
 ```text
@@ -57,4 +69,4 @@ address = 'http://127.0.0.1:8889'
 
 ## Attention
 
-Your Bot should have Group Privacy set to ON, otherwise the Bot will not be able to access the group chat messages.
+Your Bot should have Group Privacy Mode set to OFF, otherwise the Bot will not be able to access the group chat messages.
