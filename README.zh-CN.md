@@ -18,9 +18,13 @@
 
 ## 贡献者
 
-[@Itsusinn](https://github.com/Itsusinn).(Maintainer)
+[@Itsusinn/逸新](https://github.com/Itsusinn)(Maintainer)
 
 [@nexplorer-3e](https://github.com/nexplorer-3e)
+
+[@MlgmXyysd](https://github.com/MlgmXyysd)
+
+[@qwq233](https://github.com/qwq233)
 
 欢迎任何形式的PR。
 
