@@ -18,9 +18,13 @@ See --> **[User Guide](https://github.com/MeowCat-Studio/mesagisto/blob/master/d
 
 ## Contributors
 
-[@Itsusinn](https://github.com/Itsusinn).(Maintainer)
+[@Itsusinn/逸新](https://github.com/Itsusinn)(Maintainer)
 
 [@nexplorer-3e](https://github.com/nexplorer-3e)
+
+[@MlgmXyysd](https://github.com/MlgmXyysd)
+
+[@qwq233](https://github.com/qwq233)
 
 Any PR would be welcomed.
 
