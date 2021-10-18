@@ -7,18 +7,18 @@
 [submodule "mesaga-fonto/minecraft/bukkit"]
 	path = mesaga-fonto/minecraft/bukkit
 	url = git@github.com:MeowCat-Studio/bukkit-mesaga-fonto.git
-[submodule "mesaga-fonto/minecraft/sponge"]
-	path = mesaga-fonto/minecraft/sponge
-	url = git@github.com:MeowCat-Studio/sponge-mesaga-fonto.git
 [submodule "mesaga-fonto/minecraft/forge"]
 	path = mesaga-fonto/minecraft/forge
 	url = git@github.com:MeowCat-Studio/forge-mesaga-fonto.git
-[submodule "mesaga-fonto/minecraft/bungeecord"]
-	path = mesaga-fonto/minecraft/bungeecord
-	url = git@github.com:MeowCat-Studio/bungeecord-mesaga-fonto.git
 [submodule "mesaga-fonto/minecraft/farbic"]
 	path = mesaga-fonto/minecraft/farbic
 	url = git@github.com:MeowCat-Studio/farbic-mesaga-fonto.git
 [submodule "mesaga-fonto/discord-mesaga-fonto"]
 	path = mesaga-fonto/discord-mesaga-fonto
 	url = git@github.com:MeowCat-Studio/discord-mesaga-fonto.git
+[submodule "mesagisto-client/rust"]
+	path = mesagisto-client/rust
+	url = git@github.com:MeowCat-Studio/mesagisto-client-rs.git
+[submodule "mesagisto-client/jvm"]
+	path = mesagisto-client/jvm
+	url = git@github.com:MeowCat-Studio/mesagisto-client-jvm.git
