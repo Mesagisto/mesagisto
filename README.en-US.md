@@ -4,11 +4,11 @@
 
 ENGLISH | **[简体中文](https://github.com/MeowCat-Studio/mesagisto/blob/master/README.zh-CN.md)**
 
-This project aim to transport messages between different IM platforms.
+This project aims to transport messages between different IM platforms.
 
 Now supporting: Minecraft, QQ, Telegram, Discord
 
-## How does it works
+## How does it work
 
 ![graph](https://raw.fastgit.org/Itsusinn/draw-io/master/message-forwarding/architecture.svg)
 
