@@ -1,9 +1,6 @@
 [submodule "mesago-centro"]
 	path = mesago-centro
 	url = git@github.com:MeowCat-Studio/mesago-centro.git
-[submodule "mesagisto-client"]
-	path = mesagisto-client
-	url = git@github.com:MeowCat-Studio/mesagisto-client.git
 [submodule "mesaga-fonto/telegram-mesaga-fonto"]
 	path = mesaga-fonto/telegram-mesaga-fonto
 	url = git@github.com:MeowCat-Studio/telegram-mesaga-fonto.git
