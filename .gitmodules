@@ -1,9 +1,6 @@
 [submodule "mesaga-fonto/telegram-mesaga-fonto"]
 	path = mesaga-fonto/telegram-mesaga-fonto
 	url = git@github.com:MeowCat-Studio/telegram-mesaga-fonto.git
-[submodule "mesaga-fonto/mirai-mesaga-fonto"]
-	path = mesaga-fonto/mirai-mesaga-fonto
-	url = git@github.com:MeowCat-Studio/mirai-mesaga-fonto.git
 [submodule "mesaga-fonto/minecraft/bukkit"]
 	path = mesaga-fonto/minecraft/bukkit
 	url = git@github.com:MeowCat-Studio/bukkit-mesaga-fonto.git
