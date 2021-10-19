@@ -13,9 +13,6 @@
 [submodule "mesaga-fonto/minecraft/farbic"]
 	path = mesaga-fonto/minecraft/farbic
 	url = git@github.com:MeowCat-Studio/farbic-mesaga-fonto.git
-[submodule "mesaga-fonto/discord-mesaga-fonto"]
-	path = mesaga-fonto/discord-mesaga-fonto
-	url = git@github.com:MeowCat-Studio/discord-mesaga-fonto.git
 [submodule "mesagisto-client/rust"]
 	path = mesagisto-client/rust
 	url = git@github.com:MeowCat-Studio/mesagisto-client-rs.git
