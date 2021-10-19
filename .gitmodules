@@ -1,15 +1,24 @@
-[submodule "mesaga-fonto/minecraft/bukkit"]
-	path = mesaga-fonto/minecraft/bukkit
-	url = git@github.com:MeowCat-Studio/bukkit-mesaga-fonto.git
-[submodule "mesaga-fonto/minecraft/forge"]
-	path = mesaga-fonto/minecraft/forge
-	url = git@github.com:MeowCat-Studio/forge-mesaga-fonto.git
-[submodule "mesaga-fonto/minecraft/farbic"]
-	path = mesaga-fonto/minecraft/farbic
-	url = git@github.com:MeowCat-Studio/farbic-mesaga-fonto.git
 [submodule "mesagisto-client/rust"]
 	path = mesagisto-client/rust
 	url = git@github.com:MeowCat-Studio/mesagisto-client-rs.git
 [submodule "mesagisto-client/jvm"]
 	path = mesagisto-client/jvm
 	url = git@github.com:MeowCat-Studio/mesagisto-client-jvm.git
+[submodule "message-source/telegram"]
+	path = message-source/telegram
+	url = git@github.com:MeowCat-Studio/telegram-message-source.git
+[submodule "message-source/discord"]
+	path = message-source/discord
+	url = git@github.com:MeowCat-Studio/discord-message-source.git
+[submodule "message-source/mirai"]
+	path = message-source/mirai
+	url = git@github.com:MeowCat-Studio/mirai-message-source.git
+[submodule "message-source/minecraft/taboo"]
+	path = message-source/minecraft/taboo
+	url = git@github.com:MeowCat-Studio/taboo-message-source.git
+[submodule "message-source/minecraft/forge"]
+	path = message-source/minecraft/forge
+	url = git@github.com:MeowCat-Studio/forge-message-source.git
+[submodule "message-source/minecraft/farbic"]
+	path = message-source/minecraft/farbic
+	url = git@github.com:MeowCat-Studio/farbic-message-source.git
