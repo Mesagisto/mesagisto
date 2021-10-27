@@ -13,12 +13,12 @@
 [submodule "message-source/mirai"]
 	path = message-source/mirai
 	url = git@github.com:MeowCat-Studio/mirai-message-source.git
-[submodule "message-source/minecraft/taboo"]
-	path = message-source/minecraft/taboo
-	url = git@github.com:MeowCat-Studio/taboo-message-source.git
 [submodule "message-source/minecraft/forge"]
 	path = message-source/minecraft/forge
 	url = git@github.com:MeowCat-Studio/forge-message-source.git
 [submodule "message-source/minecraft/farbic"]
 	path = message-source/minecraft/farbic
 	url = git@github.com:MeowCat-Studio/farbic-message-source.git
+[submodule "message-source/minecraft/kato"]
+	path = message-source/minecraft/kato
+	url = git@github.com:MeowCat-Studio/kato-message-source.git
