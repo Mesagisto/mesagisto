@@ -22,3 +22,6 @@
 [submodule "message-source/minecraft/kato"]
 	path = message-source/minecraft/kato
 	url = git@github.com:MeowCat-Studio/kato-message-source.git
+[submodule "message-source/onebot"]
+	path = message-source/onebot
+	url = git@github.com:MeowCat-Studio/onebot-message-source.git
