@@ -8,21 +8,29 @@
 
  2. 将tmf放在网络访问Telegram服务器稳定的地方（你可能需要HTTP代理）。
 
- 3. 运行tmf,自动生成默认配置文件`config.yml`
+ 3. 运行tmf,自动生成默认配置文件`config/tg.yml`
 
- 4. 用你喜欢的编辑器编辑`config.yml`。
+ 4. 用你喜欢的编辑器编辑`config/tg.yml`。
 
    示例:
  ```yaml
 ---
 # 在使用前将 `enabled` 改为 `true`.
 enabled: true
-forwarding:
+nats:
   address: "nats://itsusinn.site:4222"
+# 加密设置
+cipher:
+  # 是否启用加密
+  enable: true
+  # 加密用使用的密钥
+  key: test
+  # 是否拒绝未经加密的消息
+  refuse_plain: true
 telegram:
-  # TG Bot的token
+  # TG Bot的token,于@BotFather处获取
   token: "114514114:IYokoiYoT4YfU_NA9NzhS5HS5oT-oJTrE"
-  # TG Bot的id 即@username
+  # TG Bot的id 即@username的username部分
   bot_name: "mesagisto_test_bot"
   webhook:
     enable: false
