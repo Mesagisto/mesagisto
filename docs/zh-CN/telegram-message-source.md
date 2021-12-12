@@ -1,12 +1,12 @@
 # telegram-message-source 
 
-**[Mesagisto信使项目](https://github.com/MeowCat-Studio/mesagisto)的一部分，消息转发客户端的[Telegram](https://core.telegram.org) 实现。**
+**[Mesagisto信使项目](https://github.com/MeowCat-Studio/mesagisto)的一部分，消息转发客户端的Telegram 实现。**
 
 ## 部署指导
 
- 1. 在 [Release页面](https://github.com/MeowCat-Studio/telegram-mesaga-fonto/releases)获取二进制文件(简称tms)。
+ 1. 在 [Release页面](https://github.com/MeowCat-Studio/telegram-message-source/releases)获取二进制文件(简称tms)。
 
- 2. 将tms放在网络访问Telegram服务器稳定的地方（你可能需要HTTP代理）。
+ 2. 确保tms在能稳定访问访问Telegram服务器的网络环境下（可能需要HTTP代理,详见本文档配置文件部分）。
 
  3. 运行tms,自动生成默认配置文件`config/tg.yml`
 
