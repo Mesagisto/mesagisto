@@ -25,3 +25,6 @@
 [submodule "message-source/onebot"]
 	path = message-source/onebot
 	url = git@github.com:MeowCat-Studio/onebot-message-source.git
+[submodule "mesagisto-diagnose"]
+	path = mesagisto-diagnose
+	url = git@github.com:MeowCat-Studio/mesagisto-diagnose.git
