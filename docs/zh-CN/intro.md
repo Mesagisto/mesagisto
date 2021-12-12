@@ -7,5 +7,5 @@ Minecraft消息源
 
 [Telegram消息源](./telegram-message-source.md)
 
-[Discord消息源](./discord-message-source.md)
+[Discord消息源(暂时不可用)](./discord-message-source.md)
 
