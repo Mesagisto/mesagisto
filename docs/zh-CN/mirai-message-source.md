@@ -2,18 +2,10 @@
 **[Mesagisto信使项目](https://github.com/MeowCat-Studio/mesagisto)的一部分，消息转发客户端的mirai(Tencent-QQ)实现。**
 
 ## 安装
-
-  - 安装在服务器上
-
-    1. 在[Releases页面](https://github.com/MeowCat-Studio/mirai-mesaga-fonto/releases) 下载 mmf.mirai.jar。
-    2. 移动至mirai-console(或是mcl)的plugins文件夹下。
-
-  - 安装在安卓(8.0+)上
-    1. 在[Releases页面](https://github.com/MeowCat-Studio/mirai-mesaga-fonto/releases) 下载 mamf.apk。
-    2. 将其作为安卓应用安装
+  1. 在[Releases页面](https://github.com/MeowCat-Studio/mirai-message-source/releases) 下载对应平台的 mms.jar。
+  2. 移动至mirai-console(或是mcl)同目录的plugins文件夹下。
+  > 注意安装前置插件chat-command, 详见本文档底端的注意事项
 ## 简单入门
-
-__您可以先看看主程序库的使用说明。__
 
  在 MCL控制台执行以下指令:
 
@@ -32,9 +24,11 @@ __您可以先看看主程序库的使用说明。__
 
 ## 注意事项
 
-为了在聊天环境中使用命令需要安装**前置插件[chat-command](https://github.com/project-mirai/chat-command)**
+  1. 为了在聊天环境中使用命令需要安装**前置插件[chat-command](https://github.com/project-mirai/chat-command)**
 
-> 安装完chat-command后，须在mirai控制台输入指令
->
-> `permission permit * net.mamoe.mirai.console.chat-command:*`
+  > 安装完chat-command后，须在mirai控制台输入指令
+  >
+  > `permission permit * net.mamoe.mirai.console.chat-command:*`
+
+  2. 若在Bot运行期间将普通成员提权至管理员,请重启Bot以刷新缓存
 
