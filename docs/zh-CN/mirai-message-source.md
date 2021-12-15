@@ -21,8 +21,8 @@
    key: your-key
    # 是否拒绝未经加密的消息
    refuse-plain: true
- # 存放信使频道与TG群组的对应关系,默认为空. 不推荐手动添加.
- target_address_mapper: {}
+ # 存放信使频道与QQ群的对应关系,默认为空. 不推荐手动添加.
+ targetChannelMapper: {}
  ```
 
  3. 在 MCL控制台执行以下指令:
