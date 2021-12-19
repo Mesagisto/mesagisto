@@ -10,7 +10,7 @@
 
 ## 它是如何工作的？
 
-![graph](https://raw.fastgit.org/Itsusinn/draw-io/master/message-forwarding/architecture.svg)
+![graph](https://raw.githubusercontent.com/Itsusinn/draw-io/master/message-forwarding/architecture.svg)
 
 ## 我该如何使用安装并使用它？
 
