@@ -16,9 +16,6 @@
 [submodule "message-source/minecraft/forge"]
 	path = message-source/minecraft/forge
 	url = git@github.com:MeowCat-Studio/forge-message-source.git
-[submodule "message-source/minecraft/farbic"]
-	path = message-source/minecraft/farbic
-	url = git@github.com:MeowCat-Studio/farbic-message-source.git
 [submodule "message-source/minecraft/kato"]
 	path = message-source/minecraft/kato
 	url = git@github.com:MeowCat-Studio/kato-message-source.git
@@ -28,3 +25,6 @@
 [submodule "mesagisto-diagnose"]
 	path = mesagisto-diagnose
 	url = git@github.com:MeowCat-Studio/mesagisto-diagnose.git
+[submodule "message-source/minecraft/fabric"]
+	path = message-source/minecraft/fabric
+	url = git@github.com:MeowCat-Studio/fabric-message-source.git
