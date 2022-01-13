@@ -52,3 +52,7 @@ target_address_mapper: {}
 > 如果你在使用mirai消息源,channel的值应当是qq号
 >
 > 实际上无论channel的值如何，只要保证不同转发客户端的值相同即可
+
+## 注意事项
+  1. 在Discord Developer Portal注册Bot时, 请前往左侧Bot分页, 
+    将Privileged Gateway Intents的Presence Intent,Server Members Intent,Message Content Intent全部开启
