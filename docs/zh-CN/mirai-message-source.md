@@ -11,10 +11,10 @@
  参考:
  ```yaml
  # 中间转发服务器,消息的桥梁. 默认为我个人提供的[NATS](https://github.com/nats-io/nats-server)服务器
- nats: 
+ nats:
    address: 'nats://itsusinn.site:4222'
 # 加密设置
- cipher: 
+ cipher:
    # 是否启用加密
    enable: false
    # 加密用使用的密钥
@@ -43,11 +43,8 @@
 
 ## 注意事项
 
-  1. 为了在聊天环境中使用命令需要安装**前置插件[chat-command](https://github.com/project-mirai/chat-command)**
+  1. 现在信使**不再依赖**前置插件[chat-command]
 
-  > 安装完chat-command后，须在mirai控制台输入指令
-  >
-  > `permission permit * net.mamoe.mirai.console.chat-command:*`
 
   2. 若在Bot运行期间将普通成员提权至管理员,请重启Bot以刷新缓存
 
