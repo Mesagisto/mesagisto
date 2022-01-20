@@ -1,7 +1,7 @@
 # bukkit消息源
 **[Mesagisto信使项目](https://github.com/MeowCat-Studio/mesagisto)的一部分，消息转发客户端的bukkit(Minecraft)实现。**
 
-## Depoly
+## 安装
 
 1. 在[Releases页面](https://github.com/MeowCat-Studio/bukkit-message-source/releases) 
   下载相应OS及CPU架构的jar归档文件。
