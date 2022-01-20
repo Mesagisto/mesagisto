@@ -35,3 +35,23 @@
 
 5. 保存配置文件，重启bukkit服务端。
 
+## 注意事项
+1. 与InteractiveChat的兼容性问题,请编辑plugins/InteractiveChat/config.yml
+  找到
+  ```yaml
+  Settings:
+    Bungeecord: false
+    ChatListeningPlugins:
+      - "Plugin:QuickShop, Class:.*, EventPriority:LOWEST"
+      - "Plugin:Slimefun, Class:.*, EventPriority:LOWEST"
+  ```
+  在列表ChatListeningPlugins中添加`"Plugin:bukkit-message-source, Class:.*, EventPriority:NORMAL"`即
+  ```yaml
+  Settings:
+    Bungeecord: false
+    ChatListeningPlugins:
+      - "Plugin:QuickShop, Class:.*, EventPriority:LOWEST"
+      - "Plugin:Slimefun, Class:.*, EventPriority:LOWEST"
+      - "Plugin:bukkit-message-source, Class:.*, EventPriority:NORMAL"
+  ```
+
