@@ -1,8 +1,8 @@
-# telegram-message-source 
+# Telegram消息源
 
 **[Mesagisto信使项目](https://github.com/MeowCat-Studio/mesagisto)的一部分，消息转发客户端的Telegram 实现。**
 
-## 部署指导
+## 部署
 
  1. 在 [Release页面](https://github.com/MeowCat-Studio/telegram-message-source/releases)获取二进制文件(简称tms)。
 
@@ -10,43 +10,42 @@
 
  3. 运行tms,自动生成默认配置文件`config/tg.yml`
 
- 4. 用你喜欢的编辑器编辑`config/tg.yml`。
+ 4. 编辑配置文件`config/tg.yml`。
 
    示例:
- ```yaml
----
-# 在使用前将 `enable` 改为 `true`.
-enable: true
-# 中间转发服务器,消息的桥梁. 默认为我个人提供的[NATS](https://github.com/nats-io/nats-server)服务器
-nats:
-  address: "nats://itsusinn.site:4222"
-# 加密设置
-cipher:
-  # 是否启用加密
+  ```yaml
+  ---
+  # 在使用前将 `enable` 改为 `true`.
   enable: true
-  # 加密用使用的密钥
-  key: test
-  # 是否拒绝未经加密的消息
-  refuse_plain: true
-telegram:
-  # TG Bot的token,于@BotFather处获取
-  token: "114514114:IYokoiYoT4YfU_NA9NzhS5HS5oT-oJTrE"
-  # TG Bot的id 即@username的username部分
-  bot_name: "mesagisto_test_bot"
-  webhook:
-    enable: false
-    heroku: false
-    port: 8889
-    host: heroku-app-name.herokuapp.com
-proxy:
-  # 是否启用代理
-  enabled: true
-  # 现阶段仅允许http代理(reqwest库限制)
-  address: "http://127.0.0.1:7890"
-# 存放信使频道与TG群组的对应关系,默认为空. 不推荐手动添加.
-target_address_mapper: {}
-
- ```
+  # 中间转发服务器,消息的桥梁. 默认为我个人提供的[NATS](https://github.com/nats-io/nats-server)服务器
+  nats:
+    address: "nats://itsusinn.site:4222"
+  # 加密设置
+  cipher:
+    # 是否启用加密
+    enable: true
+    # 加密用使用的密钥
+    key: test
+    # 是否拒绝未经加密的消息
+    refuse_plain: true
+  telegram:
+    # TG Bot的token,于@BotFather处获取
+    token: "114514114:IYokoiYoT4YfU_NA9NzhS5HS5oT-oJTrE"
+    # TG Bot的id 即@username的username部分
+    bot_name: "mesagisto_test_bot"
+    webhook:
+      enable: false
+      heroku: false
+      port: 8889
+      host: heroku-app-name.herokuapp.com
+  proxy:
+    # 是否启用代理
+    enabled: true
+    # 现阶段仅允许http代理(reqwest库限制)
+    address: "http://127.0.0.1:7890"
+  # 存放信使频道与TG群组的对应关系,默认为空. 不推荐手动添加.
+  target_address_mapper: {}
+  ```
  4. 启动tmf:
  ```shell
  # 给予可执行权限
@@ -61,7 +60,6 @@ target_address_mapper: {}
   INFO  teloxide::dispatching::dispatcher > Dispatching has been shut down.
   INFO  telegram_mesaga_fonto::config     > Configuration file was saved
   INFO  telegram_mesaga_fonto             > Mesagisto Bot is going to shut down
- 
  ```
  如果没有 [ERROR]输出, 你可以想bot发送 `/help` , 将会得到如下回复:
 ```text
