@@ -4,12 +4,13 @@
 
 Minecraft消息源
 
-- [Bukkit](./minecraft-message-source/bukkit.md)
+- [Bukkit 1.12-1.18](./minecraft-message-source/bukkit.md)
+- [Fabric 1.16.5](./minecraft-message-source/fabric.md)
 
 
 [Telegram消息源](./telegram-message-source.md)
 
-[Discord消息源(暂时不可用)](./discord-message-source.md)
+[Discord消息源](./discord-message-source.md)
 
 ## 诊断工具
 
