@@ -28,3 +28,6 @@
 [submodule "message-source/minecraft/fabric"]
 	path = message-source/minecraft/fabric
 	url = git@github.com:MeowCat-Studio/fabric-message-source.git
+[submodule "message-source/minecraft/velocity"]
+	path = message-source/minecraft/velocity
+	url = git@github.com:MeowCat-Studio/velocity-message-source.git
