@@ -46,7 +46,7 @@
   # 存放信使频道与TG群组的对应关系,默认为空. 不推荐手动添加.
   target_address_mapper: {}
   ```
- 4. 启动tmf:
+ 4. 启动tms:
  ```shell
  # 给予可执行权限
  $ chmod +x ./tms
