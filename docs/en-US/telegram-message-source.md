@@ -36,7 +36,7 @@ proxy:
 # -11451419 = '10000'
 target_address_mapper: {}
  ```
- 4. Start the tmf:
+ 4. Start the tms:
  ```shell
  # Giving executable permissions
  $ chmod +x ./tmf
