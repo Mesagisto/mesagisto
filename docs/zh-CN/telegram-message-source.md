@@ -61,7 +61,7 @@
   INFO  telegram_mesaga_fonto::config     > Configuration file was saved
   INFO  telegram_mesaga_fonto             > Mesagisto Bot is going to shut down
  ```
- 如果没有 [ERROR]输出, 你可以想bot发送 `/help` , 将会得到如下回复:
+ 如果没有 [ERROR]输出, 你可以向bot发送 `/help` , 将会得到如下回复:
 ```text
  信使Bot支持以下命令
  /help - 显示命令帮助
