@@ -1,5 +1,5 @@
-# telegram-mesaga-fonto 
-** Part of [Mesagisto Project](https://github.com/MeowCat-Studio/mesagisto), the [Telegram](https://core.telegram.org) implementation of the message forwarding client. **
+# Telegram Message Source
+**Part of [Mesagisto Project](https://github.com/MeowCat-Studio/mesagisto), the [Telegram](https://core.telegram.org) implementation of the message forwarding client.**
 
 ## Deploy instruction
 
@@ -17,13 +17,6 @@ forwarding:
 telegram:
   # do not forget to fill your bot token before use
   token: "114514114:IYokoiYoT4YfU_NA9NzhS5HS5oT-oJTrE"
-  # the id of your bot
-  bot_name: "mesagisto_test_bot"
-  webhook:
-    enable: false
-    heroku: false
-    port: 8889
-    host: heroku-app-name.herokuapp.com
 proxy:
   # whether to enable proxy
   enabled: true
@@ -68,5 +61,5 @@ target_address_mapper: {}
 > In fact, whatever the value of the channel is, just make sure the value is the same for different forwarding clients
 
 ## Attention
-
-Your Bot should have Group Privacy Mode set to OFF, otherwise the Bot will not be able to access the group chat messages.
+- Your Bot should have Group Privacy Mode set to OFF, otherwise the Bot will not be able to access the group chat messages.
+- After changing the Group Privacy Mode or group type, please remove the Bot from the group and restart it.
