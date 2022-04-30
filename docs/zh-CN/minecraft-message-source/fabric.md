@@ -5,10 +5,11 @@
 
 1. 在[Releases页面](https://github.com/MeowCat-Studio/fabric-message-source/releases)
   下载相应OS及CPU架构的jar归档文件。
+  > 文件命名规则：fabric-<MC版本>-<架构>-<操作系统>.jar
 
 2. 将jar包移动至fabric服务端的mods文件夹下。
 
-3. 启动服务器,此时会自动生成配置文件。
+3. 启动服务器,此时会自动生成配置文件, 关闭服务器。
 
 4. 修改mods/mesagisto/config.yml，
   参考
@@ -33,7 +34,7 @@
     refuse-plain: true
   ```
 
-5. 保存配置文件，重启fabric服务端。
+5. 启动fabric服务端。
 
 ## 注意事项
 1. 需要前置依赖 Fabric-API 任意版本

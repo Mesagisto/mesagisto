@@ -5,7 +5,7 @@
 Minecraft消息源
 
 - [Bukkit 1.12-1.18](./minecraft-message-source/bukkit.md)
-- [Fabric 1.16.5](./minecraft-message-source/fabric.md)
+- [Fabric 1.16-1.18](./minecraft-message-source/fabric.md)
 
 
 [Telegram消息源](./telegram-message-source.md)

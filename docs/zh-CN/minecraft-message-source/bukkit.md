@@ -5,6 +5,7 @@
 
 1. 在[Releases页面](https://github.com/MeowCat-Studio/bukkit-message-source/releases) 
   下载相应OS及CPU架构的jar归档文件。
+  > 文件命名规则：kato-<架构>-<操作系统>.jar
 
 2. 将jar包移动至bukkit系服务端(如Spigot,Paper等)的plugins文件夹下。
 

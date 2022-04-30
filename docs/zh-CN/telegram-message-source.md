@@ -54,24 +54,26 @@
   INFO  telegram_message_source > Mesagisto-Bot is starting up
   INFO  telegram_message_source > Connecting to nats server
   INFO  telegram_message_source > Connected sucessfully,the client id is ***
- # 若要关闭tmf,请使用Ctrl+C,切忌不平滑关闭
+ # 若要关闭tms,请使用Ctrl+C,切忌不平滑关闭
  $ ^C
   INFO  teloxide::dispatching::dispatcher > ^C received, trying to shutdown the dispatcher...
   INFO  teloxide::dispatching::dispatcher > Dispatching has been shut down.
-  INFO  telegram_mesaga_fonto::config     > Configuration file was saved
-  INFO  telegram_mesaga_fonto             > Mesagisto Bot is going to shut down
+  INFO  telegram_message_source::config     > Configuration file was saved
+  INFO  telegram_message_source             > Mesagisto Bot is going to shut down
  ```
  如果没有 [ERROR]输出, 你可以向bot发送 `/help` , 将会得到如下回复:
 ```text
- 信使Bot支持以下命令
- /help - 显示命令帮助
- /enable - 启用消息转发
- /disable - 禁用消息转发
- /setaddress - 设置当前Group的转发地址
+信使Bot支持以下命令
+
+/about — 关于本项目
+/unbind — 解绑当前群组的转发地址
+/help — 显示命令帮助
+/status — 显示状态
+/bind — 绑定当前群组的转发地址
 ```
  5. 创建一个 Telegram 群组, 将bot添加至群组, 并在群组内输入指令:
 
- `/setaddress <channel>`
+ `/bind <channel>`
 
 > 此处channel的值为应设置的信使频道
 >

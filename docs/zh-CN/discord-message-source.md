@@ -39,7 +39,7 @@
     refuse_plain: true
 
   # 存放信使频道与DC文字频道的对应关系,默认为空. 不推荐手动添加.
-  target_address_mapper: {}
+  bindings: {}
   ```
  5. 启动dms:
   ```shell
@@ -52,7 +52,7 @@
   ```
   6. 将bot添加至DC服务器，创建一个 Discord 文字频道，并在文字频道内输入指令:`/help`
   你将获得指令的帮助 <br/><br/>
-  使用`/channel set <channel>`来设置信使频道
+  使用`/channel bind <channel>`来设置信使频道
   > 无论channel的值如何，只要保证不同转发客户端的值相同即可
 
 ## 注意事项
