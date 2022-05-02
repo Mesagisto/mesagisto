@@ -1,11 +1,11 @@
-# Fabric消息源
-**[Mesagisto信使项目](https://github.com/MeowCat-Studio/mesagisto)的一部分，消息转发客户端的fabric(Minecraft)实现。**
+# Forge消息源
+**[Mesagisto信使项目](https://github.com/MeowCat-Studio/mesagisto)的一部分，消息转发客户端的forge(Minecraft)实现。**
 
 ## 安装
 
 1. 在[Releases页面](https://github.com/MeowCat-Studio/forge-message-source/releases)
   下载相应OS及CPU架构的jar归档文件。
-  > 文件命名规则：fabric-<MC版本>-<架构>-<操作系统>.jar
+  > 文件命名规则：forge-<MC版本>-<架构>-<操作系统>.jar
 
 2. 将jar包移动至forge服务端的mods文件夹下。
 
