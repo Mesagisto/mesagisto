@@ -5,12 +5,15 @@
 ## 部署
 
  1. 在 [Release页面](https://github.com/MeowCat-Studio/telegram-message-source/releases)获取二进制文件(简称tms)。
+ > 文件命名规则：tg-<操作系统>-<架构>
+ >
+ > 对于Windows用户而言, 可执行文件会带有no-color后缀，no-color版本的文件去除了终端的颜色代码，不会出现乱码。
+ > 推荐没有MINGW终端的Winodws用户下载该版本
+ 1. 确保tms在能稳定访问访问Telegram服务器的网络环境下（可能需要HTTP代理,详见本文档配置文件部分）。
 
- 2. 确保tms在能稳定访问访问Telegram服务器的网络环境下（可能需要HTTP代理,详见本文档配置文件部分）。
+ 2. 运行tms,自动生成默认配置文件`config/tg.yml`
 
- 3. 运行tms,自动生成默认配置文件`config/tg.yml`
-
- 4. 编辑配置文件`config/tg.yml`。
+ 3. 编辑配置文件`config/tg.yml`。
 
    示例:
   ```yaml

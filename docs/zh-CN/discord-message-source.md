@@ -5,7 +5,10 @@
 ## 部署
 
  1. 在 [Release页面](https://github.com/MeowCat-Studio/discord-message-source/releases)获取二进制文件(简称dms)。
-
+ > 文件命名规则：dc-<操作系统>-<架构>
+ >
+ > 对于Windows用户而言, 可执行文件会带有no-color后缀，no-color版本的文件去除了终端的颜色代码，不会出现乱码。
+ > 推荐没有MINGW终端的Winodws用户下载该版本
  2. 确保dms在能稳定访问访问Discord服务器的网络环境下（可能需要HTTP代理,详见本文档配置文件部分）。
 
  3. 运行dms,自动生成默认配置文件`config/dc.yml`
