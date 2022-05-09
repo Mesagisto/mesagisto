@@ -14,7 +14,7 @@
 
 ## 我该如何使用安装并使用它？
 
-请查看 --> [用户指南](https://github.com/MeowCat-Studio/mesagisto/blob/master/docs/zh-CN/intro.md)
+请查看 --> [用户指南](https://github.com/MeowCat-Studio/mesagisto-docs/blob/master/zh-CN/intro.md)
 
 ## 贡献者
 

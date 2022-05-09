@@ -14,7 +14,7 @@ Now supporting: Minecraft, QQ, Telegram, Discord
 
 ## Install & Usage
 
-See --> **[User Guide](https://github.com/MeowCat-Studio/mesagisto/blob/master/docs/en-US/intro.md)**
+See --> **[User Guide](https://github.com/MeowCat-Studio/mesagisto-docs/blob/master/en-US/intro.md)**
 
 ## Contributors
 
