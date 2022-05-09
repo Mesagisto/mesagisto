@@ -26,6 +26,10 @@
 
 [@qwq233](https://github.com/qwq233)
 
+[@DreamOneX](https://github.com/DreamOneX)
+
+[@LuDreamst](https://github.com/LuDreamst)
+
 欢迎任何形式的PR。
 
 ___

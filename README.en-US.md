@@ -26,6 +26,10 @@ See --> **[User Guide](https://github.com/MeowCat-Studio/mesagisto-docs/blob/mas
 
 [@qwq233](https://github.com/qwq233)
 
+[@DreamOneX](https://github.com/DreamOneX)
+
+[@LuDreamst](https://github.com/LuDreamst)
+
 Any PR would be welcomed.
 
 ___
