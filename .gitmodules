@@ -34,3 +34,6 @@
 [submodule "matrix-bridge/oicq"]
 	path = matrix-bridge/oicq
 	url = git@github.com:Itsusinn/matrix-oicq-bridge.git
+[submodule "docs"]
+	path = docs
+	url = git@github.com:MeowCat-Studio/mesagisto-docs.git
