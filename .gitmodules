@@ -33,7 +33,7 @@
 	url = git@github.com:MeowCat-Studio/velocity-message-source.git
 [submodule "matrix-bridge/oicq"]
 	path = matrix-bridge/oicq
-	url = git@github.com:Itsusinn/matrix-oicq-bridge.git
+	url = git@github.com:mesagisto/matrix-oicq-bridge.git
 [submodule "docs"]
 	path = docs
 	url = git@github.com:MeowCat-Studio/mesagisto-docs.git
