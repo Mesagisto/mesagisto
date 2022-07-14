@@ -28,7 +28,7 @@ This project is therefore built on top of [NATS](https://nats.io/), an open sour
 
 ## Install & Usage
 
-See  **[User Guide](https://github.com/MeowCat-Studio/mesagisto-docs/blob/master/en-US/intro.md)**
+See  **[User Guide](https://docs.mesagisto.org/zh-CN/)**
 
 ## Progress
 
