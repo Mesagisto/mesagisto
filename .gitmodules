@@ -37,3 +37,6 @@
 [submodule "docs"]
 	path = docs
 	url = git@github.com:MeowCat-Studio/mesagisto-docs.git
+[submodule "message-source/minecraft/headless"]
+	path = message-source/minecraft/headless
+	url = git@github.com:Mesagisto/minecraft-message-source.git
