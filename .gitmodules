@@ -13,9 +13,6 @@
 [submodule "message-source/mirai"]
 	path = message-source/mirai
 	url = git@github.com:MeowCat-Studio/mirai-message-source.git
-[submodule "message-source/minecraft/forge"]
-	path = message-source/minecraft/forge
-	url = git@github.com:MeowCat-Studio/forge-message-source.git
 [submodule "message-source/minecraft/kato"]
 	path = message-source/minecraft/kato
 	url = git@github.com:MeowCat-Studio/kato-message-source.git
@@ -25,9 +22,6 @@
 [submodule "mesagisto-diagnose"]
 	path = mesagisto-diagnose
 	url = git@github.com:MeowCat-Studio/mesagisto-diagnose.git
-[submodule "message-source/minecraft/fabric"]
-	path = message-source/minecraft/fabric
-	url = git@github.com:MeowCat-Studio/fabric-message-source.git
 [submodule "message-source/minecraft/velocity"]
 	path = message-source/minecraft/velocity
 	url = git@github.com:MeowCat-Studio/velocity-message-source.git
@@ -40,3 +34,9 @@
 [submodule "message-source/minecraft/headless"]
 	path = message-source/minecraft/headless
 	url = git@github.com:Mesagisto/minecraft-message-source.git
+[submodule "message-source/minecraft/mcmod-message-source"]
+	path = message-source/minecraft/mcmod-message-source
+	url = git@github.com:Mesagisto/mcmod-message-source.git
+[submodule "message-source/minecraft/mcmod"]
+	path = message-source/minecraft/mcmod
+	url = git@github.com:Mesagisto/mcmod-message-source.git
