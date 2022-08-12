@@ -40,3 +40,6 @@
 [submodule "message-source/minecraft/mcmod"]
 	path = message-source/minecraft/mcmod
 	url = git@github.com:Mesagisto/mcmod-message-source.git
+[submodule "center"]
+	path = center
+	url = git@github.com:Mesagisto/mesagisto-center.git
