@@ -5,7 +5,7 @@
 [![GitHub Contributors](https://img.shields.io/github/contributors/MeowCat-Studio/mesagisto?style=flat-square)](https://github.com/MeowCat-Studio/mesagisto/graphs/contributors)
 [![GitHub License](https://img.shields.io/github/license/MeowCat-Studio/mesagisto?style=flat-square)](https://github.com/MeowCat-Studio/mesagisto/blob/main/LICENSE)
 [![QQ Group](https://img.shields.io/badge/QQ%20Group-667352043-12B7F5?style=flat-square)](https://jq.qq.com/?_wv=1027&k=6eDIHSYt)
-[![Telegram](https://img.shields.io/badge/Telegram-Ｍesagisto-blue.svg?style=flat-square)](https://t.me/mesagisto)
+[![Telegram](https://img.shields.io/badge/Telegram-Ｍesagisto-blue.svg?style=flat-square)](https://t.me/mesagisto1)
 
 **[ENGLISH](https://github.com/MeowCat-Studio/mesagisto/blob/master/README.en-US.md)** | 简体中文
 
