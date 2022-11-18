@@ -1,27 +1,27 @@
 [submodule "mesagisto-client/rust"]
 	path = mesagisto-client/rust
-	url = git@github.com:MeowCat-Studio/mesagisto-client-rs.git
+	url = git@github.com:Mesagisto/mesagisto-client-rs.git
 [submodule "mesagisto-client/jvm"]
 	path = mesagisto-client/jvm
-	url = git@github.com:MeowCat-Studio/mesagisto-client-jvm.git
+	url = git@github.com:Mesagisto/mesagisto-client-jvm.git
 [submodule "message-source/telegram"]
 	path = message-source/telegram
 	url = git@github.com:MeowCat-Studio/telegram-message-source.git
 [submodule "message-source/discord"]
 	path = message-source/discord
-	url = git@github.com:MeowCat-Studio/discord-message-source.git
+	url = git@github.com:Mesagisto/discord-message-source.git
 [submodule "message-source/mirai"]
 	path = message-source/mirai
-	url = git@github.com:MeowCat-Studio/mirai-message-source.git
+	url = git@github.com:Mesagisto/mirai-message-source.git
 [submodule "message-source/minecraft/kato"]
 	path = message-source/minecraft/kato
-	url = git@github.com:MeowCat-Studio/kato-message-source.git
+	url = git@github.com:Mesagisto/kato-message-source.git
 [submodule "message-source/onebot"]
 	path = message-source/onebot
-	url = git@github.com:MeowCat-Studio/onebot-message-source.git
+	url = git@github.com:Mesagisto/onebot-message-source.git
 [submodule "mesagisto-diagnose"]
 	path = mesagisto-diagnose
-	url = git@github.com:MeowCat-Studio/mesagisto-diagnose.git
+	url = git@github.com:Mesagisto/mesagisto-diagnose.git
 [submodule "message-source/minecraft/velocity"]
 	path = message-source/minecraft/velocity
 	url = git@github.com:MeowCat-Studio/velocity-message-source.git
@@ -30,7 +30,7 @@
 	url = git@github.com:mesagisto/matrix-oicq-bridge.git
 [submodule "docs"]
 	path = docs
-	url = git@github.com:MeowCat-Studio/mesagisto-docs.git
+	url = git@github.com:Mesagisto/mesagisto-docs.git
 [submodule "message-source/minecraft/headless"]
 	path = message-source/minecraft/headless
 	url = git@github.com:Mesagisto/minecraft-message-source.git
