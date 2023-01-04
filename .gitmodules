@@ -40,3 +40,5 @@
 [submodule "center"]
 	path = center
 	url = git@github.com:Mesagisto/mesagisto-center.git
+[submodule "message-source/minecraft/bungeecord"]
+	url = git@github.com:Mesagisto/bungee-message-source.git
