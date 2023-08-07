@@ -85,4 +85,11 @@
 
 欢迎任何形式的PR。
 
+
+## 支持本项目
+
+USDT-Optimism **/** USDT-Ethereum(ERC20) **/** BTC-Ethereum(ERC20) **/** ETH-Optimism **/** ETH-Ethereum(ERC20) 
+
+#### 钱包地址 `0x28860de6c914960afb25d34dc0107df8af28ac8a`
+
 ___
